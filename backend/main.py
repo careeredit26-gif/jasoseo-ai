@@ -57,65 +57,67 @@ PLANS = {
 }
 
 # ── GPT system prompt ──
-SYSTEM_PROMPT = """당신은 한국 취업 시장 전문 자소서 첨삭 AI입니다.
+# Load prompt config from file
+PROMPT_CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "prompt.json")
+with open(PROMPT_CONFIG_PATH, "r", encoding="utf-8") as f:
+    PROMPT_CONFIG = json.load(f)
 
-## 역할
-- 사용자가 제출한 자기소개서 문항을 분석하고, 문장별 진단 + 구체적 대안 문장을 제시합니다.
-- 지원 기업의 인재상과 핵심 가치를 자동으로 반영합니다.
 
-## 첨삭 규칙
-1. **문장별 진단**: 각 문장이 왜 약한지 / 강한지를 구체적으로 진단합니다.
-2. **대안 문장 제시**: "이 문장이 약합니다"로 끝나지 않고, 바로 적용 가능한 대안 문장을 제시합니다.
-3. **기업 인재상 반영**: 지원 기업의 인재상·핵심 가치를 파악하여 첨삭에 반영합니다.
-4. **구조 피드백**: 전체 자소서의 흐름, 논리 구조, 서사 완성도를 평가합니다.
-5. **한국어 비즈니스 문체**: 번역체가 아닌 자연스러운 한국어 비즈니스 문체를 사용합니다.
+def build_system_prompt():
+    pc = PROMPT_CONFIG
+    qt = pc["question_types"]
+    cv = pc["company_values"]
+    wr = pc["writing_rules"]
+    of = pc["output_format"]["initial_review"]
 
-## 출력 형식 (반드시 JSON)
-다음 JSON 형식으로만 응답하세요. 다른 텍스트 없이 JSON만 출력합니다:
+    question_type_section = ""
+    for name, info in qt.items():
+        question_type_section += f"\n#### {name}\n"
+        question_type_section += f"- 평가자 기대: {info['evaluator_expects']}\n"
+        question_type_section += f"- 구조: {info['structure']}\n"
+        question_type_section += f"- 흔한 실수: {', '.join(info['common_mistakes'])}\n"
+        question_type_section += f"- 좋은 예시 패턴: {info['good_example_pattern']}\n"
 
-{
-  "company_analysis": {
-    "company": "기업명",
-    "core_values": ["인재상 키워드 1", "인재상 키워드 2", ...],
-    "reflection_strategy": "이 기업 인재상을 자소서에 어떻게 반영할지 전략"
-  },
-  "sentence_diagnosis": [
-    {
-      "original": "원본 문장",
-      "issue": "문제점 진단",
-      "severity": "high | medium | low",
-      "alternative": "대안 문장"
-    }
-  ],
-  "structure_feedback": {
-    "flow_score": 1~10,
-    "logic_score": 1~10,
-    "specificity_score": 1~10,
-    "company_fit_score": 1~10,
-    "overall_comment": "전체 구조에 대한 피드백"
-  },
-  "revised_full_text": "전체 수정된 자소서 텍스트",
-  "summary": "핵심 개선 사항 요약 (2-3문장)"
-}"""
+    company_section = ""
+    for name, info in cv.items():
+        company_section += f"\n- **{name}**: {', '.join(info['core'])}. {info.get('focus', '')}"
 
-REVISE_SYSTEM_PROMPT = """당신은 한국 취업 시장 전문 자소서 첨삭 AI입니다.
+    must_do = '\n'.join(f"- {r}" for r in wr['must_do'])
+    must_not = '\n'.join(f"- {r}" for r in wr['must_not'])
+
+    return f"""{pc['role']}
+
+## 1단계: 질문 유형 판별
+아래 유형 중 가장 적합한 것을 먼저 판별하고, 해당 유형의 평가 기준으로 첨삭하세요.
+{question_type_section}
+
+## 2단계: 기업 인재상 분석
+지원 기업의 인재상을 파악하고 첨삭에 반영합니다.
+{company_section}
+- 위 목록에 없는 기업이면 기업명과 업종 기반으로 합리적으로 추론하세요.
+
+## 3단계: 질문-기업 교차 분석
+질문 유형 + 기업 인재상을 교차하여 "이 기업의 이 질문에서 무엇을 강조해야 하는가"를 도출합니다.
+
+## 작성 규칙
+### 반드시 할 것
+{must_do}
+
+### 금지 사항
+{must_not}
+
+## 출력 형식 (반드시 JSON만 출력, 다른 텍스트 없이)
+{json.dumps(of, ensure_ascii=False, indent=2)}"""
+
+
+SYSTEM_PROMPT = build_system_prompt()
+
+REVISE_SYSTEM_PROMPT = f"""{PROMPT_CONFIG['role']}
 사용자가 이전에 첨삭받은 자소서에 대해 추가 수정을 요청합니다.
 이전 첨삭 맥락을 유지하면서, 사용자의 수정 요청을 반영하여 다시 첨삭합니다.
 
-## 출력 형식 (반드시 JSON)
-다음 JSON 형식으로만 응답하세요:
-
-{
-  "changes_made": [
-    {
-      "before": "수정 전 문장",
-      "after": "수정 후 문장",
-      "reason": "수정 이유"
-    }
-  ],
-  "revised_full_text": "전체 수정된 자소서 텍스트",
-  "summary": "이번 수정 사항 요약"
-}"""
+## 출력 형식 (반드시 JSON만 출력)
+{json.dumps(PROMPT_CONFIG['output_format']['revision'], ensure_ascii=False, indent=2)}"""
 
 
 # ──────────────────────────────────────
