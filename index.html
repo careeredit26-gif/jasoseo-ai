@@ -1214,19 +1214,8 @@ async function handlePurchase(planName) {
 }
 
 async function executePurchase(planName) {
-  if (!tossPayments) {
-    showToast('결제 시스템을 불러오는 중입니다. 잠시 후 다시 시도해주세요.', 'error');
-    return;
-  }
-
   try {
-    // 1. Create payment order on backend
-    const order = await apiFetch('/api/payment/create', {
-      method: 'POST',
-      body: JSON.stringify({ plan_name: planName }),
-    });
-
-    // 2. Activate plan directly (결제 연동 추후 적용)
+    showToast('플랜을 구매하는 중...');
     await apiFetch('/api/plans/purchase', {
       method: 'POST',
       body: JSON.stringify({ plan_name: planName }),
@@ -1234,10 +1223,8 @@ async function executePurchase(planName) {
     currentPlans = await apiFetch('/api/plans/my');
     showToast('플랜 구매 완료! 첨삭 페이지로 이동합니다.');
     setTimeout(() => { window.location.href = '/review'; }, 1000);
-    return;
   } catch (e) {
-    if (e.code === 'USER_CANCEL') return;
-    showToast(e.message || '결제를 시작할 수 없습니다.', 'error');
+    showToast(e.message, 'error');
   }
 }
 
