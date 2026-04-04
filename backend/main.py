@@ -399,11 +399,11 @@ def confirm_payment(req: PaymentConfirmRequest, db: Session = Depends(get_db)):
 # Review endpoints (GPT API)
 # ──────────────────────────────────────
 
-def get_openai_client():
-    api_key = os.environ.get("OPENAI_API_KEY")
+def get_llm_client():
+    api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
-        raise HTTPException(status_code=500, detail="OpenAI API 키가 설정되지 않았습니다. 서버 관리자에게 문의하세요.")
-    return OpenAI(api_key=api_key)
+        raise HTTPException(status_code=500, detail="Groq API 키가 설정되지 않았습니다.")
+    return OpenAI(api_key=api_key, base_url="https://api.groq.com/openai/v1")
 
 
 @app.post("/api/review", response_model=ReviewResponse)
@@ -428,14 +428,14 @@ def create_review(req: ReviewRequest, user: User = Depends(get_current_user), db
         )
 
     # Call GPT
-    client = get_openai_client()
+    client = get_llm_client()
     user_message = f"""## 지원 기업: {req.company_name}
 ## 자소서 질문: {req.question}
 ## 자소서 내용:
 {req.text}"""
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="llama-3.3-70b-versatile",
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},
@@ -481,7 +481,7 @@ def revise_review(req: ReviseRequest, user: User = Depends(get_current_user), db
     if not purchase:
         raise HTTPException(status_code=403, detail="수정 횟수가 소진되었습니다.")
 
-    client = get_openai_client()
+    client = get_llm_client()
     user_message = f"""## 이전 첨삭 결과:
 {review.result}
 
@@ -495,7 +495,7 @@ def revise_review(req: ReviseRequest, user: User = Depends(get_current_user), db
 {req.instruction}"""
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="llama-3.3-70b-versatile",
         messages=[
             {"role": "system", "content": REVISE_SYSTEM_PROMPT},
             {"role": "user", "content": user_message},
