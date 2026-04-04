@@ -424,6 +424,22 @@ def confirm_payment(req: PaymentConfirmRequest, db: Session = Depends(get_db)):
 # Review endpoints (GPT API)
 # ──────────────────────────────────────
 
+import re
+
+def clean_chinese_chars(text):
+    """Replace Chinese characters with Korean equivalents"""
+    replacements = {
+        '積累': '축적', '貢献': '기여', '貢獻': '기여', '努力': '노력',
+        '經驗': '경험', '成長': '성장', '挑戰': '도전', '協業': '협업',
+        '問題': '문제', '解決': '해결', '發展': '발전', '實現': '실현',
+    }
+    for cn, kr in replacements.items():
+        text = text.replace(cn, kr)
+    # Remove any remaining CJK Unified Ideographs (Chinese chars)
+    text = re.sub(r'[\u4e00-\u9fff]+', '', text)
+    return text
+
+
 def get_llm_client():
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
@@ -469,7 +485,7 @@ def create_review(req: ReviewRequest, user: User = Depends(get_current_user), db
         response_format={"type": "json_object"},
     )
 
-    result_text = response.choices[0].message.content
+    result_text = clean_chinese_chars(response.choices[0].message.content)
 
     # Deduct items
     purchase.items_remaining -= items_needed
@@ -529,7 +545,7 @@ def revise_review(req: ReviseRequest, user: User = Depends(get_current_user), db
         response_format={"type": "json_object"},
     )
 
-    result_text = response.choices[0].message.content
+    result_text = clean_chinese_chars(response.choices[0].message.content)
 
     # Update review
     review.result = result_text
