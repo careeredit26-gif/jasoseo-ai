@@ -1150,21 +1150,10 @@ async function doKakaoLogin() {
     return;
   }
   try {
-    const authObj = await new Promise((resolve, reject) => {
-      Kakao.Auth.login({
-        success: resolve,
-        fail: reject,
-        scope: 'profile_nickname,account_email',
-      });
+    await Kakao.Auth.authorize({
+      redirectUri: window.location.origin + '/api/auth/kakao/callback',
+      scope: 'profile_nickname,account_email',
     });
-    showToast('카카오 인증 중...');
-    const data = await apiFetch('/api/auth/kakao', {
-      method: 'POST',
-      body: JSON.stringify({ access_token: authObj.access_token }),
-    });
-    localStorage.setItem('token', data.access_token);
-    await fetchMe(data.access_token);
-    await onAuthSuccess();
   } catch (e) {
     showToast(e.message || '카카오 로그인에 실패했습니다.', 'error');
   }
@@ -1177,29 +1166,14 @@ async function doGoogleLogin() {
     return;
   }
   try {
-    const client = google.accounts.oauth2.initTokenClient({
+    google.accounts.id.initialize({
       client_id: googleClientId,
-      scope: 'openid email profile',
-      callback: async (tokenResponse) => {
-        if (tokenResponse.error) {
-          showToast('구글 로그인에 실패했습니다.', 'error');
-          return;
-        }
-        // Get ID token via userinfo
+      callback: async (response) => {
         showToast('구글 인증 중...');
         try {
-          // Use access token to get id_token from Google
-          const idRes = await fetch(
-            `https://www.googleapis.com/oauth2/v3/userinfo`,
-            { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } }
-          );
-          const userInfo = await idRes.json();
-
-          // Send to our backend using access_token approach
-          // We need the id_token, so let's use implicit flow with id_token
           const data = await apiFetch('/api/auth/google', {
             method: 'POST',
-            body: JSON.stringify({ credential: tokenResponse.access_token, user_info: userInfo }),
+            body: JSON.stringify({ credential: response.credential }),
           });
           localStorage.setItem('token', data.access_token);
           await fetchMe(data.access_token);
@@ -1209,7 +1183,7 @@ async function doGoogleLogin() {
         }
       },
     });
-    client.requestAccessToken();
+    google.accounts.id.prompt();
   } catch (e) {
     showToast('구글 로그인을 시작할 수 없습니다.', 'error');
   }

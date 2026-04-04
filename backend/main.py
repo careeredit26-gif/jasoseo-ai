@@ -22,6 +22,7 @@ from schemas import (
 from auth import hash_password, verify_password, create_access_token, get_current_user
 
 KAKAO_JS_KEY = os.environ.get("KAKAO_JS_KEY", "")
+KAKAO_REST_KEY = os.environ.get("KAKAO_REST_KEY", "")
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
 TOSS_CLIENT_KEY = os.environ.get("TOSS_CLIENT_KEY", "")
 TOSS_SECRET_KEY = os.environ.get("TOSS_SECRET_KEY", "")
@@ -126,16 +127,40 @@ def oauth_config():
     return {"kakao_js_key": KAKAO_JS_KEY, "google_client_id": GOOGLE_CLIENT_ID}
 
 
-@app.post("/api/auth/kakao", response_model=TokenResponse)
-def kakao_login(req: KakaoLoginRequest, db: Session = Depends(get_db)):
-    # Verify token with Kakao API
+@app.get("/api/auth/kakao/callback")
+def kakao_callback(code: str, db: Session = Depends(get_db)):
+    from fastapi.responses import HTMLResponse
+    # Determine base URL
+    base_url = os.environ.get("RENDER_EXTERNAL_URL", "")
+    if not base_url:
+        base_url = "http://localhost:8080"
+    redirect_uri = f"{base_url}/api/auth/kakao/callback"
+
+    # Exchange code for access token
+    with httpx.Client() as client:
+        token_res = client.post(
+            "https://kauth.kakao.com/oauth/token",
+            data={
+                "grant_type": "authorization_code",
+                "client_id": KAKAO_REST_KEY,
+                "redirect_uri": redirect_uri,
+                "code": code,
+            },
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
+    if token_res.status_code != 200:
+        return HTMLResponse("<script>alert('��카오 인증에 실패했습니다.');location.href='/';</script>")
+
+    access_token = token_res.json().get("access_token")
+
+    # Get user info
     with httpx.Client() as client:
         res = client.get(
             "https://kapi.kakao.com/v2/user/me",
-            headers={"Authorization": f"Bearer {req.access_token}"},
+            headers={"Authorization": f"Bearer {access_token}"},
         )
     if res.status_code != 200:
-        raise HTTPException(status_code=401, detail="카카오 인증에 실패했습니다.")
+        return HTMLResponse("<script>alert('카카오 사용자 정보를 가져올 수 없습니다.');location.href='/';</script>")
 
     kakao_data = res.json()
     kakao_id = str(kakao_data["id"])
@@ -144,43 +169,38 @@ def kakao_login(req: KakaoLoginRequest, db: Session = Depends(get_db)):
     nickname = profile.get("nickname", "카카오 사용자")
     email = kakao_account.get("email")
 
-    # Find existing user or create new
     user = db.query(User).filter(User.kakao_id == kakao_id).first()
     if not user:
-        # Check if email already exists (link accounts)
         if email:
             user = db.query(User).filter(User.email == email).first()
             if user:
                 user.kakao_id = kakao_id
                 db.commit()
-
         if not user:
-            user = User(
-                email=email,
-                name=nickname,
-                kakao_id=kakao_id,
-                auth_provider="kakao",
-            )
+            user = User(email=email, name=nickname, kakao_id=kakao_id, auth_provider="kakao")
             db.add(user)
             db.commit()
             db.refresh(user)
 
-    token = create_access_token(user.id)
-    return TokenResponse(access_token=token)
+    jwt_token = create_access_token(user.id)
+    return HTMLResponse(f"<script>localStorage.setItem('token','{jwt_token}');location.href='/';</script>")
 
 
 @app.post("/api/auth/google", response_model=TokenResponse)
 def google_login(req: GoogleLoginRequest, db: Session = Depends(get_db)):
-    # Verify Google access token via userinfo endpoint
+    # Verify Google ID token via tokeninfo endpoint
     with httpx.Client() as client:
         res = client.get(
-            "https://www.googleapis.com/oauth2/v3/userinfo",
-            headers={"Authorization": f"Bearer {req.credential}"},
+            f"https://oauth2.googleapis.com/tokeninfo?id_token={req.credential}"
         )
     if res.status_code != 200:
         raise HTTPException(status_code=401, detail="구글 인증에 실패했습니다.")
 
     google_data = res.json()
+
+    if GOOGLE_CLIENT_ID and google_data.get("aud") != GOOGLE_CLIENT_ID:
+        raise HTTPException(status_code=401, detail="구글 인증 정보가 유효하지 않습니다.")
+
     google_id = google_data.get("sub")
     if not google_id:
         raise HTTPException(status_code=401, detail="구글 사용자 정보를 가져올 수 없습니다.")
