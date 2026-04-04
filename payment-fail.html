@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결제 실패 — 자소서 AI 첨삭</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f6f8;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 48px 40px;
+    max-width: 440px; width: 100%;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: #fef2f2;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 28px;
+  }
+  h1 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  p { font-size: 15px; color: #5f6877; margin-bottom: 12px; line-height: 1.6; }
+  .error-code { font-size: 13px; color: #9ca3af; margin-bottom: 32px; }
+  .btn {
+    display: inline-block;
+    padding: 14px 40px; border-radius: 12px;
+    background: #111318; color: #fff;
+    font-size: 15px; font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #2a2d35; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">✕</div>
+  <h1>결제가 완료되지 않았습니다</h1>
+  <p id="message">결제 중 문제가 발생했습니다.</p>
+  <p class="error-code" id="errorCode"></p>
+  <a href="/" class="btn">다시 시도하기</a>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const code = params.get('code');
+const message = params.get('message');
+if (message) document.getElementById('message').textContent = message;
+if (code) document.getElementById('errorCode').textContent = '오류 코드: ' + code;
+</script>
+</body>
+</html>

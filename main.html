@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자소서 첨삭 — AI 첨삭 서비스</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════
+   DESIGN TOKENS
+   ══════════════════════════════════════ */
+:root {
+  /* Surface */
+  --bg-page: #f5f6f8;
+  --bg-white: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-subtle: #f0f2f5;
+  --bg-input: #f8f9fb;
+  --bg-hover: #eef0f4;
+
+  /* Text */
+  --text-primary: #111318;
+  --text-secondary: #5f6877;
+  --text-tertiary: #8c95a6;
+  --text-inverse: #ffffff;
+
+  /* Brand */
+  --brand: #3b5bf5;
+  --brand-light: #eef1fe;
+  --brand-lighter: #f6f7ff;
+  --brand-dark: #2a42c9;
+  --brand-glow: rgba(59,91,245,0.12);
+
+  /* Status */
+  --green: #0d9f6e;
+  --green-bg: #ecfdf5;
+  --green-border: #a7f3d0;
+  --red: #dc2626;
+  --red-bg: #fef2f2;
+  --red-border: #fecaca;
+  --yellow: #d97706;
+  --yellow-bg: #fffbeb;
+  --yellow-border: #fde68a;
+  --orange: #ea580c;
+  --orange-bg: #fff7ed;
+
+  /* CTA */
+  --cta: #111318;
+  --cta-hover: #2a2d35;
+
+  /* Border */
+  --border: #e5e7ec;
+  --border-strong: #d1d5dc;
+  --border-focus: var(--brand);
+
+  /* Misc */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+  --shadow-focus: 0 0 0 3px var(--brand-glow);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════════════
+   NAV
+   ══════════════════════════════════════ */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  height: 56px;
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 24px;
+}
+.nav-inner {
+  max-width: 1360px; width: 100%;
+  margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-left { display: flex; align-items: center; gap: 16px; }
+.nav-logo {
+  font-weight: 800; font-size: 16px;
+  color: var(--brand); letter-spacing: -0.5px;
+  text-decoration: none;
+}
+.nav-divider { width: 1px; height: 20px; background: var(--border); }
+.nav-page-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
+.nav-right { display: flex; align-items: center; gap: 10px; }
+.nav-credits {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 8px;
+  background: var(--brand-light);
+  font-size: 12px; font-weight: 600; color: var(--brand);
+}
+.nav-credits .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--brand); opacity: 0.4; }
+.nav-btn {
+  padding: 6px 12px; border-radius: 8px;
+  background: none; border: 1px solid var(--border);
+  color: var(--text-secondary); font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.nav-btn:hover { border-color: var(--border-strong); color: var(--text-primary); }
+
+/* ══════════════════════════════════════
+   PAGE HEADER
+   ══════════════════════════════════════ */
+.page-header {
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 24px 0;
+}
+.page-header-inner {
+  max-width: 1360px; margin: 0 auto;
+}
+.page-header h1 {
+  font-size: 22px; font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+.page-header .subtitle {
+  font-size: 14px; color: var(--text-secondary); font-weight: 400;
+  margin-bottom: 24px;
+}
+
+/* Steps */
+.steps {
+  display: flex; gap: 0; position: relative;
+  border-bottom: none;
+}
+.step {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 20px 14px;
+  font-size: 13px; font-weight: 600;
+  color: var(--text-tertiary);
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  cursor: default;
+  position: relative;
+}
+.step.active { color: var(--brand); border-bottom-color: var(--brand); }
+.step.done { color: var(--green); }
+.step-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  background: var(--bg-subtle);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+.step.active .step-num { background: var(--brand); color: #fff; }
+.step.done .step-num { background: var(--green); color: #fff; }
+
+/* ══════════════════════════════════════
+   MAIN LAYOUT
+   ══════════════════════════════════════ */
+.main {
+  max-width: 1360px; margin: 0 auto;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 24px;
+  min-height: calc(100vh - 160px);
+}
+@media (max-width: 1024px) {
+  .main { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════════════════
+   INPUT PANEL
+   ══════════════════════════════════════ */
+.input-panel {
+  position: sticky; top: 80px;
+  height: fit-content;
+  display: flex; flex-direction: column; gap: 16px;
+}
+@media (max-width: 1024px) {
+  .input-panel { position: static; }
+}
+
+.card {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.card-body { padding: 24px; }
+
+/* Field */
+.field { margin-bottom: 18px; }
+.field:last-child { margin-bottom: 0; }
+.field-label {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
+}
+.field-label label {
+  font-size: 13px; font-weight: 700; color: var(--text-primary);
+}
+.field-label .optional {
+  font-size: 11px; color: var(--text-tertiary); font-weight: 400;
+}
+.field-hint {
+  font-size: 12px; color: var(--text-tertiary); font-weight: 400;
+  margin-bottom: 8px; line-height: 1.5;
+}
+.field input, .field textarea, .field select {
+  width: 100%; padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-size: 14px; font-family: inherit;
+  outline: none; transition: all 0.15s;
+}
+.field input:focus, .field textarea:focus {
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-focus);
+  background: var(--bg-white);
+}
+.field input::placeholder, .field textarea::placeholder {
+  color: var(--text-tertiary);
+}
+.field textarea {
+  min-height: 180px; line-height: 1.75; resize: vertical;
+}
+.field-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 6px;
+}
+.char-counter {
+  font-size: 12px; color: var(--text-tertiary);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+}
+.char-counter.over { color: var(--yellow); }
+.char-items-note {
+  font-size: 11px; color: var(--text-tertiary);
+}
+
+/* Submit */
+.submit-area { padding: 0 24px 24px; }
+.submit-btn {
+  width: 100%; padding: 14px 20px;
+  border-radius: var(--radius-md); border: none;
+  background: var(--cta); color: #fff;
+  font-size: 15px; font-weight: 700;
+  font-family: inherit; cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.submit-btn:hover { background: var(--cta-hover); }
+.submit-btn:active { transform: scale(0.99); }
+.submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.submit-btn .spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff; border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: none;
+}
+.submit-btn.loading .spinner { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.submit-hint {
+  text-align: center; margin-top: 10px;
+  font-size: 12px; color: var(--text-tertiary);
+}
+
+/* Tips */
+.tip-card {
+  background: var(--brand-lighter);
+  border: 1px solid rgba(59,91,245,0.1);
+  border-radius: var(--radius-md);
+}
+.tip-card .card-body { padding: 16px 20px; }
+.tip-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; width: 100%;
+  background: none; border: none; font-family: inherit;
+  text-align: left;
+}
+.tip-toggle-label {
+  font-size: 13px; font-weight: 600; color: var(--brand);
+  display: flex; align-items: center; gap: 6px;
+}
+.tip-toggle-arrow {
+  font-size: 12px; color: var(--brand);
+  transition: transform 0.2s;
+}
+.tip-card.open .tip-toggle-arrow { transform: rotate(180deg); }
+.tip-content {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.tip-card.open .tip-content { max-height: 300px; }
+.tip-list {
+  padding-top: 12px;
+  list-style: none;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.tip-list li {
+  font-size: 13px; color: var(--text-secondary);
+  line-height: 1.5; padding-left: 16px;
+  position: relative;
+}
+.tip-list li::before {
+  content: '→';
+  position: absolute; left: 0;
+  color: var(--brand); font-weight: 600;
+}
+
+/* History */
+.history-card { margin-top: 0; }
+.history-card .card-header {
+  padding: 16px 20px 12px;
+  font-size: 13px; font-weight: 700; color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+.history-list {
+  padding: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.history-item {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer; transition: background 0.15s;
+}
+.history-item:hover { background: var(--bg-subtle); }
+.history-item.active { background: var(--brand-light); }
+.hi-top { display: flex; align-items: center; justify-content: space-between; }
+.hi-company { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.hi-revision {
+  font-size: 11px; font-weight: 600; color: var(--brand);
+  padding: 2px 6px; border-radius: 4px;
+  background: var(--brand-light);
+}
+.hi-question {
+  font-size: 12px; color: var(--text-tertiary); margin-top: 2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ══════════════════════════════════════
+   RESULT PANEL
+   ══════════════════════════════════════ */
+.result-panel {
+  min-height: 500px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+/* ── Empty State ── */
+.empty-state {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 48px 32px;
+  text-align: center;
+}
+.empty-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: var(--brand-light);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 24px;
+}
+.empty-state h3 {
+  font-size: 17px; font-weight: 700; margin-bottom: 6px;
+}
+.empty-state p {
+  font-size: 14px; color: var(--text-secondary); font-weight: 300;
+  margin-bottom: 32px;
+}
+.preview-cards {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; text-align: left;
+}
+@media (max-width: 560px) {
+  .preview-cards { grid-template-columns: 1fr; }
+}
+.preview-card {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--bg-page);
+  display: flex; gap: 12px;
+  align-items: flex-start;
+}
+.preview-card-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 16px;
+}
+.preview-card-icon.blue { background: var(--brand-light); }
+.preview-card-icon.red { background: var(--red-bg); }
+.preview-card-icon.green { background: var(--green-bg); }
+.preview-card-icon.yellow { background: var(--yellow-bg); }
+.preview-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.preview-card p { font-size: 12px; color: var(--text-tertiary); line-height: 1.4; }
+
+/* ── Result Sections ── */
+.result-section {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.result-section-header {
+  padding: 20px 24px 16px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.result-section-header h3 {
+  font-size: 15px; font-weight: 700;
+}
+.rs-badge {
+  padding: 3px 8px; border-radius: 5px;
+  font-size: 11px; font-weight: 700;
+}
+.rs-badge.blue { background: var(--brand-light); color: var(--brand); }
+.rs-badge.green { background: var(--green-bg); color: var(--green); }
+.rs-badge.red { background: var(--red-bg); color: var(--red); }
+.rs-badge.yellow { background: var(--yellow-bg); color: var(--yellow); }
+.result-section-body { padding: 20px 24px; }
+
+/* Summary / Overall */
+.summary-box {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  border-left: 4px solid var(--brand);
+}
+.summary-box .summary-label {
+  font-size: 12px; font-weight: 700; color: var(--brand);
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.summary-box .summary-text {
+  font-size: 16px; font-weight: 500; line-height: 1.7;
+  color: var(--text-primary);
+}
+
+/* Scores */
+.scores-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 640px) { .scores-row { grid-template-columns: repeat(2, 1fr); } }
+.score-card {
+  padding: 20px 16px;
+  border-radius: var(--radius-md);
+  background: var(--bg-page);
+  text-align: center;
+}
+.score-val {
+  font-size: 32px; font-weight: 900;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.score-val.high { color: var(--green); }
+.score-val.mid { color: var(--yellow); }
+.score-val.low { color: var(--red); }
+.score-label { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
+.score-bar {
+  width: 100%; height: 4px; border-radius: 2px;
+  background: var(--border);
+  margin-top: 8px; overflow: hidden;
+}
+.score-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+
+/* Company analysis */
+.company-box {
+  padding: 20px;
+  border-radius: var(--radius-md);
+  background: var(--brand-lighter);
+  border: 1px solid rgba(59,91,245,0.1);
+}
+.company-name {
+  font-size: 18px; font-weight: 800;
+  margin-bottom: 10px; color: var(--text-primary);
+}
+.company-values {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 12px;
+}
+.company-values span {
+  padding: 4px 10px; border-radius: 6px;
+  background: var(--brand-light);
+  color: var(--brand); font-size: 12px; font-weight: 600;
+}
+.company-strategy {
+  font-size: 14px; color: var(--text-secondary);
+  line-height: 1.7; font-weight: 400;
+}
+
+/* Diagnosis */
+.diag-list { display: flex; flex-direction: column; gap: 12px; }
+.diag-item {
+  padding: 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  transition: box-shadow 0.15s;
+}
+.diag-item:hover { box-shadow: var(--shadow-sm); }
+.diag-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 50%;
+  font-size: 11px; font-weight: 700;
+  margin-right: 6px; flex-shrink: 0;
+}
+.diag-num.high { background: var(--red-bg); color: var(--red); }
+.diag-num.medium { background: var(--yellow-bg); color: var(--yellow); }
+.diag-num.low { background: var(--green-bg); color: var(--green); }
+.diag-header {
+  display: flex; align-items: center; margin-bottom: 10px;
+}
+.diag-severity {
+  padding: 2px 7px; border-radius: 4px;
+  font-size: 11px; font-weight: 700;
+  margin-left: auto;
+}
+.sev-high { background: var(--red-bg); color: var(--red); }
+.sev-medium { background: var(--yellow-bg); color: var(--yellow); }
+.sev-low { background: var(--green-bg); color: var(--green); }
+.diag-original {
+  font-size: 14px; color: var(--text-secondary);
+  line-height: 1.7; font-weight: 300;
+  padding: 10px 14px;
+  background: var(--red-bg);
+  border-left: 3px solid var(--red);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 10px;
+}
+.diag-issue {
+  font-size: 13px; color: var(--red);
+  font-weight: 500; margin-bottom: 10px;
+}
+.diag-alt {
+  font-size: 14px; color: var(--green);
+  font-weight: 500; line-height: 1.7;
+  padding: 10px 14px;
+  background: var(--green-bg);
+  border-left: 3px solid var(--green);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* Before/After Compare */
+.compare-wrapper {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 640px) { .compare-wrapper { grid-template-columns: 1fr; } }
+.compare-col {
+  padding: 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px; line-height: 1.85;
+  font-weight: 300;
+}
+.compare-col.before {
+  background: var(--red-bg);
+  border: 1px solid var(--red-border);
+  color: var(--text-secondary);
+}
+.compare-col.after {
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  color: var(--text-primary);
+}
+.compare-col-tag {
+  display: inline-block;
+  padding: 3px 8px; border-radius: 5px;
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.compare-col.before .compare-col-tag { background: rgba(220,38,38,0.1); color: var(--red); }
+.compare-col.after .compare-col-tag { background: rgba(13,159,110,0.1); color: var(--green); }
+.compare-col .text { white-space: pre-wrap; }
+
+/* Revised full */
+.revised-box {
+  padding: 24px;
+  border-radius: var(--radius-md);
+  background: var(--bg-page);
+  border: 1px solid var(--border);
+  font-size: 15px; line-height: 1.85;
+  font-weight: 400;
+  white-space: pre-wrap;
+  position: relative;
+  color: var(--text-primary);
+}
+.copy-btn {
+  position: absolute; top: 12px; right: 12px;
+  padding: 6px 14px; border-radius: 6px;
+  background: var(--bg-white); border: 1px solid var(--border);
+  color: var(--text-secondary); font-size: 12px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+  transition: all 0.15s;
+}
+.copy-btn:hover { border-color: var(--brand); color: var(--brand); }
+
+/* ── Revise Section ── */
+.revise-card { overflow: visible; }
+.revise-card .result-section-body { padding-bottom: 24px; }
+.chip-row {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 14px;
+}
+.chip {
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  font-size: 13px; font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer; font-family: inherit;
+  transition: all 0.15s;
+}
+.chip:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-lighter); }
+.chip.active { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+.revise-input-row {
+  display: flex; gap: 10px;
+}
+.revise-input-row textarea {
+  flex: 1; padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-size: 14px; font-family: inherit;
+  outline: none; min-height: 70px; resize: vertical;
+  transition: all 0.15s;
+}
+.revise-input-row textarea:focus {
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-focus);
+}
+.revise-btn {
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  background: var(--brand); color: #fff; border: none;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+  white-space: nowrap; align-self: flex-end;
+  transition: all 0.15s;
+}
+.revise-btn:hover { background: var(--brand-dark); }
+.revise-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Changes (revision result) */
+.change-item {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.change-item:last-child { margin-bottom: 0; }
+.change-before {
+  font-size: 13px; color: var(--text-tertiary);
+  text-decoration: line-through;
+  margin-bottom: 6px;
+}
+.change-after {
+  font-size: 14px; color: var(--green);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.change-reason {
+  font-size: 12px; color: var(--text-tertiary);
+}
+
+/* ── Toast ── */
+.toast {
+  position: fixed; top: 72px; right: 24px;
+  padding: 12px 20px; border-radius: var(--radius-md);
+  font-size: 14px; font-weight: 600;
+  z-index: 2000;
+  transform: translateX(calc(100% + 40px));
+  transition: transform 0.3s ease;
+  box-shadow: var(--shadow-lg);
+}
+.toast.visible { transform: translateX(0); }
+.toast.success { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+.toast.error { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+
+/* ── Animations ── */
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nav { padding: 0 16px; }
+  .page-header { padding: 20px 16px 0; }
+  .main { padding: 16px; gap: 16px; }
+  .steps { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .step { white-space: nowrap; padding: 10px 14px 12px; font-size: 12px; }
+  .scores-row { grid-template-columns: repeat(2, 1fr); }
+  .compare-wrapper { grid-template-columns: 1fr; }
+  .revise-input-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="/" class="nav-logo">자소서 AI 첨삭</a>
+      <div class="nav-divider"></div>
+      <span class="nav-page-title">첨삭하기</span>
+    </div>
+    <div class="nav-right" id="navRight">
+      <span class="nav-credits" id="navCredits">
+        문항 <strong>4</strong>개 <span class="dot"></span> 수정 <strong>40</strong>회 사용 가능
+      </span>
+      <a href="/" class="nav-btn">홈</a>
+      <button class="nav-btn" onclick="doLogout()">로그아웃</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE HEADER ═══ -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1>AI 자소서 첨삭</h1>
+    <p class="subtitle">기업 맞춤 진단부터 구체적 수정안까지, 한 번에 받아보세요.</p>
+    <div class="steps" id="steps">
+      <div class="step active" data-step="1">
+        <span class="step-num">1</span> 기업 선택
+      </div>
+      <div class="step" data-step="2">
+        <span class="step-num">2</span> 문항 입력
+      </div>
+      <div class="step" data-step="3">
+        <span class="step-num">3</span> 초안 작성
+      </div>
+      <div class="step" data-step="4">
+        <span class="step-num">4</span> AI 첨삭 결과
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+
+  <!-- ── INPUT PANEL ── -->
+  <div class="input-panel">
+
+    <!-- Input Form Card -->
+    <div class="card">
+      <div class="card-body">
+        <div class="field">
+          <div class="field-label">
+            <label>지원 기업</label>
+          </div>
+          <div class="field-hint">기업명을 입력하면 해당 기업의 인재상이 첨삭에 자동 반영됩니다.</div>
+          <input type="text" id="companyName" placeholder="예: 삼성전자, 카카오, SK하이닉스" onfocus="setStep(1)">
+        </div>
+
+        <div class="field">
+          <div class="field-label">
+            <label>자소서 문항</label>
+          </div>
+          <div class="field-hint">기업에서 제시한 질문을 그대로 붙여넣으세요.</div>
+          <input type="text" id="question" placeholder="예: 본인의 성장 과정과 이를 통해 배운 점을 기술하세요" onfocus="setStep(2)">
+        </div>
+
+        <div class="field">
+          <div class="field-label">
+            <label>자소서 초안</label>
+          </div>
+          <div class="field-hint">완성되지 않아도 괜찮습니다. AI가 다듬어 드립니다.</div>
+          <textarea id="essayText" placeholder="자소서 내용을 붙여넣으세요..." onfocus="setStep(3)"></textarea>
+          <div class="field-footer">
+            <span class="char-counter" id="charCount">0 / 800자</span>
+            <span class="char-items-note" id="charNote"></span>
+          </div>
+        </div>
+      </div>
+      <div class="submit-area">
+        <button class="submit-btn" id="submitBtn" onclick="submitReview()">
+          <span class="spinner"></span>
+          <span class="btn-text">첨삭 시작하기</span>
+        </button>
+        <p class="submit-hint">기업 적합도 · 문장별 진단 · 구조 분석 · 수정본이 제공됩니다</p>
+      </div>
+    </div>
+
+    <!-- Tips Card -->
+    <div class="card tip-card" id="tipCard">
+      <div class="card-body">
+        <button class="tip-toggle" onclick="toggleTip()">
+          <span class="tip-toggle-label">💡 더 좋은 첨삭 결과를 위한 팁</span>
+          <span class="tip-toggle-arrow">▼</span>
+        </button>
+        <div class="tip-content">
+          <ul class="tip-list">
+            <li>기업명은 정확하게 입력하세요. "삼성"보다 "삼성전자 DX부문"이 더 맞춤 첨삭이 됩니다.</li>
+            <li>자소서 문항은 기업이 제시한 질문을 그대로 복사하세요. AI가 질문 의도를 분석합니다.</li>
+            <li>초안은 길수록 좋습니다. 짧은 메모보다는 800자 내외의 초안이 더 구체적인 피드백을 받습니다.</li>
+            <li>한 번에 완벽하지 않아도 됩니다. 결과를 보고 반복 수정하면 완성도가 올라갑니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Card -->
+    <div class="card history-card" id="historyCard" style="display:none;">
+      <div class="card-header">첨삭 기록</div>
+      <div class="history-list" id="historyItems"></div>
+    </div>
+
+  </div>
+
+  <!-- ── RESULT PANEL ── -->
+  <div class="result-panel" id="resultPanel">
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">✍️</div>
+      <h3>첨삭 결과가 여기에 표시됩니다</h3>
+      <p>왼쪽에 자소서를 입력하고 첨삭을 시작하면,<br>아래 4가지 분석을 받아볼 수 있습니다.</p>
+      <div class="preview-cards">
+        <div class="preview-card">
+          <div class="preview-card-icon blue">🏢</div>
+          <div>
+            <h4>기업 적합도 분석</h4>
+            <p>지원 기업의 인재상에 자소서가 얼마나 부합하는지 진단합니다.</p>
+          </div>
+        </div>
+        <div class="preview-card">
+          <div class="preview-card-icon red">🔍</div>
+          <div>
+            <h4>문장별 진단</h4>
+            <p>약한 문장을 찾고, 바로 적용 가능한 대안 문장을 제시합니다.</p>
+          </div>
+        </div>
+        <div class="preview-card">
+          <div class="preview-card-icon yellow">📊</div>
+          <div>
+            <h4>구조 분석 점수</h4>
+            <p>흐름 · 논리 · 구체성 · 기업 적합도를 10점 만점으로 평가합니다.</p>
+          </div>
+        </div>
+        <div class="preview-card">
+          <div class="preview-card-icon green">✅</div>
+          <div>
+            <h4>AI 수정본</h4>
+            <p>진단 결과를 반영한 전체 수정본을 바로 복사할 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Content (hidden initially) -->
+    <div id="resultContent" style="display:none;"></div>
+
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '';
+let currentUser = null;
+let currentPlans = [];
+let currentReviewId = null;
+let history = [];
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', async () => {
+  const token = localStorage.getItem('token');
+  if (!token) { window.location.href = '/'; return; }
+
+  try {
+    currentUser = await apiFetch('/api/auth/me');
+    currentPlans = await apiFetch('/api/plans/my');
+    if (currentPlans.length === 0) {
+      showToast('플랜을 먼저 구매해주세요.', 'error');
+      setTimeout(() => { window.location.href = '/'; }, 1500);
+      return;
+    }
+    updateNav();
+    loadHistory();
+  } catch {
+    localStorage.removeItem('token');
+    window.location.href = '/';
+  }
+
+  document.getElementById('essayText').addEventListener('input', updateCharCount);
+  document.getElementById('companyName').addEventListener('input', () => setStep(1));
+  document.getElementById('question').addEventListener('input', () => setStep(2));
+});
+
+async function apiFetch(path, options = {}) {
+  const token = localStorage.getItem('token');
+  const headers = { 'Content-Type': 'application/json', ...options.headers };
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  const res = await fetch(API + path, { ...options, headers });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.detail || '요청에 실패했습니다.');
+  return data;
+}
+
+// ── Nav ──
+function updateNav() {
+  const plan = currentPlans[0];
+  document.getElementById('navCredits').innerHTML =
+    `문항 <strong>${plan.items_remaining}</strong>개 <span class="dot"></span> 수정 <strong>${plan.revisions_remaining}</strong>회 사용 가능`;
+}
+
+// ── Steps ──
+function setStep(num) {
+  document.querySelectorAll('.step').forEach(s => {
+    const n = parseInt(s.dataset.step);
+    s.classList.toggle('active', n === num);
+    s.classList.toggle('done', n < num);
+  });
+}
+
+// ── Char count ──
+function updateCharCount() {
+  const text = document.getElementById('essayText').value;
+  const len = text.length;
+  const items = Math.max(1, Math.ceil(len / 800));
+  const el = document.getElementById('charCount');
+  el.textContent = `${len} / 800자`;
+  el.className = len > 800 ? 'char-counter over' : 'char-counter';
+  const note = document.getElementById('charNote');
+  note.textContent = len > 800 ? `문항 ${items}개분에 해당` : '';
+  setStep(3);
+}
+
+// ── Tip toggle ──
+function toggleTip() {
+  document.getElementById('tipCard').classList.toggle('open');
+}
+
+// ── Submit ──
+async function submitReview() {
+  const company = document.getElementById('companyName').value.trim();
+  const question = document.getElementById('question').value.trim();
+  const text = document.getElementById('essayText').value.trim();
+
+  if (!company) { showToast('지원 기업을 입력해주세요.', 'error'); return; }
+  if (!question) { showToast('자소서 문항을 입력해주세요.', 'error'); return; }
+  if (!text) { showToast('자소서 초안을 입력해주세요.', 'error'); return; }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.classList.add('loading');
+  btn.querySelector('.btn-text').textContent = '첨삭 중... 약 30초 소요';
+
+  try {
+    const review = await apiFetch('/api/review', {
+      method: 'POST',
+      body: JSON.stringify({ company_name: company, question, text }),
+    });
+    currentReviewId = review.id;
+    renderResult(JSON.parse(review.result), review);
+    setStep(4);
+    currentPlans = await apiFetch('/api/plans/my');
+    updateNav();
+    loadHistory();
+    showToast('첨삭이 완료되었습니다!');
+  } catch (e) {
+    showToast(e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    btn.querySelector('.btn-text').textContent = '첨삭 시작하기';
+  }
+}
+
+// ── Render Result ──
+function renderResult(data, review) {
+  document.getElementById('emptyState').style.display = 'none';
+  const content = document.getElementById('resultContent');
+  content.style.display = 'flex';
+  content.style.flexDirection = 'column';
+  content.style.gap = '16px';
+
+  const isRevision = !!data.changes_made;
+  let html = '';
+
+  // ① Summary
+  if (data.summary) {
+    html += `
+      <div class="summary-box fade-in">
+        <div class="summary-label">총평</div>
+        <div class="summary-text">${escHtml(data.summary)}</div>
+      </div>`;
+  }
+
+  // ② Scores
+  if (!isRevision && data.structure_feedback) {
+    const sf = data.structure_feedback;
+    const cls = v => v >= 7 ? 'high' : v >= 5 ? 'mid' : 'low';
+    const color = v => v >= 7 ? 'var(--green)' : v >= 5 ? 'var(--yellow)' : 'var(--red)';
+    html += `
+      <div class="result-section fade-in">
+        <div class="result-section-header">
+          <span class="rs-badge yellow">📊</span>
+          <h3>구조 분석</h3>
+        </div>
+        <div class="result-section-body">
+          <div class="scores-row">
+            ${[
+              { k: 'flow_score', l: '흐름' },
+              { k: 'logic_score', l: '논리' },
+              { k: 'specificity_score', l: '구체성' },
+              { k: 'company_fit_score', l: '기업 적합도' }
+            ].map(s => `
+              <div class="score-card">
+                <div class="score-val ${cls(sf[s.k])}">${sf[s.k]}</div>
+                <div class="score-label">${s.l}</div>
+                <div class="score-bar"><div class="score-bar-fill" style="width:${sf[s.k]*10}%;background:${color(sf[s.k])}"></div></div>
+              </div>
+            `).join('')}
+          </div>
+          ${sf.overall_comment ? `<p style="margin-top:16px;font-size:14px;color:var(--text-secondary);line-height:1.7;">${escHtml(sf.overall_comment)}</p>` : ''}
+        </div>
+      </div>`;
+  }
+
+  // ③ Company analysis
+  if (!isRevision && data.company_analysis) {
+    const ca = data.company_analysis;
+    html += `
+      <div class="result-section fade-in">
+        <div class="result-section-header">
+          <span class="rs-badge blue">🏢</span>
+          <h3>기업 적합도 분석</h3>
+        </div>
+        <div class="result-section-body">
+          <div class="company-box">
+            <div class="company-name">${escHtml(ca.company || '')}</div>
+            <div class="company-values">${(ca.core_values || []).map(v => `<span>${escHtml(v)}</span>`).join('')}</div>
+            <div class="company-strategy">${escHtml(ca.reflection_strategy || '')}</div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ④ Sentence diagnosis
+  if (!isRevision && data.sentence_diagnosis) {
+    html += `
+      <div class="result-section fade-in">
+        <div class="result-section-header">
+          <span class="rs-badge red">🔍</span>
+          <h3>문장별 진단</h3>
+          <span style="margin-left:auto;font-size:12px;color:var(--text-tertiary);">총 ${data.sentence_diagnosis.length}개 항목</span>
+        </div>
+        <div class="result-section-body">
+          <div class="diag-list">
+            ${data.sentence_diagnosis.map((d, i) => `
+              <div class="diag-item">
+                <div class="diag-header">
+                  <span class="diag-num ${d.severity}">${i + 1}</span>
+                  <span style="font-size:13px;font-weight:600;">문장 ${i + 1}</span>
+                  <span class="diag-severity sev-${d.severity}">${d.severity === 'high' ? '심각' : d.severity === 'medium' ? '보통' : '경미'}</span>
+                </div>
+                <div class="diag-original">${escHtml(d.original)}</div>
+                <div class="diag-issue">⚠ ${escHtml(d.issue)}</div>
+                <div class="diag-alt">✓ ${escHtml(d.alternative)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ④-b Changes (for revisions)
+  if (isRevision && data.changes_made) {
+    html += `
+      <div class="result-section fade-in">
+        <div class="result-section-header">
+          <span class="rs-badge blue">🔄</span>
+          <h3>수정 사항</h3>
+        </div>
+        <div class="result-section-body">
+          ${data.changes_made.map(c => `
+            <div class="change-item">
+              <div class="change-before">${escHtml(c.before)}</div>
+              <div class="change-after">→ ${escHtml(c.after)}</div>
+              <div class="change-reason">${escHtml(c.reason)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+  }
+
+  // ⑤ Before/After compare
+  if (!isRevision && data.revised_full_text && review) {
+    html += `
+      <div class="result-section fade-in">
+        <div class="result-section-header">
+          <span class="rs-badge green">🔀</span>
+          <h3>수정 전 / 수정 후 비교</h3>
+        </div>
+        <div class="result-section-body">
+          <div class="compare-wrapper">
+            <div class="compare-col before">
+              <div class="compare-col-tag">Before — 원본</div>
+              <div class="text">${escHtml(review.original_text || document.getElementById('essayText').value)}</div>
+            </div>
+            <div class="compare-col after">
+              <div class="compare-col-tag">After — 수정본</div>
+              <div class="text">${escHtml(data.revised_full_text)}</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ⑥ Full revised text
+  if (data.revised_full_text) {
+    html += `
+      <div class="result-section fade-in">
+        <div class="result-section-header">
+          <span class="rs-badge green">✅</span>
+          <h3>수정된 자소서</h3>
+          <span style="margin-left:auto;font-size:12px;color:var(--text-tertiary);">복사해서 바로 사용하세요</span>
+        </div>
+        <div class="result-section-body">
+          <div class="revised-box">
+            <button class="copy-btn" onclick="copyText(this)">복사</button>
+            ${escHtml(data.revised_full_text)}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ⑦ Revise section
+  html += `
+    <div class="result-section revise-card fade-in">
+      <div class="result-section-header">
+        <span class="rs-badge blue">✏️</span>
+        <h3>계속 다듬기</h3>
+      </div>
+      <div class="result-section-body">
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:14px;">
+          아래 예시를 탭하거나, 원하는 수정 사항을 직접 입력하세요.
+        </p>
+        <div class="chip-row">
+          <button class="chip" onclick="insertChip(this)">더 공격적으로</button>
+          <button class="chip" onclick="insertChip(this)">성과 수치 강조</button>
+          <button class="chip" onclick="insertChip(this)">두괄식으로 변경</button>
+          <button class="chip" onclick="insertChip(this)">기업 맞춤 표현 강화</button>
+          <button class="chip" onclick="insertChip(this)">구체적 에피소드 추가</button>
+          <button class="chip" onclick="insertChip(this)">마무리 문장 강화</button>
+        </div>
+        <div class="revise-input-row">
+          <textarea id="reviseInstruction" placeholder="수정하고 싶은 부분을 자유롭게 입력하세요..."></textarea>
+          <button class="revise-btn" id="reviseBtn" onclick="submitRevise()">수정 요청</button>
+        </div>
+      </div>
+    </div>`;
+
+  content.innerHTML = html;
+
+  // Scroll to top of result
+  content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Chip insert ──
+function insertChip(btn) {
+  const ta = document.getElementById('reviseInstruction');
+  const current = ta.value.trim();
+  const chip = btn.textContent;
+  ta.value = current ? current + ', ' + chip : chip;
+  btn.classList.add('active');
+  ta.focus();
+}
+
+// ── Revise ──
+async function submitRevise() {
+  if (!currentReviewId) return;
+  const instruction = document.getElementById('reviseInstruction').value.trim();
+  if (!instruction) { showToast('수정 요청을 입력해주세요.', 'error'); return; }
+
+  const btn = document.getElementById('reviseBtn');
+  btn.disabled = true;
+  btn.textContent = '수정 중...';
+
+  try {
+    const review = await apiFetch('/api/review/revise', {
+      method: 'POST',
+      body: JSON.stringify({ review_id: currentReviewId, instruction }),
+    });
+    renderResult(JSON.parse(review.result), review);
+    currentPlans = await apiFetch('/api/plans/my');
+    updateNav();
+    showToast(`수정 완료! (${review.revision_count}회차)`);
+  } catch (e) { showToast(e.message, 'error'); }
+  finally { btn.disabled = false; btn.textContent = '수정 요청'; }
+}
+
+// ── History ──
+async function loadHistory() {
+  try {
+    history = await apiFetch('/api/review/history');
+    const container = document.getElementById('historyItems');
+    const wrapper = document.getElementById('historyCard');
+    if (history.length === 0) { wrapper.style.display = 'none'; return; }
+    wrapper.style.display = 'block';
+    container.innerHTML = history.map(r => `
+      <div class="history-item ${r.id === currentReviewId ? 'active' : ''}" onclick="loadReview(${r.id})">
+        <div class="hi-top">
+          <span class="hi-company">${escHtml(r.company_name)}</span>
+          <span class="hi-revision">수정 ${r.revision_count}회</span>
+        </div>
+        <div class="hi-question">${escHtml(r.question)}</div>
+      </div>
+    `).join('');
+  } catch {}
+}
+
+function loadReview(id) {
+  const review = history.find(r => r.id === id);
+  if (!review) return;
+  currentReviewId = review.id;
+  document.getElementById('companyName').value = review.company_name;
+  document.getElementById('question').value = review.question;
+  document.getElementById('essayText').value = review.original_text;
+  updateCharCount();
+  renderResult(JSON.parse(review.result), review);
+  setStep(4);
+  loadHistory();
+}
+
+// ── Helpers ──
+function escHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function copyText(btn) {
+  const text = btn.parentElement.textContent.replace('복사', '').trim();
+  navigator.clipboard.writeText(text);
+  btn.textContent = '복사됨!';
+  setTimeout(() => { btn.textContent = '복사'; }, 2000);
+}
+
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' visible';
+  setTimeout(() => t.classList.remove('visible'), 3000);
+}
+
+function doLogout() {
+  localStorage.removeItem('token');
+  window.location.href = '/';
+}
+</script>
+</body>
+</html>

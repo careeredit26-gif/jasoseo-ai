@@ -9,17 +9,22 @@ from sqlalchemy.orm import Session
 from openai import OpenAI
 
 from database import engine, get_db, Base
-from models import User, Purchase, Review
+import base64
+import uuid
+from models import User, Purchase, Review, PaymentOrder
 from schemas import (
     SignupRequest, LoginRequest, TokenResponse, UserResponse,
     KakaoLoginRequest, GoogleLoginRequest,
     PlanInfo, PurchaseRequest, PurchaseResponse,
+    PaymentCreateRequest, PaymentConfirmRequest,
     ReviewRequest, ReviseRequest, ReviewResponse,
 )
 from auth import hash_password, verify_password, create_access_token, get_current_user
 
 KAKAO_JS_KEY = os.environ.get("KAKAO_JS_KEY", "")
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
+TOSS_CLIENT_KEY = os.environ.get("TOSS_CLIENT_KEY", "")
+TOSS_SECRET_KEY = os.environ.get("TOSS_SECRET_KEY", "")
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -286,6 +291,91 @@ def my_plans(user: User = Depends(get_current_user), db: Session = Depends(get_d
 
 
 # ──────────────────────────────────────
+# Payment endpoints (Toss Payments)
+# ──────────────────────────────────────
+
+@app.get("/api/payment/toss-key")
+def toss_client_key():
+    return {"client_key": TOSS_CLIENT_KEY}
+
+
+@app.post("/api/payment/create")
+def create_payment(req: PaymentCreateRequest, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    plan = PLANS.get(req.plan_name)
+    if not plan:
+        raise HTTPException(status_code=400, detail="존재하지 않는 플랜입니다.")
+
+    order_id = f"order_{uuid.uuid4().hex[:16]}"
+    order = PaymentOrder(
+        order_id=order_id,
+        user_id=user.id,
+        plan_name=plan.name,
+        amount=plan.price,
+    )
+    db.add(order)
+    db.commit()
+
+    return {
+        "order_id": order_id,
+        "amount": plan.price,
+        "order_name": f"자소서 AI 첨삭 - {plan.label}",
+        "customer_name": user.name,
+        "customer_email": user.email,
+    }
+
+
+@app.post("/api/payment/confirm")
+def confirm_payment(req: PaymentConfirmRequest, db: Session = Depends(get_db)):
+    order = db.query(PaymentOrder).filter(PaymentOrder.order_id == req.order_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="주문을 찾을 수 없습니다.")
+    if order.status == "paid":
+        raise HTTPException(status_code=400, detail="이미 처리된 결제입니다.")
+    if order.amount != req.amount:
+        raise HTTPException(status_code=400, detail="결제 금액이 일치하지 않습니다.")
+
+    # Confirm with Toss Payments API
+    auth = base64.b64encode(f"{TOSS_SECRET_KEY}:".encode()).decode()
+    with httpx.Client() as client:
+        res = client.post(
+            "https://api.tosspayments.com/v1/payments/confirm",
+            headers={
+                "Authorization": f"Basic {auth}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "paymentKey": req.payment_key,
+                "orderId": req.order_id,
+                "amount": req.amount,
+            },
+        )
+
+    if res.status_code != 200:
+        order.status = "failed"
+        db.commit()
+        error_msg = res.json().get("message", "결제 승인에 실패했습니다.")
+        raise HTTPException(status_code=400, detail=error_msg)
+
+    # Payment confirmed — activate plan
+    order.status = "paid"
+    order.payment_key = req.payment_key
+    db.commit()
+
+    plan = PLANS[order.plan_name]
+    purchase = Purchase(
+        user_id=order.user_id,
+        plan_name=plan.name,
+        price=plan.price,
+        items_remaining=plan.items,
+        revisions_remaining=plan.revisions,
+    )
+    db.add(purchase)
+    db.commit()
+
+    return {"status": "success", "plan_name": plan.name}
+
+
+# ──────────────────────────────────────
 # Review endpoints (GPT API)
 # ──────────────────────────────────────
 
@@ -425,7 +515,15 @@ def serve_index():
 
 @app.get("/review")
 def serve_review():
-    return FileResponse(os.path.join(STATIC_DIR, "review.html"))
+    return FileResponse(os.path.join(STATIC_DIR, "main.html"))
+
+@app.get("/payment/success")
+def serve_payment_success():
+    return FileResponse(os.path.join(STATIC_DIR, "payment-success.html"))
+
+@app.get("/payment/fail")
+def serve_payment_fail():
+    return FileResponse(os.path.join(STATIC_DIR, "payment-fail.html"))
 
 
 if __name__ == "__main__":

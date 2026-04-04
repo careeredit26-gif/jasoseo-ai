@@ -53,6 +53,16 @@ class PurchaseRequest(BaseModel):
     plan_name: str  # basic, plus, pro
 
 
+class PaymentCreateRequest(BaseModel):
+    plan_name: str
+
+
+class PaymentConfirmRequest(BaseModel):
+    payment_key: str
+    order_id: str
+    amount: int
+
+
 class PurchaseResponse(BaseModel):
     id: int
     plan_name: str

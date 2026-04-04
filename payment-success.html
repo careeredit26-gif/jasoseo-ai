@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결제 완료 — 자소서 AI 첨삭</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f6f8;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 48px 40px;
+    max-width: 440px; width: 100%;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: #ecfdf5;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 28px;
+  }
+  h1 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  p { font-size: 15px; color: #5f6877; margin-bottom: 32px; line-height: 1.6; }
+  .btn {
+    display: inline-block;
+    padding: 14px 40px; border-radius: 12px;
+    background: #111318; color: #fff;
+    font-size: 15px; font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #2a2d35; }
+  .spinner {
+    width: 20px; height: 20px;
+    border: 2px solid #e5e7ec; border-top-color: #3b5bf5;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #status { font-size: 14px; color: #5f6877; margin-bottom: 24px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">✓</div>
+  <h1>결제 확인 중</h1>
+  <div class="spinner" id="spinner"></div>
+  <p id="status">결제를 확인하고 있습니다...</p>
+  <a href="/review" class="btn" id="ctaBtn" style="display:none;">첨삭 시작하기</a>
+</div>
+
+<script>
+async function confirmPayment() {
+  const params = new URLSearchParams(window.location.search);
+  const paymentKey = params.get('paymentKey');
+  const orderId = params.get('orderId');
+  const amount = parseInt(params.get('amount'));
+
+  if (!paymentKey || !orderId || !amount) {
+    document.getElementById('status').textContent = '결제 정보가 올바르지 않습니다.';
+    document.getElementById('spinner').style.display = 'none';
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/payment/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ payment_key: paymentKey, order_id: orderId, amount }),
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      document.querySelector('h1').textContent = '결제 완료!';
+      document.querySelector('.icon').textContent = '🎉';
+      document.getElementById('status').textContent = '플랜이 활성화되었습니다. 지금 바로 자소서 첨삭을 시작하세요.';
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('ctaBtn').style.display = 'inline-block';
+    } else {
+      throw new Error(data.detail || '결제 승인에 실패했습니다.');
+    }
+  } catch (e) {
+    document.querySelector('h1').textContent = '결제 실패';
+    document.querySelector('.icon').textContent = '⚠️';
+    document.querySelector('.icon').style.background = '#fef2f2';
+    document.getElementById('status').textContent = e.message;
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('ctaBtn').href = '/';
+    document.getElementById('ctaBtn').textContent = '돌아가기';
+    document.getElementById('ctaBtn').style.display = 'inline-block';
+  }
+}
+
+confirmPayment();
+</script>
+</body>
+</html>

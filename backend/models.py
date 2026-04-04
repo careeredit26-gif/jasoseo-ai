@@ -35,6 +35,19 @@ class Purchase(Base):
     user = relationship("User", back_populates="purchases")
 
 
+class PaymentOrder(Base):
+    __tablename__ = "payment_orders"
+
+    id = Column(Integer, primary_key=True, index=True)
+    order_id = Column(String, unique=True, index=True, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    plan_name = Column(String, nullable=False)
+    amount = Column(Integer, nullable=False)
+    status = Column(String, default="pending")  # pending, paid, failed
+    payment_key = Column(String, nullable=True)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+
 class Review(Base):
     __tablename__ = "reviews"
 

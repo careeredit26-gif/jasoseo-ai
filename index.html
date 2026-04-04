@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://js.tosspayments.com/v2/standard"></script>
 <style>
   :root {
     --bg-deep: #0a0e1a;
@@ -1026,6 +1027,7 @@ let currentPlans = [];
 let pendingPurchasePlan = null;
 let kakaoInited = false;
 let googleClientId = '';
+let tossPayments = null;
 
 // ── Init ──
 document.addEventListener('DOMContentLoaded', async () => {
@@ -1059,6 +1061,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Google
     if (oauthData.google_client_id) {
       googleClientId = oauthData.google_client_id;
+    }
+  } catch {}
+
+  // Init Toss Payments
+  try {
+    const tossRes = await fetch(API + '/api/payment/toss-key');
+    const tossData = await tossRes.json();
+    if (tossData.client_key && typeof TossPayments !== 'undefined') {
+      tossPayments = TossPayments(tossData.client_key);
     }
   } catch {}
 
@@ -1236,17 +1247,37 @@ async function handlePurchase(planName) {
 }
 
 async function executePurchase(planName) {
+  if (!tossPayments) {
+    showToast('결제 시스템을 불러오는 중입니다. 잠시 후 다시 시도해주세요.', 'error');
+    return;
+  }
+
   try {
-    showToast('플랜을 구매하는 중...');
-    await apiFetch('/api/plans/purchase', {
+    // 1. Create payment order on backend
+    const order = await apiFetch('/api/payment/create', {
       method: 'POST',
       body: JSON.stringify({ plan_name: planName }),
     });
-    currentPlans = await apiFetch('/api/plans/my');
-    showToast('플랜 구매 완료! 첨삭 페이지로 이동합니다.');
-    setTimeout(() => { window.location.href = '/review'; }, 1000);
+
+    // 2. Open Toss Payments widget
+    const payment = tossPayments.payment({ customerKey: String(currentUser.id) });
+    await payment.requestPayment({
+      method: 'CARD',
+      amount: { currency: 'KRW', value: order.amount },
+      orderId: order.order_id,
+      orderName: order.order_name,
+      customerName: order.customer_name || '',
+      customerEmail: order.customer_email || '',
+      successUrl: window.location.origin + '/payment/success',
+      failUrl: window.location.origin + '/payment/fail',
+      card: {},
+      transfer: {},
+      mobilePhone: {},
+      easyPay: { provider: ['카카오페이', '토스페이'] },
+    });
   } catch (e) {
-    showToast(e.message, 'error');
+    if (e.code === 'USER_CANCEL') return;
+    showToast(e.message || '결제를 시작할 수 없습니다.', 'error');
   }
 }
 
