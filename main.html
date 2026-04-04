@@ -720,6 +720,33 @@ body {
   .compare-wrapper { grid-template-columns: 1fr; }
   .revise-input-row { flex-direction: column; }
 }
+
+/* ── Autocomplete ── */
+.ac-dropdown {
+  display: none;
+  position: absolute; left: 24px; right: 24px;
+  top: 100%;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 50;
+  box-shadow: var(--shadow-md);
+}
+.ac-dropdown.open { display: block; }
+.ac-item {
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  transition: background 0.1s;
+}
+.ac-item:hover, .ac-item.active { background: var(--brand-lighter); }
+.ac-item .ac-main { font-weight: 600; color: var(--text-primary); }
+.ac-item .ac-sub { font-size: 12px; color: var(--text-tertiary); }
+.ac-item .ac-match { color: var(--brand); }
 </style>
 </head>
 <body>
@@ -773,12 +800,13 @@ body {
     <!-- Input Form Card -->
     <div class="card">
       <div class="card-body">
-        <div class="field">
+        <div class="field" style="position:relative;">
           <div class="field-label">
             <label>지원 기업</label>
           </div>
           <div class="field-hint">기업명을 입력하면 해당 기업의 인재상이 첨삭에 자동 반영됩니다.</div>
-          <input type="text" id="companyName" placeholder="예: 삼성전자, 카카오, SK하이닉스" onfocus="setStep(1)">
+          <input type="text" id="companyName" placeholder="기업명을 입력하세요" onfocus="setStep(1)" autocomplete="off">
+          <div class="ac-dropdown" id="acDropdown"></div>
         </div>
 
         <div class="field">
@@ -892,6 +920,96 @@ let currentPlans = [];
 let currentReviewId = null;
 let history = [];
 
+// ── Company Data ──
+const COMPANIES = [
+  // 삼성
+  '삼성전자 DX부문','삼성전자 DS부문','삼성전자 SDC','삼성전자 네트워크사업부',
+  '삼성SDS','삼성물산','삼성생명','삼성화재','삼성증권','삼성바이오로직스','삼성SDI','삼성전기','삼성디스플레이','삼성엔지니어링','삼성중공업','삼성카드',
+  // SK
+  'SK하이닉스','SK텔레콤','SK이노베이션','SK에너지','SK네트웍스','SK C&C','SK플래닛','SK스퀘어','SK바이오팜','SK실트론',
+  // LG
+  'LG전자','LG에너지솔루션','LG화학','LG디스플레이','LG이노텍','LG CNS','LG유플러스','LG생활건강','LG경영개발원',
+  // 현대
+  '현대자동차','현대모비스','현대건설','현대중공업','현대제철','현대글로비스','현대오토에버','현대위아','현대로템','현대엔지니어링',
+  // 카카오
+  '카카오','카카오엔터프라이즈','카카오뱅크','카카오페이','카카오모빌리티','카카오엔터테인먼트','카카오게임즈','카카오브레인',
+  // 네이버
+  '네이버','네이버클라우드','네이버랩스','네이버파이낸셜','네이버웹툰','라인플러스',
+  // 쿠팡
+  '쿠팡','쿠팡이츠','쿠팡플레이','쿠팡로켓그로스',
+  // 배달의민족
+  '우아한형제들(배달의민족)',
+  // 토스
+  '비바리퍼블리카(토스)','토스뱅크','토스증권','토스페이먼츠',
+  // 당근
+  '당근마켓',
+  // 금융
+  'KB국민은행','신한은행','하나은행','우리은행','IBK기업은행','NH농협은행',
+  'KB증권','신한투자증권','한국투자증권','미래에셋증권','NH투자증권','삼성증권',
+  'KB손해보험','삼성화재','현대해상','DB손해보험',
+  // 대기업
+  'CJ제일제당','CJ대한통운','CJ ENM','CJ올리브네트웍스',
+  '롯데그룹','롯데케미칼','롯데정보통신','롯데쇼핑',
+  'GS칼텍스','GS리테일','GS건설',
+  '포스코','포스코인터내셔널','포스코ICT',
+  'KT','KT클라우드','KT엔터프라이즈',
+  '한화에어로스페이스','한화솔루션','한화시스템','한화생명','한화오션',
+  '두산에너빌리티','두산밥캣','두산로보틱스',
+  // IT/스타트업
+  '넥슨','NC소프트','크래프톤','스마일게이트','넷마블','펄어비스',
+  '직방','야놀자','마켓컬리(컬리)','무신사','오늘의집(버킷플레이스)','리디','왓챠','밀리의서재',
+  '하이퍼커넥트','센드버드','채널톡','토스랩(잔디)','드라마앤컴퍼니(리멤버)',
+  // 공기업
+  '한국전력공사','한국수력원자력','한국가스공사','한국석유공사','한국도로공사',
+  '한국철도공사(코레일)','인천국제공항공사','한국공항공사','한국토지주택공사(LH)',
+  '국민건강보험공단','국민연금공단','한국수자원공사',
+  '한국산업은행','한국수출입은행','중소벤처기업진흥공단',
+];
+
+let acIndex = -1;
+
+function initAutocomplete() {
+  const input = document.getElementById('companyName');
+  const dropdown = document.getElementById('acDropdown');
+
+  input.addEventListener('input', () => {
+    const val = input.value.trim().toLowerCase();
+    if (val.length < 1) { dropdown.classList.remove('open'); return; }
+
+    const matches = COMPANIES.filter(c => c.toLowerCase().includes(val)).slice(0, 8);
+    if (matches.length === 0) { dropdown.classList.remove('open'); return; }
+
+    acIndex = -1;
+    dropdown.innerHTML = matches.map((c, i) => {
+      const highlighted = c.replace(new RegExp(`(${val.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<span class="ac-match">$1</span>');
+      return `<div class="ac-item" data-idx="${i}" onmousedown="selectCompany('${c.replace(/'/g,"\\'")}')">${highlighted}</div>`;
+    }).join('');
+    dropdown.classList.add('open');
+  });
+
+  input.addEventListener('keydown', (e) => {
+    const items = dropdown.querySelectorAll('.ac-item');
+    if (!items.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); acIndex = Math.min(acIndex + 1, items.length - 1); updateAcActive(items); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); acIndex = Math.max(acIndex - 1, 0); updateAcActive(items); }
+    else if (e.key === 'Enter' && acIndex >= 0) { e.preventDefault(); items[acIndex].onmousedown(); }
+    else if (e.key === 'Escape') { dropdown.classList.remove('open'); }
+  });
+
+  input.addEventListener('blur', () => { setTimeout(() => dropdown.classList.remove('open'), 150); });
+}
+
+function updateAcActive(items) {
+  items.forEach((el, i) => el.classList.toggle('active', i === acIndex));
+}
+
+function selectCompany(name) {
+  document.getElementById('companyName').value = name;
+  document.getElementById('acDropdown').classList.remove('open');
+  setStep(1);
+  document.getElementById('question').focus();
+}
+
 // ── Init ──
 document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('token');
@@ -913,6 +1031,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   document.getElementById('essayText').addEventListener('input', updateCharCount);
+  initAutocomplete();
   document.getElementById('companyName').addEventListener('input', () => setStep(1));
   document.getElementById('question').addEventListener('input', () => setStep(2));
 });
