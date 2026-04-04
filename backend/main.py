@@ -65,46 +65,65 @@ with open(PROMPT_CONFIG_PATH, "r", encoding="utf-8") as f:
 
 def build_system_prompt():
     pc = PROMPT_CONFIG
-    qt = pc["question_types"]
-    cv = pc["company_values"]
+    qc = pc["question_classification"]
+    ck = pc["company_knowledge"]
     wr = pc["writing_rules"]
+    dd = pc["diagnosis_depth_rules"]
     of = pc["output_format"]["initial_review"]
 
-    question_type_section = ""
-    for name, info in qt.items():
-        question_type_section += f"\n#### {name}\n"
-        question_type_section += f"- 평가자 기대: {info['evaluator_expects']}\n"
-        question_type_section += f"- 구조: {info['structure']}\n"
-        question_type_section += f"- 흔한 실수: {', '.join(info['common_mistakes'])}\n"
-        question_type_section += f"- 좋은 예시 패턴: {info['good_example_pattern']}\n"
+    # Build question types section
+    qt_section = f"{qc['instruction']}\n"
+    for name, info in qc["types"].items():
+        qt_section += f"\n#### {name}\n"
+        qt_section += f"- 평가 의도: {info['evaluator_intent']}\n"
+        scores = info["what_evaluator_actually_scores"]
+        qt_section += f"- S등급: {scores['S_tier']}\n"
+        qt_section += f"- C등급: {scores['C_tier']}\n"
+        struct = info["required_structure"]
+        qt_section += f"- 필수 구조: {' → '.join(f'{k}({v})' for k, v in struct.items())}\n"
+        qt_section += f"- 치명적 실수: {'; '.join(info['fatal_mistakes'])}\n"
 
-    company_section = ""
-    for name, info in cv.items():
-        company_section += f"\n- **{name}**: {', '.join(info['core'])}. {info.get('focus', '')}"
+    # Build company section
+    co_section = f"{ck['instruction']}\n"
+    for name, info in ck["companies"].items():
+        co_section += f"\n**{name}**: {', '.join(info['group_values'])}. {info['evaluation_style']}"
+        for div_name, div_info in info.get("divisions", {}).items():
+            co_section += f"\n  - {div_name}: {div_info['what_they_want']} (톤: {div_info['tone_guide']})"
 
-    must_do = '\n'.join(f"- {r}" for r in wr['must_do'])
-    must_not = '\n'.join(f"- {r}" for r in wr['must_not'])
+    # Writing rules
+    rules = '\n'.join(f"- {r}" for r in wr['absolute_rules'])
+    sent_rules = '\n'.join(f"- {r}" for r in wr['sentence_level_rules'])
+    banned = ', '.join(f'"{e}"' for e in wr['banned_expressions'])
+
+    # Diagnosis rules
+    diag = f"진단 3단계: 1) {dd['level_1_what']} 2) {dd['level_2_why']} 3) {dd['level_3_how']}"
 
     return f"""{pc['role']}
 
+{pc['core_philosophy']['principle']}
+{pc['core_philosophy']['evaluation_mindset']}
+{pc['core_philosophy']['differentiation_rule']}
+
 ## 1단계: 질문 유형 판별
-아래 유형 중 가장 적합한 것을 먼저 판별하고, 해당 유형의 평가 기준으로 첨삭하세요.
-{question_type_section}
+{qt_section}
 
 ## 2단계: 기업 인재상 분석
-지원 기업의 인재상을 파악하고 첨삭에 반영합니다.
-{company_section}
-- 위 목록에 없는 기업이면 기업명과 업종 기반으로 합리적으로 추론하세요.
+{co_section}
 
 ## 3단계: 질문-기업 교차 분석
-질문 유형 + 기업 인재상을 교차하여 "이 기업의 이 질문에서 무엇을 강조해야 하는가"를 도출합니다.
+질문 유형 + 기업 인재상 + 부서 특성을 교차하여 "이 기업의 이 부서에서 이 질문으로 무엇을 확인하려 하는가"를 도출합니다.
+
+## 진단 규칙
+{diag}
 
 ## 작성 규칙
-### 반드시 할 것
-{must_do}
+{rules}
 
-### 금지 사항
-{must_not}
+### 문장 규칙
+{sent_rules}
+
+### 금지 표현
+{banned}
 
 ## 출력 형식 (반드시 JSON만 출력, 다른 텍스트 없이)
 {json.dumps(of, ensure_ascii=False, indent=2)}"""
@@ -112,9 +131,13 @@ def build_system_prompt():
 
 SYSTEM_PROMPT = build_system_prompt()
 
+_rg = PROMPT_CONFIG.get("revision_guidelines", {})
+_rg_common = '\n'.join(f"- '{k}': {v}" for k, v in _rg.get("common_requests", {}).items())
 REVISE_SYSTEM_PROMPT = f"""{PROMPT_CONFIG['role']}
-사용자가 이전에 첨삭받은 자소서에 대해 추가 수정을 요청합니다.
-이전 첨삭 맥락을 유지하면서, 사용자의 수정 요청을 반영하여 다시 첨삭합니다.
+{_rg.get('instruction', '')}
+
+## 자주 요청되는 수정 유형
+{_rg_common}
 
 ## 출력 형식 (반드시 JSON만 출력)
 {json.dumps(PROMPT_CONFIG['output_format']['revision'], ensure_ascii=False, indent=2)}"""
