@@ -533,6 +533,10 @@ STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 def serve_index():
     return FileResponse(os.path.join(STATIC_DIR, "index.html"))
 
+@app.get("/companies.json")
+def serve_companies():
+    return FileResponse(os.path.join(STATIC_DIR, "companies.json"))
+
 @app.get("/review")
 def serve_review():
     return FileResponse(os.path.join(STATIC_DIR, "main.html"))
