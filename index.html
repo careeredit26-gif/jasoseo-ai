@@ -1139,7 +1139,7 @@ async function onAuthSuccess() {
     pendingPurchasePlan = null;
     await executePurchase(plan);
   } else if (currentPlans.length > 0) {
-    window.location.href = '/review';
+    window.location.href = '/editing';
   } else {
     document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
   }
@@ -1192,7 +1192,7 @@ function handleStart() {
     return;
   }
   if (currentPlans.length > 0) {
-    window.location.href = '/review';
+    window.location.href = '/editing';
   } else {
     document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
     showToast('플랜을 선택해주세요.', 'error');
@@ -1217,7 +1217,7 @@ async function executePurchase(planName) {
     });
     currentPlans = await apiFetch('/api/plans/my');
     showToast('플랜 구매 완료! 첨삭 페이지로 이동합니다.');
-    setTimeout(() => { window.location.href = '/review'; }, 1000);
+    setTimeout(() => { window.location.href = '/editing'; }, 1000);
   } catch (e) {
     showToast(e.message, 'error');
   }

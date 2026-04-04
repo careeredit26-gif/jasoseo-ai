@@ -539,8 +539,8 @@ def serve_index():
 def serve_companies():
     return FileResponse(os.path.join(STATIC_DIR, "companies.json"))
 
-@app.get("/review")
-def serve_review():
+@app.get("/editing")
+def serve_editing():
     return FileResponse(os.path.join(STATIC_DIR, "main.html"))
 
 @app.get("/payment/success")
