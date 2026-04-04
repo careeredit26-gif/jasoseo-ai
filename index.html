@@ -1226,22 +1226,15 @@ async function executePurchase(planName) {
       body: JSON.stringify({ plan_name: planName }),
     });
 
-    // 2. Open Toss Payments widget
-    const payment = tossPayments.payment({ customerKey: String(currentUser.id) });
-    await payment.requestPayment({
-      method: 'CARD',
-      amount: { currency: 'KRW', value: order.amount },
-      orderId: order.order_id,
-      orderName: order.order_name,
-      customerName: order.customer_name || '',
-      customerEmail: order.customer_email || '',
-      successUrl: window.location.origin + '/payment/success',
-      failUrl: window.location.origin + '/payment/fail',
-      card: {},
-      transfer: {},
-      mobilePhone: {},
-      easyPay: { provider: ['카카오페이', '토스페이'] },
+    // 2. Activate plan directly (결제 연동 추후 적용)
+    await apiFetch('/api/plans/purchase', {
+      method: 'POST',
+      body: JSON.stringify({ plan_name: planName }),
     });
+    currentPlans = await apiFetch('/api/plans/my');
+    showToast('플랜 구매 완료! 첨삭 페이지로 이동합니다.');
+    setTimeout(() => { window.location.href = '/review'; }, 1000);
+    return;
   } catch (e) {
     if (e.code === 'USER_CANCEL') return;
     showToast(e.message || '결제를 시작할 수 없습니다.', 'error');
