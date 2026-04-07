@@ -6,6 +6,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>커리어에딧 — 붙여넣으면 다듬어져서 나옵니다</title>
+<meta name="description" content="기업명만 입력하면 인재상이 자동 반영되는 AI 자소서 첨삭. 문장별 진단부터 구체적 수정안까지. 19,900원으로 자소서 1세트 완성.">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<meta name="author" content="커리어에딧">
+<link rel="canonical" href="https://careeredit.kr/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="커리어에딧">
+<meta property="og:title" content="커리어에딧 — 붙여넣으면 다듬어져서 나옵니다">
+<meta property="og:description" content="기업 인재상이 자동 반영되는 AI 자소서 첨삭. 문장별 진단 + 구체적 수정안 + 반복 수정. 19,900원, 1회 결제.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://careeredit.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="커리어에딧 — 붙여넣으면 다듬어져서 나옵니다">
+<meta name="twitter:description" content="기업 인재상이 자동 반영되는 AI 자소서 첨삭. 19,900원, 1회 결제.">
+<meta name="twitter:image" content="https://careeredit.kr/og-image.png">
+
+<!-- Favicon (inline SVG, no extra request) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ff6b3d'/%3E%3Ctext x='32' y='44' font-family='-apple-system,system-ui,sans-serif' font-size='38' font-weight='800' fill='%23fff' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
@@ -13,26 +38,36 @@
 <script src="https://js.tosspayments.com/v2/standard"></script>
 <style>
   :root {
-    --bg-deep: #0a0e1a;
-    --bg-dark: #111827;
-    --bg-card: #1a2035;
-    --bg-light: #f6f7fb;
+    /* Light theme — Indigo + Coral */
+    --bg-deep: #ffffff;          /* page base */
+    --bg-dark: #f8fafc;          /* alt section */
+    --bg-card: #ffffff;          /* card surface */
+    --bg-soft: #f1f5f9;          /* soft fill */
+    --bg-light: #f8fafc;
     --bg-white: #ffffff;
-    --text-primary: #e8ecf4;
-    --text-secondary: #9ba3b5;
-    --text-dark: #1a1e2e;
-    --text-dark-secondary: #5a6275;
-    --accent: #4f6ef7;
-    --accent-glow: rgba(79, 110, 247, 0.25);
-    --cta: #ff6b3d;
-    --cta-hover: #ff8a62;
-    --cta-glow: rgba(255, 107, 61, 0.3);
-    --green: #34d399;
-    --red: #f87171;
-    --yellow: #fbbf24;
-    --border-light: rgba(255,255,255,0.06);
-    --border-dark: #e2e5ec;
-    --plus-gradient: linear-gradient(135deg, #4f6ef7 0%, #7c5bf5 100%);
+    --text-primary: #0f172a;     /* near-black headings */
+    --text-secondary: #64748b;   /* body secondary */
+    --text-tertiary: #94a3b8;    /* meta */
+    --text-dark: #0f172a;
+    --text-dark-secondary: #475569;
+    --accent: #4f46e5;           /* deep indigo */
+    --accent-hover: #4338ca;
+    --accent-soft: #eef2ff;      /* indigo tint */
+    --accent-glow: rgba(79, 70, 229, 0.18);
+    --cta: #ff6b3d;              /* coral, kept */
+    --cta-hover: #ff5722;
+    --cta-glow: rgba(255, 107, 61, 0.28);
+    --green: #10b981;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+    --border-light: rgba(15, 23, 42, 0.08);
+    --border-medium: rgba(15, 23, 42, 0.12);
+    --border-dark: #e2e8f0;
+    --shadow-sm: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+    --shadow-md: 0 4px 16px rgba(15,23,42,0.06), 0 2px 6px rgba(15,23,42,0.04);
+    --shadow-lg: 0 18px 48px rgba(15,23,42,0.10), 0 6px 18px rgba(15,23,42,0.06);
+    --shadow-cta: 0 12px 32px rgba(255,107,61,0.28);
+    --plus-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -48,16 +83,56 @@
     line-height: 1.6;
   }
 
+  /* Ambient gradient blur — subtle indigo/coral light spots */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+  body::before {
+    background: radial-gradient(circle, rgba(79,70,229,0.18) 0%, transparent 70%);
+    top: -200px; left: -200px;
+  }
+  body::after {
+    background: radial-gradient(circle, rgba(255,107,61,0.14) 0%, transparent 70%);
+    top: 30%; right: -250px;
+  }
+  nav, main, section, footer, .modal-overlay, .toast, .mobile-sticky-cta {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Accessible focus ring (only when keyboard-navigating) */
+  :focus { outline: none; }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
   /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     padding: 0 40px;
     height: 64px;
     display: flex; align-items: center; justify-content: space-between;
-    background: rgba(10,14,26,0.8);
+    background: rgba(255,255,255,0.85);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-light);
-    transition: background 0.3s;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(255,255,255,0.95);
+    box-shadow: var(--shadow-sm);
   }
   .nav-logo {
     font-weight: 800; font-size: 18px;
@@ -80,30 +155,26 @@
 
   /* ── HERO ── */
   .hero {
-    min-height: 100vh;
+    min-height: auto;
     display: flex; align-items: center; justify-content: center;
     text-align: center;
-    padding: 120px 24px 80px;
-    background:
-      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(79,110,247,0.12) 0%, transparent 70%),
-      var(--bg-deep);
+    padding: 140px 24px 100px;
+    background: transparent;
     overflow: hidden;
   }
-  .hero::before {
-    content: '';
-    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
-    width: 800px; height: 800px;
-    background: radial-gradient(circle, rgba(79,110,247,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
   .hero-badge {
-    display: inline-block;
-    padding: 6px 16px; border-radius: 100px;
-    background: rgba(79,110,247,0.12);
-    border: 1px solid rgba(79,110,247,0.25);
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 16px; border-radius: 100px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(79,70,229,0.18);
     color: var(--accent); font-size: 13px; font-weight: 600;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
     letter-spacing: -0.2px;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(79,70,229,0.18);
   }
   .hero h1 {
     font-size: clamp(36px, 6vw, 64px);
@@ -111,44 +182,146 @@
     line-height: 1.2;
     letter-spacing: -2px;
     margin-bottom: 24px;
-    color: #fff;
+    color: var(--text-primary);
   }
   .hero h1 .highlight {
     background: var(--plus-gradient);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
   .hero-sub {
-    font-size: clamp(16px, 2.2vw, 20px);
-    line-height: 1.7;
+    font-size: clamp(16px, 2.2vw, 19px);
+    line-height: 1.75;
     color: var(--text-secondary);
-    max-width: 560px; margin: 0 auto 48px;
-    font-weight: 300;
+    max-width: 580px; margin: 0 auto 44px;
+    font-weight: 400;
   }
-  .hero-sub strong { color: var(--text-primary); font-weight: 500; }
+  .hero-sub strong { color: var(--text-primary); font-weight: 600; }
   .hero-cta {
     display: inline-flex; align-items: center; gap: 10px;
-    padding: 18px 40px; border-radius: 14px;
+    padding: 18px 38px; border-radius: 14px;
     background: var(--cta); color: #fff;
     font-size: 17px; font-weight: 700;
     text-decoration: none;
-    box-shadow: 0 8px 32px var(--cta-glow);
+    box-shadow: var(--shadow-cta);
     transition: all 0.25s;
     letter-spacing: -0.3px;
   }
-  .hero-cta:hover { background: var(--cta-hover); transform: translateY(-2px); box-shadow: 0 12px 40px var(--cta-glow); }
+  .hero-cta:hover { background: var(--cta-hover); transform: translateY(-2px); box-shadow: 0 16px 40px rgba(255,107,61,0.35); }
   .hero-cta svg { width: 20px; height: 20px; }
   .hero-sub-note {
     margin-top: 20px;
-    font-size: 13px; color: var(--text-secondary);
+    font-size: 13px; color: var(--text-tertiary);
+  }
+
+  /* ── HERO DEMO ── */
+  .hero-demo {
+    margin: 64px auto 0;
+    max-width: 880px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: stretch;
+    position: relative;
+  }
+  .demo-card {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    padding: 24px 26px 26px;
+    text-align: left;
+    min-height: 240px;
+    box-shadow: var(--shadow-lg);
+  }
+  .demo-card.before {
+    border-color: rgba(239,68,68,0.18);
+    background: linear-gradient(180deg, #fff8f8 0%, #ffffff 100%);
+  }
+  .demo-card.after {
+    border-color: rgba(79,70,229,0.22);
+    background: linear-gradient(180deg, #f5f5ff 0%, #ffffff 100%);
+  }
+  .demo-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 5px 10px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .demo-card.before .demo-tag {
+    background: rgba(239,68,68,0.10);
+    color: #dc2626;
+  }
+  .demo-card.after .demo-tag {
+    background: rgba(79,70,229,0.10);
+    color: var(--accent);
+  }
+  .demo-tag::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: currentColor;
+  }
+  .demo-text {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-primary);
+    font-weight: 400;
+    text-align: left;
+    white-space: pre-wrap;
+    word-break: keep-all;
+  }
+  .demo-card.before .demo-text { color: var(--text-secondary); }
+  .demo-text .typed-cursor {
+    display: inline-block;
+    width: 2px; height: 1em;
+    background: var(--accent);
+    vertical-align: -2px;
+    margin-left: 1px;
+    animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .demo-arrow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 16px;
+    color: var(--accent);
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .demo-arrow svg { width: 28px; height: 28px; }
+  .demo-meta {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-light);
+    display: flex; gap: 14px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .demo-meta strong { color: var(--accent); font-weight: 700; }
+  .demo-context {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 16px;
     opacity: 0.7;
+  }
+  @media (max-width: 768px) {
+    .hero-demo {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      max-width: 100%;
+    }
+    .demo-arrow { transform: rotate(90deg); padding: 4px 0; }
+    .demo-card { padding: 18px 20px; min-height: 180px; }
+    .demo-text { font-size: 13px; }
   }
 
   /* ── PROBLEM ── */
   .problem {
     padding: 120px 24px;
-    background: #f8f9fc;
-    border-top: 1px solid #e5e7eb;
-    color: #1a1e2e;
+    background: var(--bg-dark);
+    border-top: 1px solid var(--border-light);
+    color: var(--text-primary);
   }
   .section-label {
     font-size: 13px; font-weight: 700;
@@ -162,68 +335,194 @@
     line-height: 1.3;
     letter-spacing: -1.5px;
     margin-bottom: 60px;
+    color: var(--text-primary);
   }
-  .section-title.dark { color: var(--text-dark); }
+  .section-title.dark { color: var(--text-primary); }
   .problem-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 24px;
   }
-  .problem .section-label { color: #4f6ef7; }
-  .problem .section-title { color: #1a1e2e; }
   .problem-card {
     padding: 36px 32px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
     border-radius: 16px;
-    transition: all 0.3s;
+    transition: all 0.25s;
+    box-shadow: var(--shadow-sm);
   }
-  .problem-card:hover { border-color: rgba(79,110,247,0.3); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+  .problem-card:hover {
+    border-color: rgba(79,70,229,0.25);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
   .problem-icon {
     width: 48px; height: 48px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 22px;
     margin-bottom: 20px;
   }
-  .problem-icon.red { background: rgba(248,113,113,0.12); }
-  .problem-icon.yellow { background: rgba(251,191,36,0.12); }
-  .problem-icon.gray { background: rgba(155,163,181,0.12); }
+  .problem-icon.red { background: rgba(239,68,68,0.10); }
+  .problem-icon.yellow { background: rgba(245,158,11,0.10); }
+  .problem-icon.gray { background: rgba(100,116,139,0.10); }
   .problem-card h3 {
     font-size: 18px; font-weight: 700;
     margin-bottom: 14px;
     line-height: 1.4;
     letter-spacing: -0.5px;
-    color: #1a1e2e;
+    color: var(--text-primary);
   }
   .problem-card p {
     font-size: 15px; line-height: 1.75;
-    color: #6b7280;
-    font-weight: 300;
+    color: var(--text-secondary);
+    font-weight: 400;
   }
   .problem-card .stat {
     margin-top: 16px; padding-top: 16px;
-    border-top: 1px solid #e5e7eb;
-    font-size: 13px; color: #ef4444;
+    border-top: 1px solid var(--border-light);
+    font-size: 13px; color: var(--red);
     font-weight: 600;
     font-family: 'JetBrains Mono', monospace;
   }
 
-  /* ── BEFORE/AFTER ── */
+  /* ── VERSUS TABLE ── */
+  .versus {
+    padding: 120px 24px;
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border-light);
+  }
+  .versus .section-label { color: var(--accent); }
+  .versus .section-title { color: var(--text-primary); }
+  .versus-wrap {
+    max-width: 1080px;
+    margin: 56px auto 0;
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--bg-card);
+    box-shadow: var(--shadow-md);
+  }
+  .versus-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .versus-table thead th {
+    background: var(--bg-soft);
+    padding: 22px 18px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 14px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .versus-table thead th:first-child {
+    text-align: left;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .versus-table thead th.us {
+    background: linear-gradient(180deg, rgba(255,107,61,0.16), rgba(255,107,61,0.04));
+    color: var(--cta);
+    font-size: 15px;
+    font-weight: 800;
+    position: relative;
+  }
+  .versus-table thead th.us::before {
+    content: '★ 우리';
+    position: absolute;
+    top: -10px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--cta);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 10px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(255,107,61,0.35);
+  }
+  .versus-table tbody td {
+    padding: 18px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    vertical-align: middle;
+  }
+  .versus-table tbody td:first-child {
+    text-align: left;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .versus-table tbody td.us {
+    background: rgba(255,107,61,0.05);
+    color: var(--text-primary);
+    font-weight: 700;
+    border-left: 1px solid rgba(255,107,61,0.18);
+    border-right: 1px solid rgba(255,107,61,0.18);
+  }
+  .versus-table tbody tr:last-child td { border-bottom: none; }
+  .versus-table tbody tr:last-child td.us {
+    border-bottom: 1px solid rgba(255,107,61,0.18);
+  }
+  .v-yes {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(16,185,129,0.12);
+    color: var(--green);
+    font-weight: 700;
+  }
+  .v-no {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(239,68,68,0.10);
+    color: var(--red);
+    font-weight: 700;
+  }
+  .v-warn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(245,158,11,0.12);
+    color: var(--yellow);
+    font-weight: 700;
+  }
+  .versus-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 20px;
+  }
+  @media (max-width: 768px) {
+    .versus-wrap { border-radius: 14px; }
+    .versus-table { font-size: 12px; }
+    .versus-table thead th { padding: 18px 8px; font-size: 11px; }
+    .versus-table thead th.us { font-size: 12px; }
+    .versus-table tbody td { padding: 14px 6px; font-size: 12px; }
+    .versus-table tbody td:first-child { font-size: 12px; }
+  }
+
   .compare {
     padding: 120px 24px;
-    background: #ffffff;
-    color: #1a1e2e;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    border-top: 1px solid var(--border-light);
   }
-  .compare .section-label { color: #4f6ef7; }
-  .compare .section-title { color: #1a1e2e; }
   .compare-context {
     display: inline-block;
     padding: 10px 20px; border-radius: 10px;
-    background: rgba(79,110,247,0.1);
-    border: 1px solid rgba(79,110,247,0.2);
+    background: var(--accent-soft);
+    border: 1px solid rgba(79,70,229,0.18);
     font-size: 14px; color: var(--accent);
     margin-bottom: 48px;
-    font-weight: 500;
+    font-weight: 600;
   }
   .compare-context strong { font-weight: 700; }
   .compare-grid {
@@ -236,15 +535,17 @@
   .compare-box {
     padding: 32px;
     border-radius: 16px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border-light);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
   }
   .compare-box.before {
-    background: rgba(248,113,113,0.05);
-    border-color: rgba(248,113,113,0.2);
+    background: linear-gradient(180deg, #fff8f8 0%, #ffffff 100%);
+    border-color: rgba(239,68,68,0.18);
   }
   .compare-box.after {
-    background: rgba(52,211,153,0.05);
-    border-color: rgba(52,211,153,0.2);
+    background: linear-gradient(180deg, #f0fdf6 0%, #ffffff 100%);
+    border-color: rgba(16,185,129,0.22);
   }
   .compare-tag {
     display: inline-block;
@@ -253,40 +554,47 @@
     text-transform: uppercase; letter-spacing: 1px;
     margin-bottom: 20px;
   }
-  .before .compare-tag { background: rgba(248,113,113,0.15); color: #ef4444; }
-  .after .compare-tag { background: rgba(52,211,153,0.15); color: #10b981; }
+  .before .compare-tag { background: rgba(239,68,68,0.10); color: var(--red); }
+  .after .compare-tag { background: rgba(16,185,129,0.12); color: var(--green); }
   .compare-box blockquote {
     font-size: 15px; line-height: 1.85;
-    color: #6b7280;
-    font-weight: 300;
+    color: var(--text-secondary);
+    font-weight: 400;
     border: none; padding: 0;
   }
-  .after blockquote { color: #1a1e2e; }
+  .after blockquote { color: var(--text-primary); }
 
   .diagnosis-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    overflow: hidden;
   }
   .diagnosis-table th, .diagnosis-table td {
     padding: 14px 16px;
     text-align: left;
     font-size: 14px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--border-light);
   }
+  .diagnosis-table tr:last-child td { border-bottom: none; }
   .diagnosis-table th {
-    color: #6b7280; font-weight: 600;
+    color: var(--text-secondary); font-weight: 600;
     font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+    background: var(--bg-soft);
   }
-  .diagnosis-table td:first-child { font-weight: 600; white-space: nowrap; color: #1a1e2e; }
-  .diagnosis-table .label-before { color: #ef4444; }
-  .diagnosis-table .label-after { color: #10b981; }
+  .diagnosis-table td:first-child { font-weight: 600; white-space: nowrap; color: var(--text-primary); }
+  .diagnosis-table .label-before { color: var(--red); }
+  .diagnosis-table .label-after { color: var(--green); }
 
   /* ── SERVICES ── */
   .services {
     padding: 120px 24px;
-    background: var(--bg-light);
-    color: var(--text-dark);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    border-top: 1px solid var(--border-light);
   }
   .services .section-label { color: var(--accent); }
   .service-grid {
@@ -296,12 +604,13 @@
   }
   .service-card {
     padding: 40px 32px;
-    background: var(--bg-white);
-    border: 1px solid var(--border-dark);
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
     border-radius: 16px;
-    transition: all 0.3s;
+    transition: all 0.25s;
     position: relative;
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
   }
   .service-card::before {
     content: '';
@@ -312,33 +621,33 @@
     transition: opacity 0.3s;
   }
   .service-card:hover::before { opacity: 1; }
-  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
+  .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(79,70,229,0.18); }
   .service-num {
     font-size: 48px; font-weight: 900;
     background: var(--plus-gradient);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     line-height: 1;
     margin-bottom: 20px;
-    opacity: 0.3;
+    opacity: 0.4;
   }
   .service-card h3 {
     font-size: 20px; font-weight: 800;
     margin-bottom: 14px;
     letter-spacing: -0.5px;
-    color: var(--text-dark);
+    color: var(--text-primary);
   }
   .service-card p {
     font-size: 15px; line-height: 1.75;
-    color: var(--text-dark-secondary);
+    color: var(--text-secondary);
     margin-bottom: 24px;
-    font-weight: 300;
+    font-weight: 400;
   }
   .service-stat {
     padding: 14px 18px;
-    background: var(--bg-light);
+    background: var(--bg-soft);
     border-radius: 10px;
     font-size: 13px;
-    color: var(--text-dark);
+    color: var(--text-primary);
     font-weight: 500;
     line-height: 1.6;
   }
@@ -367,14 +676,15 @@
     border: 1px solid var(--border-light);
     border-radius: 16px;
     text-align: center;
-    transition: all 0.3s;
+    transition: all 0.25s;
     position: relative;
+    box-shadow: var(--shadow-sm);
   }
-  .price-card:hover { transform: translateY(-4px); }
+  .price-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
   .price-card.featured {
     border-color: var(--accent);
-    background: linear-gradient(180deg, rgba(79,110,247,0.08) 0%, var(--bg-card) 100%);
-    box-shadow: 0 0 60px var(--accent-glow);
+    background: linear-gradient(180deg, var(--accent-soft) 0%, var(--bg-card) 100%);
+    box-shadow: 0 16px 48px rgba(79,70,229,0.18);
     transform: scale(1.04);
   }
   .price-card.featured:hover { transform: scale(1.04) translateY(-4px); }
@@ -412,7 +722,7 @@
     font-size: 14px;
     color: var(--text-secondary);
     display: flex; align-items: flex-start; gap: 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid var(--border-light);
     font-weight: 400;
   }
   .price-features li:last-child { border-bottom: none; }
@@ -431,10 +741,10 @@
   }
   .price-btn.outline {
     background: transparent;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid var(--border-medium);
     color: var(--text-primary);
   }
-  .price-btn.outline:hover { border-color: var(--accent); color: var(--accent); }
+  .price-btn.outline:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
   .price-btn.primary {
     background: var(--cta); color: #fff;
     box-shadow: 0 4px 20px var(--cta-glow);
@@ -453,6 +763,7 @@
   .testimonials {
     padding: 120px 24px;
     background: var(--bg-deep);
+    border-top: 1px solid var(--border-light);
   }
   .testi-grid {
     display: grid;
@@ -464,28 +775,59 @@
     padding: 40px 36px;
     background: var(--bg-card);
     border: 1px solid var(--border-light);
-    border-radius: 16px;
+    border-radius: 18px;
     position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.25s, transform 0.25s;
+  }
+  .testi-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
   }
   .testi-card::before {
     content: '"';
     position: absolute; top: 20px; left: 28px;
     font-size: 72px; font-weight: 900;
-    color: var(--accent); opacity: 0.15;
+    color: var(--accent); opacity: 0.10;
     line-height: 1;
+  }
+  .testi-stars {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 14px;
+    color: var(--yellow);
+    font-size: 16px;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+  }
+  .testi-result {
+    display: inline-block;
+    margin-left: 12px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: rgba(16,185,129,0.10);
+    border: 1px solid rgba(16,185,129,0.28);
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    vertical-align: 3px;
   }
   .testi-quote {
     font-size: 18px; font-weight: 700;
     line-height: 1.5;
     margin-bottom: 20px;
     letter-spacing: -0.5px;
-    color: #fff;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 1;
   }
   .testi-body {
     font-size: 14px; line-height: 1.8;
     color: var(--text-secondary);
     margin-bottom: 28px;
-    font-weight: 300;
+    font-weight: 400;
   }
   .testi-author {
     display: flex; align-items: center; gap: 14px;
@@ -498,16 +840,75 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 18px; font-weight: 800; color: #fff;
   }
-  .testi-name { font-size: 14px; font-weight: 700; }
+  .testi-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
   .testi-role { font-size: 12px; color: var(--text-secondary); margin-top: 2px; font-weight: 400; }
+
+  /* ── FAQ ── */
+  .faq {
+    padding: 120px 24px;
+    background: var(--bg-dark);
+    border-top: 1px solid var(--border-light);
+  }
+  .faq .section-label { color: var(--accent); }
+  .faq-list {
+    max-width: 760px;
+    margin: 56px auto 0;
+    display: flex; flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow-sm);
+  }
+  .faq-item[open] {
+    border-color: rgba(79,70,229,0.30);
+    background: var(--accent-soft);
+    box-shadow: var(--shadow-md);
+  }
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 22px 26px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+';
+    font-size: 24px; font-weight: 300;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    transition: transform 0.25s ease, color 0.2s;
+    line-height: 1;
+  }
+  .faq-item[open] summary::after {
+    content: '−';
+    color: var(--accent);
+  }
+  .faq-item summary:hover { color: var(--accent); }
+  .faq-answer {
+    padding: 0 26px 24px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+  .faq-answer strong { color: var(--text-primary); font-weight: 600; }
 
   /* ── FINAL CTA ── */
   .final-cta {
     padding: 120px 24px;
     text-align: center;
     background:
-      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(79,110,247,0.1) 0%, transparent 70%),
-      var(--bg-dark);
+      radial-gradient(ellipse 70% 60% at 50% 0%, var(--accent-soft) 0%, transparent 70%),
+      var(--bg-deep);
     border-top: 1px solid var(--border-light);
   }
   .final-cta h2 {
@@ -515,38 +916,109 @@
     font-weight: 900;
     letter-spacing: -2px;
     margin-bottom: 20px;
-    color: #fff;
+    color: var(--text-primary);
   }
   .final-cta .sub {
     font-size: 18px; line-height: 1.7;
     color: var(--text-secondary);
     max-width: 480px; margin: 0 auto 48px;
-    font-weight: 300;
+    font-weight: 400;
   }
-  .final-cta .sub strong { color: var(--text-primary); font-weight: 500; }
+  .final-cta .sub strong { color: var(--text-primary); font-weight: 700; }
   .final-meta {
     margin-top: 20px;
-    font-size: 13px; color: var(--text-secondary);
-    opacity: 0.6;
+    font-size: 13px; color: var(--text-tertiary);
   }
   .final-meta span { margin: 0 8px; }
 
   /* ── FOOTER ── */
   footer {
-    padding: 40px 24px;
-    text-align: center;
-    font-size: 12px;
+    padding: 64px 24px 48px;
+    font-size: 13px;
     color: var(--text-secondary);
-    opacity: 0.5;
     border-top: 1px solid var(--border-light);
-    background: var(--bg-deep);
+    background: var(--bg-dark);
+  }
+  .footer-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .footer-brand .footer-logo {
+    font-size: 18px; font-weight: 800;
+    background: var(--plus-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+  .footer-brand p {
+    font-size: 13px; line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 320px;
+  }
+  .footer-col h4 {
+    font-size: 12px; font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; padding: 0; margin: 0; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.15s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-legal {
+    max-width: 1100px;
+    margin: 24px auto 0;
+    font-size: 11px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    opacity: 0.55;
+  }
+  .footer-legal .biz-info {
+    margin-bottom: 14px;
+  }
+  .footer-legal .biz-info span { margin-right: 14px; white-space: nowrap; }
+  .footer-bottom {
+    display: flex; justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; gap: 12px;
+    margin-top: 12px;
+  }
+  .footer-pay {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    background: var(--bg-card);
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .footer-pay::before {
+    content: '🔒'; font-size: 11px;
+  }
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-bottom: 32px;
+    }
   }
 
   /* ── MODAL ── */
   .modal-overlay {
     display: none;
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.7);
+    background: rgba(15, 23, 42, 0.55);
     backdrop-filter: blur(8px);
     z-index: 1000;
     align-items: center; justify-content: center;
@@ -560,22 +1032,26 @@
     max-width: 440px;
     width: 90%;
     position: relative;
+    box-shadow: 0 32px 80px rgba(15,23,42,0.20);
   }
   .modal-close {
     position: absolute; top: 16px; right: 16px;
     background: none; border: none;
     color: var(--text-secondary); font-size: 24px;
     cursor: pointer; line-height: 1;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
   }
-  .modal-close:hover { color: #fff; }
+  .modal-close:hover { color: var(--text-primary); background: var(--bg-soft); }
   .modal h2 {
     font-size: 24px; font-weight: 800;
-    margin-bottom: 8px; color: #fff;
+    margin-bottom: 8px; color: var(--text-primary);
     letter-spacing: -0.5px;
   }
   .modal .modal-sub {
     font-size: 14px; color: var(--text-secondary);
-    margin-bottom: 32px; font-weight: 300;
+    margin-bottom: 32px; font-weight: 400;
   }
   .form-group {
     margin-bottom: 18px;
@@ -587,17 +1063,18 @@
   .form-group input {
     width: 100%; padding: 12px 16px;
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(255,255,255,0.05);
-    color: #fff; font-size: 15px;
+    border: 1px solid var(--border-medium);
+    background: var(--bg-soft);
+    color: var(--text-primary); font-size: 15px;
     font-family: inherit;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background 0.2s;
   }
   .form-group input:focus {
     border-color: var(--accent);
+    background: var(--bg-card);
   }
-  .form-group input::placeholder { color: rgba(255,255,255,0.25); }
+  .form-group input::placeholder { color: var(--text-tertiary); }
   .form-btn {
     width: 100%; padding: 14px;
     border-radius: 10px; border: none;
@@ -619,28 +1096,148 @@
   }
   .form-switch a:hover { text-decoration: underline; }
 
-  /* Auth method selection */
-  .auth-methods {
-    display: flex; flex-direction: column; gap: 12px;
-    margin-bottom: 24px;
+  /* Auth provider selection */
+  .auth-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .auth-logo {
+    width: 44px; height: 44px;
+    margin: 0 auto 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--cta), #ff8a62);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 22px; font-weight: 800;
+    box-shadow: 0 6px 20px var(--cta-glow);
+  }
+  .auth-header h2 {
+    font-size: 22px; font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.4;
+    letter-spacing: -0.4px;
+    margin-bottom: 0;
+  }
+  .auth-providers {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 20px;
   }
   .auth-btn {
-    width: 100%; padding: 14px 20px;
-    border-radius: 12px; border: none;
+    position: relative;
+    width: 100%;
+    padding: 15px 18px;
+    border-radius: 12px;
+    border: 1px solid transparent;
     font-size: 15px; font-weight: 700;
     cursor: pointer; font-family: inherit;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    transition: all 0.2s;
+    display: flex; align-items: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    overflow: hidden;
+  }
+  .auth-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+  .auth-btn:active { transform: translateY(0); }
+  .auth-btn .auth-icon {
+    width: 22px; height: 22px;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .auth-btn .auth-label {
+    flex: 1;
+    text-align: center;
+    margin-right: 22px; /* compensate for icon width to keep label visually centered */
+    z-index: 1;
   }
   .auth-btn-kakao {
     background: #FEE500; color: #191919;
   }
-  .auth-btn-kakao:hover { background: #f0d800; }
-  .auth-btn-kakao svg { width: 20px; height: 20px; }
+  .auth-btn-kakao:hover { background: #FEE500; }
   .auth-btn-google {
-    background: #ffffff; color: #3c4043;
+    background: #ffffff; color: #1f1f1f;
+    border-color: rgba(15,23,42,0.15);
   }
-  .auth-btn-google:hover { background: #f1f3f4; }
+  .auth-btn-google:hover { background: #ffffff; }
+  /* GSI button rendered transparently on top of custom Google button */
+  .google-gsi-cover {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .google-gsi-cover > div { width: 100% !important; }
+  .auth-tos {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+    opacity: 0.6;
+    line-height: 1.6;
+  }
+  /* ToS checkbox */
+  .auth-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+  }
+  .auth-consent:hover { border-color: rgba(79,70,229,0.3); background: var(--accent-soft); }
+  .auth-consent input[type="checkbox"] {
+    width: 18px; height: 18px;
+    margin: 1px 0 0 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .auth-consent-text {
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+  }
+  .auth-consent-text a {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-decoration-color: var(--border-medium);
+  }
+  .auth-consent-text a:hover { color: var(--accent); }
+  .auth-providers.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+    filter: grayscale(0.3);
+  }
+  .auth-consent.shake { animation: shake 0.4s; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+  /* Generic loading state — adds inline spinner before button label */
+  .is-loading {
+    pointer-events: none;
+    opacity: 0.75;
+    cursor: wait !important;
+    position: relative;
+  }
+  .is-loading::before {
+    content: '';
+    display: inline-block;
+    width: 14px; height: 14px;
+    margin-right: 8px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    vertical-align: -2px;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   .auth-divider {
     display: flex; align-items: center; gap: 16px;
     margin: 4px 0;
@@ -648,7 +1245,7 @@
   }
   .auth-divider::before, .auth-divider::after {
     content: ''; flex: 1; height: 1px;
-    background: rgba(255,255,255,0.08);
+    background: var(--border-light);
   }
   .back-link {
     display: inline-flex; align-items: center; gap: 4px;
@@ -659,14 +1256,76 @@
   .back-link:hover { color: var(--accent); }
 
   .form-error {
-    background: rgba(248,113,113,0.1);
-    border: 1px solid rgba(248,113,113,0.3);
-    color: #f87171; font-size: 13px;
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.25);
+    color: var(--red); font-size: 13px;
     padding: 10px 14px; border-radius: 8px;
     margin-bottom: 16px;
     display: none;
   }
   .form-error.visible { display: block; }
+
+  /* ── MOBILE STICKY CTA ── */
+  .mobile-sticky-cta {
+    display: none;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 900;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border-light);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    transform: translateY(120%);
+    transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+    box-shadow: 0 -8px 32px rgba(15,23,42,0.08);
+  }
+  .mobile-sticky-cta.visible { transform: translateY(0); }
+  .mobile-sticky-cta-inner {
+    display: flex; align-items: center; gap: 12px;
+    max-width: 480px; margin: 0 auto;
+  }
+  .mobile-sticky-cta .msc-text {
+    flex: 1;
+    line-height: 1.3;
+    min-width: 0;
+  }
+  .mobile-sticky-cta .msc-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mobile-sticky-cta .msc-sub {
+    font-size: 11px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mobile-sticky-cta .msc-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 12px 18px;
+    background: var(--cta);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 16px var(--cta-glow);
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+  .mobile-sticky-cta .msc-btn:active { transform: scale(0.97); }
+  @media (max-width: 768px) {
+    .mobile-sticky-cta { display: block; }
+    /* Reserve space at page bottom so footer isn't covered */
+    body.has-mobile-cta { padding-bottom: 80px; }
+  }
 
   /* ── TOAST ── */
   .toast {
@@ -676,10 +1335,11 @@
     z-index: 2000;
     transform: translateX(120%);
     transition: transform 0.3s ease;
+    box-shadow: var(--shadow-md);
   }
   .toast.visible { transform: translateX(0); }
-  .toast.success { background: rgba(52,211,153,0.15); border: 1px solid rgba(52,211,153,0.3); color: var(--green); }
-  .toast.error { background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.3); color: #f87171; }
+  .toast.success { background: #ecfdf5; border: 1px solid rgba(16,185,129,0.3); color: var(--green); }
+  .toast.error { background: #fef2f2; border: 1px solid rgba(239,68,68,0.3); color: var(--red); }
 
   /* ── USER NAV ── */
   .nav-user {
@@ -690,17 +1350,17 @@
   }
   .nav-user-badge {
     padding: 4px 10px; border-radius: 6px;
-    background: rgba(79,110,247,0.15);
+    background: var(--accent-soft);
     color: var(--accent); font-size: 12px; font-weight: 700;
   }
   .nav-logout {
     padding: 6px 14px; border-radius: 8px;
-    background: none; border: 1px solid rgba(255,255,255,0.1);
+    background: none; border: 1px solid var(--border-medium);
     color: var(--text-secondary); font-size: 13px; font-weight: 500;
     cursor: pointer; transition: all 0.2s;
     font-family: inherit;
   }
-  .nav-logout:hover { border-color: #f87171; color: #f87171; }
+  .nav-logout:hover { border-color: var(--red); color: var(--red); }
 
   /* ── ANIMATIONS ── */
   .fade-up {
@@ -713,11 +1373,26 @@
     transform: translateY(0);
   }
 
+  /* Reduced motion: respect user accessibility preference */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .fade-up {
+      opacity: 1;
+      transform: none;
+    }
+    .typed-cursor { animation: none; }
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     nav { padding: 0 20px; }
     .hero { padding: 100px 20px 60px; }
-    .problem, .compare, .services, .pricing, .testimonials, .final-cta {
+    .problem, .compare, .services, .pricing, .testimonials, .final-cta, .versus, .faq {
       padding: 80px 20px;
     }
     .hero h1 { letter-spacing: -1px; }
@@ -725,6 +1400,39 @@
     .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
     .price-card.featured { transform: scale(1); }
     .price-card.featured:hover { transform: translateY(-4px); }
+  }
+
+  /* Narrow phones */
+  @media (max-width: 480px) {
+    nav { padding: 0 16px; height: 56px; }
+    .nav-logo { font-size: 16px; }
+    .nav-cta { padding: 7px 14px; font-size: 13px; }
+    .hero { padding: 88px 16px 48px; }
+    .hero-badge { font-size: 11px; padding: 6px 14px; }
+    .hero h1 { letter-spacing: -0.5px; }
+    .hero-sub { font-size: 14px; line-height: 1.7; }
+    .hero-cta { padding: 16px 28px; font-size: 15px; width: 100%; justify-content: center; }
+    .hero-sub-note { font-size: 12px; }
+    .problem, .compare, .services, .pricing, .testimonials, .final-cta, .versus, .faq {
+      padding: 64px 16px;
+    }
+    .section-title { margin-bottom: 32px; }
+    .problem-card, .service-card, .price-card, .testi-card { padding: 28px 22px; }
+    .modal { padding: 36px 24px; max-width: 100%; border-radius: 16px; }
+    .modal h2, .auth-header h2 { font-size: 19px; }
+    .auth-header { margin-bottom: 22px; }
+    .auth-logo { width: 40px; height: 40px; font-size: 20px; }
+    .footer-grid { padding: 0 4px 24px; gap: 28px; }
+    .footer-legal { font-size: 10px; }
+    .footer-legal .biz-info span { display: inline-block; margin-right: 10px; }
+    .faq-item summary { padding: 18px 20px; font-size: 14px; }
+    .faq-answer { padding: 0 20px 20px; font-size: 13px; }
+  }
+
+  /* Tablet */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .pricing-grid { gap: 16px; }
+    .footer-grid { gap: 32px; }
   }
 </style>
 </head>
@@ -756,6 +1464,30 @@
       </a>
       <p class="hero-sub-note">19,900원으로 자소서 1세트 완성 · 1회 결제 · 월 구독 아님</p>
     </div>
+
+    <!-- Live demo -->
+    <div class="hero-demo fade-up">
+      <div class="demo-card before">
+        <div class="demo-tag">Before — 원본</div>
+        <div class="demo-text">저는 대학교 시절 다양한 경험을 통해 성장하였습니다. 동아리 활동과 인턴 경험을 통해 팀워크의 중요성을 알게 되었고, 협업 능력을 키울 수 있었습니다.</div>
+        <div class="demo-meta">
+          <span>구체성 <strong style="color:#f87171">낮음</strong></span>
+          <span>차별성 <strong style="color:#f87171">낮음</strong></span>
+        </div>
+      </div>
+      <div class="demo-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </div>
+      <div class="demo-card after">
+        <div class="demo-tag">After — AI 첨삭</div>
+        <div class="demo-text" id="demoTypedText"></div>
+        <div class="demo-meta">
+          <span>구체성 <strong>높음</strong></span>
+          <span>삼성 인재상 <strong>반영</strong></span>
+        </div>
+      </div>
+    </div>
+    <p class="demo-context fade-up">▲ 실제 첨삭 예시 · 삼성전자 DX부문 / "성장 과정" 문항</p>
   </div>
 </section>
 
@@ -770,7 +1502,7 @@
       <div class="problem-card fade-up">
         <div class="problem-icon red">🩺</div>
         <h3>"이 문장이 약합니다"<br>까지만 알려주는 피드백</h3>
-        <p>잡코리아·사람인 AI 첨삭을 돌려봤더니, "두 번째 문장의 구체성이 부족합니다"라는 진단만 나옵니다. 그래서 어떻게 고치라는 건지는 알려주지 않습니다.</p>
+        <p>일반 취업 사이트의 AI 첨삭을 돌려봤더니, "두 번째 문장의 구체성이 부족합니다"라는 진단만 나옵니다. 그래서 어떻게 고치라는 건지는 알려주지 않습니다.</p>
         <div class="stat">진단만 있고, 처방은 없음</div>
       </div>
       <div class="problem-card fade-up">
@@ -786,6 +1518,81 @@
         <div class="stat">프롬프트 설계 → 사용자 부담</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- VERSUS -->
+<section class="versus">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">Compare</div>
+      <h2 class="section-title">다른 방법과 뭐가 다른가요?</h2>
+    </div>
+    <div class="versus-wrap fade-up">
+      <table class="versus-table">
+        <thead>
+          <tr>
+            <th>비교 항목</th>
+            <th>전문 컨설턴트</th>
+            <th>ChatGPT</th>
+            <th>취업 사이트 AI</th>
+            <th class="us">커리어에딧</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>5문항 기준 비용</td>
+            <td>건당 4~5만원</td>
+            <td>무료</td>
+            <td>무료</td>
+            <td class="us">19,900원</td>
+          </tr>
+          <tr>
+            <td>기업 인재상 자동 반영</td>
+            <td><span class="v-no">−</span></td>
+            <td><span class="v-no">−</span></td>
+            <td><span class="v-no">−</span></td>
+            <td class="us"><span class="v-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>구체적 수정안 제시</td>
+            <td><span class="v-yes">✓</span></td>
+            <td><span class="v-warn">△</span></td>
+            <td><span class="v-no">−</span></td>
+            <td class="us"><span class="v-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>반복 수정 횟수</td>
+            <td>1~2회</td>
+            <td>무제한</td>
+            <td>1회</td>
+            <td class="us">최대 120회</td>
+          </tr>
+          <tr>
+            <td>이전 첨삭 기억</td>
+            <td><span class="v-yes">✓</span></td>
+            <td><span class="v-no">−</span></td>
+            <td><span class="v-no">−</span></td>
+            <td class="us"><span class="v-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>응답 속도</td>
+            <td>2~7일</td>
+            <td>즉시</td>
+            <td>즉시</td>
+            <td class="us">평균 2분</td>
+          </tr>
+          <tr>
+            <td>품질 일관성</td>
+            <td>사람마다 다름</td>
+            <td>프롬프트마다 다름</td>
+            <td>표면적 진단</td>
+            <td class="us">학습된 일관성</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="versus-note">△ = 직접 프롬프트로 요청 시에만 가능 · 컨설턴트 가격은 1회 첨삭 기준 일반 시세</p>
   </div>
 </section>
 
@@ -855,19 +1662,19 @@
         <div class="service-num">01</div>
         <h3>기업 맞춤 자동 반영</h3>
         <p>기업명만 입력하면, 해당 기업의 인재상과 핵심 가치가 첨삭에 자동 반영됩니다. 삼성의 "창의·도전", 카카오의 "사용자 중심 사고"까지 — 같은 자소서라도 지원 기업에 따라 강조점이 달라집니다.</p>
-        <div class="service-stat">대응 기업 <strong>500개+</strong> · 직접 검색 대비 <strong>4배</strong> 빠른 반영</div>
+        <div class="service-stat">대응 기업 <strong class="count-up">500개+</strong> · 직접 검색 대비 <strong class="count-up">4배</strong> 빠른 반영</div>
       </div>
       <div class="service-card fade-up">
         <div class="service-num">02</div>
         <h3>문장별 진단 + 구체적 수정안</h3>
         <p>"이 문장이 약합니다"에서 끝나지 않습니다. 어떤 문장이, 왜 약한지 진단하고, 바로 적용 가능한 대안 문장을 제시합니다. 복사해서 붙여넣을 수 있는 수정안입니다.</p>
-        <div class="service-stat">진단 + 대안 문장 + 구조 피드백 <strong>3종</strong> 동시 제공</div>
+        <div class="service-stat">진단 + 대안 문장 + 구조 피드백 <strong class="count-up">3종</strong> 동시 제공</div>
       </div>
       <div class="service-card fade-up">
         <div class="service-num">03</div>
         <h3>반복 수정, 마감 전까지</h3>
         <p>컨설턴트는 수정 1~2회로 끝입니다. 이 서비스는 다릅니다. 첨삭 결과가 마음에 안 들면 다시 수정 요청을 보내세요. 마감 직전까지 계속 다듬을 수 있습니다.</p>
-        <div class="service-stat">Plus 기준 수정 <strong>40회</strong> · 컨설턴트 대비 <strong>20배</strong></div>
+        <div class="service-stat">Plus 기준 수정 <strong class="count-up">40회</strong> · 컨설턴트 대비 <strong class="count-up">20배</strong></div>
       </div>
     </div>
   </div>
@@ -892,7 +1699,7 @@
           <li><span class="check">✓</span> 기업 맞춤 자동 반영</li>
           <li><span class="check">✓</span> 문장별 진단 + 수정안</li>
         </ul>
-        <button class="price-btn outline" onclick="handlePurchase('basic')">시작하기</button>
+        <button class="price-btn outline" onclick="handlePurchase('basic', this)">시작하기</button>
       </div>
 
       <!-- PLUS (Featured) -->
@@ -907,7 +1714,7 @@
           <li><span class="check">✓</span> 기업 맞춤 자동 반영</li>
           <li><span class="check">✓</span> 문장별 진단 + 수정안</li>
         </ul>
-        <button class="price-btn primary" onclick="handlePurchase('plus')">Plus로 시작하기</button>
+        <button class="price-btn primary" onclick="handlePurchase('plus', this)">Plus로 시작하기</button>
       </div>
 
       <!-- PRO -->
@@ -921,7 +1728,7 @@
           <li><span class="check">✓</span> 기업 맞춤 자동 반영</li>
           <li><span class="check">✓</span> 문장별 진단 + 수정안</li>
         </ul>
-        <button class="price-btn outline" onclick="handlePurchase('pro')">시작하기</button>
+        <button class="price-btn outline" onclick="handlePurchase('pro', this)">시작하기</button>
       </div>
     </div>
     <p class="pricing-note fade-up">
@@ -940,6 +1747,7 @@
     </div>
     <div class="testi-grid">
       <div class="testi-card fade-up">
+        <div class="testi-stars" aria-label="별점 5점 만점에 5점">★★★★★<span class="testi-result">서류 통과</span></div>
         <div class="testi-quote">"컨설턴트한테 5만원 주고 받은 거보다, 여기서 19,900원에 다듬은 게 더 낫습니다."</div>
         <div class="testi-body">하반기에 삼성·SK·LG 3곳 동시에 넣었는데, 컨설턴트한테 맡기면 건당 4만원이었어요. 한 곳만 맡기고 나머지는 여기서 돌렸는데, 솔직히 여기가 더 구체적이었습니다. 특히 "삼성 인재상 반영"이 진짜 되는 게 놀라웠어요. 2번 문항 수정만 7번 했는데, 갈수록 문장이 단단해지는 게 느껴졌습니다.</div>
         <div class="testi-author">
@@ -951,6 +1759,7 @@
         </div>
       </div>
       <div class="testi-card fade-up">
+        <div class="testi-stars" aria-label="별점 5점 만점에 5점">★★★★★<span class="testi-result">이직 합격</span></div>
         <div class="testi-quote">"퇴근하고 새벽에 자소서 고치는데, 이전 첨삭을 기억해주니까 진짜 편합니다."</div>
         <div class="testi-body">이직 준비 중인 3년차 개발자인데, 시간이 없어서 ChatGPT로 하다가 여기로 왔어요. ChatGPT는 매번 "저는 소프트웨어 엔지니어입니다"부터 다시 설명해야 했는데, 여기는 이전에 첨삭받은 내용이 유지되니까 "3번 문장 더 공격적으로"라고만 하면 끝이에요. Pro 끊고 카카오·토스·당근 3곳 자소서를 2주 만에 다 끝냈습니다.</div>
         <div class="testi-author">
@@ -961,6 +1770,66 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">자주 묻는 질문</h2>
+    </div>
+    <div class="faq-list fade-up">
+      <details class="faq-item">
+        <summary>ChatGPT랑 정확히 뭐가 달라요?</summary>
+        <div class="faq-answer">
+          ChatGPT는 범용 AI라서 매번 "저는 ○○ 직무 지원자입니다, 인재상은 △△입니다"부터 다시 설명해야 합니다. 커리어에딧은 <strong>기업명만 입력하면 인재상이 자동 반영</strong>되고, 이전 첨삭 결과를 기억해서 "3번 문장 더 공격적으로"라고만 해도 즉시 반영됩니다. 자소서 첨삭 한 가지 작업에 최적화된 도구라는 점이 가장 큰 차이입니다.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>기업명만 입력하면 진짜 인재상이 반영되나요?</summary>
+        <div class="faq-answer">
+          네. 국내 주요 기업 <strong>500개+</strong>의 인재상·핵심가치·직무별 요구역량 데이터를 기반으로 첨삭에 자동 반영됩니다. 예를 들어 같은 자소서라도 "삼성전자 DX부문"으로 입력하면 도전·창의 키워드 중심으로, "카카오"로 입력하면 사용자 중심 사고와 협업 키워드 중심으로 다듬어집니다.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>한 번 결제하면 언제까지 쓸 수 있어요?</summary>
+        <div class="faq-answer">
+          <strong>월 구독이 아닙니다.</strong> 1회 결제로 구매한 문항·수정 횟수는 만료 없이 사용할 수 있습니다. 문항을 다 쓰면 추가 플랜을 결제하시면 됩니다.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>환불 되나요?</summary>
+        <div class="faq-answer">
+          결제 후 <strong>첨삭 기능을 한 번도 사용하지 않은 경우 7일 이내 100% 환불</strong>해 드립니다. 첨삭을 1회라도 진행한 경우, 콘텐츠 특성상 사용한 만큼을 차감한 금액을 환불해 드립니다. 자세한 내용은 푸터의 환불 정책을 참고해 주세요.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>제가 입력한 자소서, 저장되거나 학습에 쓰이나요?</summary>
+        <div class="faq-answer">
+          입력하신 자소서는 본인의 첨삭 기록 조회 목적으로만 저장되며, <strong>AI 학습 데이터로 사용하지 않습니다.</strong> 계정 삭제 시 모든 데이터가 즉시 영구 삭제됩니다.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>지원하려는 회사가 500개 안에 없으면요?</summary>
+        <div class="faq-answer">
+          데이터베이스에 없는 기업도 입력 가능합니다. 이 경우 일반적인 자소서 첨삭 원칙(구체성·논리·차별성)에 따라 다듬어지며, 인재상 자동 반영 기능만 비활성화됩니다. 자주 요청되는 기업은 우선 추가하고 있으니 의견 보내주시면 반영합니다.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>합격을 보장해주나요?</summary>
+        <div class="faq-answer">
+          합격은 <strong>보장하지 않습니다.</strong> 첨삭 도구는 어떤 서비스든 합격을 보장할 수 없습니다. 다만 "구체성이 부족합니다"라는 진단에서 끝나지 않고, 바로 적용 가능한 수정안을 제시하기 때문에 자소서 완성도를 끌어올리는 데에는 분명한 도움이 됩니다.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>결제는 안전한가요?</summary>
+        <div class="faq-answer">
+          결제는 국내 1위 결제 인프라인 <strong>토스페이먼츠</strong>를 통해 처리됩니다. 카드 정보는 저희 서버에 저장되지 않으며, 모든 결제 정보는 토스페이먼츠의 PCI-DSS 인증 환경에서 안전하게 처리됩니다.
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -979,15 +1848,50 @@
       <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/></svg>
     </a>
     <p class="final-meta">
-      <span>첫 문항 무료 체험 가능</span>·<span>회원가입 30초</span>·<span>결과 확인까지 평균 2분</span>
+      <span>회원가입 30초</span>·<span>결과 확인까지 평균 2분</span>
     </p>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="container">
-    &copy; 2026 커리어에딧. All rights reserved.
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">커리어에딧</div>
+      <p>기업 인재상이 자동 반영되는 AI 자소서 첨삭. 문장별 진단부터 구체적 수정안까지, 한 번에.</p>
+    </div>
+    <div class="footer-col">
+      <h4>서비스</h4>
+      <ul>
+        <li><a href="#pricing">요금제</a></li>
+        <li><a href="#faq">자주 묻는 질문</a></li>
+        <li><a href="javascript:void(0)" onclick="handleStart()">첨삭 시작하기</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>고객 지원</h4>
+      <ul>
+        <li><a href="mailto:help@careeredit.kr">help@careeredit.kr</a></li>
+        <li><a href="/terms">이용약관</a></li>
+        <li><a href="/privacy">개인정보처리방침</a></li>
+        <li><a href="/refund">환불 정책</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <div class="biz-info">
+      <span>상호 : 커리어에딧</span>
+      <span>대표 : 홍길동</span>
+      <span>사업자등록번호 : 000-00-00000</span>
+      <span>통신판매업신고 : 제0000-서울강남-00000호</span>
+      <br>
+      <span>주소 : 서울특별시 강남구 OO로 OO, OO층</span>
+      <span>고객센터 : help@careeredit.kr</span>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 커리어에딧. All rights reserved.</span>
+      <span class="footer-pay">토스페이먼츠 안전결제</span>
+    </div>
   </div>
 </footer>
 
@@ -996,16 +1900,54 @@
   <div class="modal">
     <button class="modal-close" onclick="closeModal('authModal')">&times;</button>
 
-    <h2>시작하기</h2>
-    <p class="modal-sub">간편하게 로그인하고, 자소서 첨삭을 시작하세요.</p>
-    <div class="auth-methods">
-      <div id="googleBtnWrapper" style="display:flex;justify-content:center;min-height:44px;">
-        <div id="googleBtn"></div>
+    <div class="auth-header">
+      <div class="auth-logo">C</div>
+      <h2>커리어에딧과 함께<br>합격 자소서를 시작하세요</h2>
+    </div>
+
+    <label class="auth-consent" id="authConsent">
+      <input type="checkbox" id="authConsentCheck" onchange="onConsentChange()">
+      <span class="auth-consent-text">
+        <strong style="color:var(--text-primary);font-weight:600;">[필수]</strong>
+        <a href="/terms" target="_blank" rel="noopener">이용약관</a> 및
+        <a href="/privacy" target="_blank" rel="noopener">개인정보처리방침</a>에 동의합니다.
+      </span>
+    </label>
+
+    <div class="auth-providers is-disabled" id="authProviders">
+      <button type="button" class="auth-btn auth-btn-kakao" onclick="doKakaoLogin(this)">
+        <svg class="auth-icon" viewBox="0 0 24 24" fill="#191919" aria-hidden="true">
+          <path d="M12 3C6.48 3 2 6.58 2 10.7c0 2.66 1.78 4.99 4.45 6.32-.2.7-.71 2.5-.81 2.89-.13.48.18.47.37.34.15-.1 2.4-1.63 3.37-2.29.86.13 1.74.2 2.62.2 5.52 0 10-3.58 10-7.46S17.52 3 12 3z"/>
+        </svg>
+        <span class="auth-label">카카오로 계속하기</span>
+      </button>
+
+      <div class="auth-btn auth-btn-google" id="googleAuthBtn">
+        <svg class="auth-icon" viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
+          <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 18.9 13 24 13c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+          <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
+          <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.1 5.6l6.2 5.2C41 35.2 44 30 44 24c0-1.3-.1-2.4-.4-3.5z"/>
+        </svg>
+        <span class="auth-label">구글로 계속하기</span>
+        <div id="googleBtn" class="google-gsi-cover"></div>
       </div>
     </div>
-    <p style="text-align:center;font-size:12px;color:var(--text-secondary);margin-top:20px;opacity:0.6;">
-      로그인 시 서비스 이용약관에 동의하는 것으로 간주합니다.
-    </p>
+
+  </div>
+</div>
+
+<!-- ── MOBILE STICKY CTA ── -->
+<div class="mobile-sticky-cta" id="mobileStickyCta">
+  <div class="mobile-sticky-cta-inner">
+    <div class="msc-text">
+      <div class="msc-title">자소서, 지금 다듬어보세요</div>
+      <div class="msc-sub">19,900원 · 1회 결제 · 평균 2분</div>
+    </div>
+    <a href="javascript:void(0)" class="msc-btn" onclick="handleStart()">
+      시작하기
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/></svg>
+    </a>
   </div>
 </div>
 
@@ -1039,9 +1981,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Navbar scroll
   const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
-    nav.style.background = window.scrollY > 60
-      ? 'rgba(10,14,26,0.95)' : 'rgba(10,14,26,0.8)';
+    nav.classList.toggle('scrolled', window.scrollY > 60);
   });
+
+  // Hero demo: type the After text once it scrolls into view (loop every 30s)
+  startHeroDemoTyping();
+
+  // Mobile sticky CTA: visible after hero, hidden near footer & when modal is open
+  setupMobileStickyCta();
+
+  // Count-up animation for stat numbers
+  setupCountUp();
 
   // Init OAuth SDKs
   try {
@@ -1053,18 +2003,31 @@ document.addEventListener('DOMContentLoaded', async () => {
       kakaoInited = true;
     }
     // Google
-    if (oauthData.google_client_id && typeof google !== 'undefined') {
+    if (!oauthData.google_client_id) {
+      console.warn('[auth] GOOGLE_CLIENT_ID 환경변수가 설정되지 않았습니다.');
+    } else {
       googleClientId = oauthData.google_client_id;
-      google.accounts.id.initialize({
-        client_id: googleClientId,
-        callback: handleGoogleCredential,
-      });
-      google.accounts.id.renderButton(
-        document.getElementById('googleBtn'),
-        { theme: 'outline', size: 'large', width: 360, text: 'continue_with', locale: 'ko' }
-      );
+      // GSI 스크립트는 async로 로드되므로 google 전역이 준비될 때까지 대기
+      await waitForGoogle();
+      if (typeof google === 'undefined' || !google.accounts || !google.accounts.id) {
+        console.error('[auth] Google GSI 스크립트 로드 실패 (네트워크 또는 차단 확인 필요)');
+      } else {
+        google.accounts.id.initialize({
+          client_id: googleClientId,
+          callback: handleGoogleCredential,
+        });
+        // Render GSI button as transparent click overlay on top of custom button.
+        // Use max width (400) so it always covers the visible custom button area;
+        // parent's overflow:hidden clips any excess.
+        google.accounts.id.renderButton(
+          document.getElementById('googleBtn'),
+          { theme: 'outline', size: 'large', width: 400, text: 'continue_with', locale: 'ko' }
+        );
+      }
     }
-  } catch {}
+  } catch (e) {
+    console.error('[auth] OAuth 초기화 실패:', e);
+  }
 
   // Init Toss Payments
   try {
@@ -1079,6 +2042,142 @@ document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('token');
   if (token) fetchMe(token);
 });
+
+// ── Count-up animation ──
+function setupCountUp() {
+  const els = document.querySelectorAll('.count-up');
+  if (!els.length) return;
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Parse and prepare each element
+  els.forEach(el => {
+    const text = el.textContent.trim();
+    const m = text.match(/^(\d+)(.*)$/);
+    if (!m) return;
+    el.dataset.target = m[1];
+    el.dataset.suffix = m[2] || '';
+    if (reduced) return; // keep as-is
+    el.textContent = '0' + (m[2] || '');
+  });
+  if (reduced) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  els.forEach(el => io.observe(el));
+}
+
+function animateCount(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const suffix = el.dataset.suffix || '';
+  if (isNaN(target)) return;
+  const duration = 1200;
+  const start = performance.now();
+  function step(now) {
+    const progress = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const value = Math.round(target * eased);
+    el.textContent = value.toLocaleString() + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ── Mobile sticky CTA ──
+function setupMobileStickyCta() {
+  const bar = document.getElementById('mobileStickyCta');
+  if (!bar) return;
+  // Only on mobile widths
+  const mq = window.matchMedia('(max-width: 768px)');
+  if (!mq.matches) return;
+
+  document.body.classList.add('has-mobile-cta');
+
+  const hero = document.querySelector('.hero');
+  const footer = document.querySelector('footer');
+
+  function update() {
+    // Hide while auth modal is open
+    const modalOpen = document.querySelector('.modal-overlay.active');
+    if (modalOpen) { bar.classList.remove('visible'); return; }
+    // Hide before scrolling past hero
+    const heroBottom = hero ? hero.getBoundingClientRect().bottom : 0;
+    if (heroBottom > 100) { bar.classList.remove('visible'); return; }
+    // Hide when footer enters viewport
+    if (footer) {
+      const footerTop = footer.getBoundingClientRect().top;
+      if (footerTop < window.innerHeight - 60) { bar.classList.remove('visible'); return; }
+    }
+    bar.classList.add('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  // Re-evaluate when modal toggles (no MutationObserver needed since openModal/closeModal call setTimeout to update)
+  document.addEventListener('click', () => setTimeout(update, 50));
+  update();
+}
+
+// ── Hero typing demo ──
+function startHeroDemoTyping() {
+  const target = document.getElementById('demoTypedText');
+  if (!target) return;
+  const fullText = '교내 해커톤에서 프론트 팀원이 중도 이탈했을 때, 저는 48시간 안에 API 12개를 혼자 연결해 팀을 3위로 이끌었습니다. 이 경험으로 \'내 역할 밖의 문제도 내 문제\'라는 삼성 DX의 도전 정신을 체득했습니다.';
+  const cursorHTML = '<span class="typed-cursor"></span>';
+  const respectsReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (respectsReducedMotion) {
+    target.textContent = fullText;
+    return;
+  }
+  let i = 0;
+  let timer = null;
+  function type() {
+    if (i <= fullText.length) {
+      target.innerHTML = fullText.slice(0, i) + cursorHTML;
+      i++;
+      // Variable speed: faster overall, slight pause on punctuation
+      const ch = fullText[i - 1];
+      const delay = (ch === ',' || ch === '.') ? 220 : (ch === ' ' ? 30 : 24);
+      timer = setTimeout(type, delay);
+    } else {
+      // Hold then restart
+      timer = setTimeout(() => { i = 0; type(); }, 12000);
+    }
+  }
+  // Start when hero demo enters viewport
+  const demo = document.querySelector('.hero-demo');
+  if (!demo) { type(); return; }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        type();
+        io.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  io.observe(demo);
+}
+
+// ── Wait for Google GSI to load ──
+function waitForGoogle(timeoutMs = 5000) {
+  return new Promise((resolve) => {
+    const ready = () =>
+      typeof google !== 'undefined' && google.accounts && google.accounts.id;
+    if (ready()) return resolve();
+    const start = Date.now();
+    const iv = setInterval(() => {
+      if (ready()) {
+        clearInterval(iv);
+        resolve();
+      } else if (Date.now() - start > timeoutMs) {
+        clearInterval(iv);
+        resolve();
+      }
+    }, 50);
+  });
+}
 
 // ── API helpers ──
 async function apiFetch(path, options = {}) {
@@ -1118,8 +2217,99 @@ function updateNavForUser() {
 }
 
 // ── Modal ──
-function openModal(id) { document.getElementById(id).classList.add('active'); }
-function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+// Track which element triggered the modal so we can restore focus on close
+let modalReturnFocus = null;
+
+function openModal(id) {
+  modalReturnFocus = document.activeElement;
+  const overlay = document.getElementById(id);
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  // Reset auth modal consent state on open
+  if (id === 'authModal') {
+    const cb = document.getElementById('authConsentCheck');
+    if (cb) cb.checked = false;
+    onConsentChange();
+  }
+  // Move focus into the modal for keyboard users
+  setTimeout(() => {
+    const target = overlay.querySelector('input:not([disabled]), button:not([disabled]):not(.modal-close), [tabindex]:not([tabindex="-1"])');
+    if (target) target.focus();
+    else overlay.querySelector('.modal-close')?.focus();
+  }, 30);
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow = '';
+  if (modalReturnFocus && typeof modalReturnFocus.focus === 'function') {
+    modalReturnFocus.focus();
+    modalReturnFocus = null;
+  }
+}
+
+// ESC key closes any open modal
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  const open = document.querySelector('.modal-overlay.active');
+  if (open && open.id) closeModal(open.id);
+});
+
+// Click on backdrop closes modal (but not when clicking the modal content itself)
+document.addEventListener('click', (e) => {
+  const target = e.target;
+  if (target.classList && target.classList.contains('modal-overlay') && target.classList.contains('active')) {
+    closeModal(target.id);
+  }
+});
+
+// Tab focus trap inside open modal
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab') return;
+  const open = document.querySelector('.modal-overlay.active');
+  if (!open) return;
+  const focusables = open.querySelectorAll(
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  );
+  if (!focusables.length) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+});
+
+// Toggle provider button group based on consent checkbox
+function onConsentChange() {
+  const cb = document.getElementById('authConsentCheck');
+  const group = document.getElementById('authProviders');
+  if (!cb || !group) return;
+  group.classList.toggle('is-disabled', !cb.checked);
+}
+
+// Shake the consent box if user tries to interact with disabled providers
+document.addEventListener('click', (e) => {
+  const group = document.getElementById('authProviders');
+  if (!group || !group.classList.contains('is-disabled')) return;
+  // Check if click landed inside the disabled providers area (pointer-events:none means
+  // events fall through to ancestors, so we detect via composedPath)
+  const path = e.composedPath ? e.composedPath() : [];
+  const hitProviders = path.some(el => el === group);
+  if (!hitProviders) {
+    // Check via geometry as fallback
+    const rect = group.getBoundingClientRect();
+    if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) return;
+  }
+  const consent = document.getElementById('authConsent');
+  if (consent) {
+    consent.classList.remove('shake');
+    void consent.offsetWidth;
+    consent.classList.add('shake');
+  }
+}, true);
 
 // ── Toast ──
 function showToast(msg, type = 'success') {
@@ -1146,17 +2336,20 @@ async function onAuthSuccess() {
 }
 
 // ── Kakao login ──
-async function doKakaoLogin() {
+async function doKakaoLogin(btn) {
   if (!kakaoInited) {
     showToast('카카오 앱 키가 설정되지 않았습니다.', 'error');
     return;
   }
+  if (btn) { btn.classList.add('is-loading'); btn.disabled = true; }
   try {
     await Kakao.Auth.authorize({
       redirectUri: window.location.origin + '/api/auth/kakao/callback',
       scope: 'profile_nickname,account_email',
     });
+    // Note: authorize() redirects, so the page unloads. No need to remove loading state on success.
   } catch (e) {
+    if (btn) { btn.classList.remove('is-loading'); btn.disabled = false; }
     showToast(e.message || '카카오 로그인에 실패했습니다.', 'error');
   }
 }
@@ -1199,18 +2392,23 @@ function handleStart() {
   }
 }
 
-async function handlePurchase(planName) {
+async function handlePurchase(planName, btn) {
   if (!currentUser) {
     pendingPurchasePlan = planName;
     openModal('authModal');
     return;
   }
-  await executePurchase(planName);
+  await executePurchase(planName, btn);
 }
 
-async function executePurchase(planName) {
+async function executePurchase(planName, btn) {
+  const originalText = btn ? btn.textContent : null;
+  if (btn) {
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+    btn.textContent = '결제 진행 중…';
+  }
   try {
-    showToast('플랜을 구매하는 중...');
     await apiFetch('/api/plans/purchase', {
       method: 'POST',
       body: JSON.stringify({ plan_name: planName }),
@@ -1220,13 +2418,12 @@ async function executePurchase(planName) {
     setTimeout(() => { window.location.href = '/editing'; }, 1000);
   } catch (e) {
     showToast(e.message, 'error');
+    if (btn) {
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
   }
 }
 
-// Close modal on overlay click
-document.getElementById('authModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal('authModal');
-});
-</script>
-</body>
-</html>
+// Close mo
