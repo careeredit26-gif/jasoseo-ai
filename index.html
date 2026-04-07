@@ -1179,14 +1179,17 @@
   .auth-btn {
     position: relative;
     width: 100%;
-    padding: 15px 18px;
+    padding: 16px 18px;
     border-radius: 12px;
-    border: 1px solid transparent;
+    border: 1.5px solid transparent;
     font-size: 15px; font-weight: 700;
     cursor: pointer; font-family: inherit;
     display: flex; align-items: center;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
     overflow: hidden;
+    min-height: 56px;
+    box-sizing: border-box;
+    line-height: 1;
   }
   .auth-btn:hover {
     transform: translateY(-1px);
@@ -1203,16 +1206,23 @@
     text-align: center;
     margin-right: 22px; /* compensate for icon width to keep label visually centered */
     z-index: 1;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
   }
   .auth-btn-kakao {
     background: #FEE500; color: #191919;
+    border-color: #FEE500;
   }
-  .auth-btn-kakao:hover { background: #FEE500; }
+  .auth-btn-kakao:hover { background: #FDD800; border-color: #FDD800; }
   .auth-btn-google {
     background: #ffffff; color: #1f1f1f;
-    border-color: rgba(15,23,42,0.18);
+    border-color: #dadce0;
   }
-  .auth-btn-google:hover { background: #f8f9fc; }
+  .auth-btn-google:hover {
+    background: #f8f9fc;
+    border-color: #c4c7cc;
+  }
   /* Off-screen GSI button — provides the actual click target via JS */
   .google-gsi-hidden {
     position: absolute;
