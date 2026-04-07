@@ -83,28 +83,12 @@
     line-height: 1.6;
   }
 
-  /* Ambient gradient blur — subtle indigo/coral light spots */
-  body::before, body::after {
-    content: '';
-    position: fixed;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    filter: blur(120px);
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.5;
-  }
-  body::before {
-    background: radial-gradient(circle, rgba(79,70,229,0.18) 0%, transparent 70%);
-    top: -200px; left: -200px;
-  }
-  body::after {
-    background: radial-gradient(circle, rgba(255,107,61,0.14) 0%, transparent 70%);
-    top: 30%; right: -250px;
-  }
-  nav, main, section, footer, .modal-overlay, .toast, .mobile-sticky-cta {
-    position: relative;
-    z-index: 1;
+  /* Ambient gradient — subtle indigo/coral tint baked into hero only */
+  .hero {
+    background:
+      radial-gradient(ellipse 70% 50% at 15% 20%, rgba(79,70,229,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 40%, rgba(255,107,61,0.08) 0%, transparent 60%),
+      transparent;
   }
 
   /* Accessible focus ring (only when keyboard-navigating) */
@@ -159,7 +143,6 @@
     display: flex; align-items: center; justify-content: center;
     text-align: center;
     padding: 140px 24px 100px;
-    background: transparent;
     overflow: hidden;
   }
   .hero-badge {
@@ -1966,17 +1949,33 @@ let googleClientId = '';
 let tossPayments = null;
 
 // ── Init ──
+// Safety net: if anything below fails, force all fade-up elements visible
+// after a short delay so the page never stays blank.
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => el.classList.add('visible'));
+  }, 1500);
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
   // Fade-up animation
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  try {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    // Eagerly mark above-the-fold elements as visible immediately
+    const heroFade = document.querySelector('.hero .fade-up');
+    if (heroFade) heroFade.classList.add('visible');
+  } catch (e) {
+    // If observer fails, just show everything
+    document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+  }
 
   // Navbar scroll
   const nav = document.querySelector('nav');
