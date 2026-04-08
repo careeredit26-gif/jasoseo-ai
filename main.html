@@ -978,8 +978,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     currentUser = await apiFetch('/api/auth/me');
     currentPlans = await apiFetch('/api/plans/my');
     if (currentPlans.length === 0) {
-      showToast('플랜을 먼저 구매해주세요.', 'error');
-      setTimeout(() => { window.location.href = '/'; }, 1500);
+      redirectToPurchase('사용 가능한 플랜이 없습니다.');
       return;
     }
     updateNav();
@@ -1001,8 +1000,20 @@ async function apiFetch(path, options = {}) {
   if (token) headers['Authorization'] = 'Bearer ' + token;
   const res = await fetch(API + path, { ...options, headers });
   const data = await res.json();
-  if (!res.ok) throw new Error(data.detail || '요청에 실패했습니다.');
+  if (!res.ok) {
+    const err = new Error(data.detail || '요청에 실패했습니다.');
+    err.status = res.status;
+    throw err;
+  }
   return data;
+}
+
+// ── Redirect to purchase page ──
+// 첨삭/수정 횟수 부족 시 사용. 토스트로 사유를 알린 뒤 메인 페이지의
+// 요금제 섹션(#pricing)으로 자연스럽게 이동시킨다.
+function redirectToPurchase(reason) {
+  showToast(reason + ' 구매 페이지로 이동합니다.', 'error');
+  setTimeout(() => { window.location.href = '/#pricing'; }, 1800);
 }
 
 // ── Nav ──
@@ -1067,7 +1078,12 @@ async function submitReview() {
     loadHistory();
     showToast('첨삭이 완료되었습니다!');
   } catch (e) {
-    showToast(e.message, 'error');
+    if (e.status === 403) {
+      // 첨삭 가능한 플랜이 없거나 잔여 문항이 부족한 경우
+      redirectToPurchase(e.message);
+    } else {
+      showToast(e.message, 'error');
+    }
   } finally {
     btn.disabled = false;
     btn.classList.remove('loading');
@@ -1295,8 +1311,14 @@ async function submitRevise() {
     currentPlans = await apiFetch('/api/plans/my');
     updateNav();
     showToast(`수정 완료! (${review.revision_count}회차)`);
-  } catch (e) { showToast(e.message, 'error'); }
-  finally { btn.disabled = false; btn.textContent = '수정 요청'; }
+  } catch (e) {
+    if (e.status === 403) {
+      // 수정 횟수가 소진된 경우
+      redirectToPurchase(e.message);
+    } else {
+      showToast(e.message, 'error');
+    }
+  } finally { btn.disabled = false; btn.textContent = '수정 요청'; }
 }
 
 // ── History ──
