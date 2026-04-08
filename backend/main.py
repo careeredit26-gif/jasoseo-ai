@@ -97,154 +97,122 @@ def _section(*lines):
     return "\n".join(str(l) for l in lines if l is not None and l != "")
 
 
-def build_system_prompt():
-    """Compose the comprehensive system prompt from all v3.0 modules."""
-    core = PROMPT_MODULES["core"]
-    qe   = PROMPT_MODULES["question"]
-    cd   = PROMPT_MODULES["company"]
-    we   = PROMPT_MODULES["writing"]
-    ds   = PROMPT_MODULES["diagnosis"]
-    ib   = PROMPT_MODULES["interview"]
-    of   = PROMPT_MODULES["output"]
+def _join_list(v):
+    if isinstance(v, list):
+        return '; '.join(str(x) for x in v)
+    return str(v) if v is not None else ''
 
-    parts = []
 
-    # ─── ROLE & CORE PHILOSOPHY ───
-    parts.append(core["role"])
-    cp = core.get("core_philosophy", {})
-    if cp:
-        parts.append(_section(
-            "\n## 핵심 철학",
-            cp.get("principle", ""),
-            cp.get("evaluation_mindset", ""),
-            cp.get("differentiation_rule", ""),
-        ))
+# ──────────────────────────────────────
+# STEP 2 lookup tables — pre-rendered once at startup
+# ──────────────────────────────────────
+# The full company DB across 03 + 03b + 03d~03h is ~32k chars (~20k tokens),
+# which alone exceeds Groq llama-3.3-70b-versatile free-tier TPM (12,000).
+# To avoid 429 → unhandled exception → "Internal Server Error" plain text,
+# we render only the matched company per request and fall back to the
+# industry framework when no match is found.
 
-    # ─── EVALUATOR SIMULATION ───
-    es = core.get("evaluator_simulation", {})
-    if es:
-        parts.append("\n## 평가자 시뮬레이션")
-        parts.append(es.get("instruction", ""))
-        for stage, desc in (es.get("reading_pattern") or {}).items():
-            parts.append(f"- {stage}: {desc}")
-        if es.get("instant_reject_signals"):
-            parts.append("\n### 즉시 탈락 신호")
-            for s in es["instant_reject_signals"]:
-                parts.append(f"- {s}")
-        if es.get("positive_signals"):
-            parts.append("\n### 긍정 신호")
-            for s in es["positive_signals"]:
-                parts.append(f"- {s}")
+def _render_flat_company(name, info):
+    """Render one company from 03/03b shape (flat with divisions)."""
+    lines = []
+    gv = ', '.join(info.get("group_values", []))
+    lines.append(f"**{name}** [{gv}]")
+    if info.get("evaluation_style"):
+        lines.append(f"  {info['evaluation_style']}")
+    for div_name, div_info in (info.get("divisions") or {}).items():
+        lines.append(
+            f"  - {div_name}: {div_info.get('what_they_want', '')} "
+            f"(톤: {div_info.get('tone_guide', '')})"
+        )
+    tp = info.get("tone_profile")
+    if isinstance(tp, dict) and tp:
+        lines.append(f"  톤 프로필: {', '.join(f'{k}={v}' for k, v in tp.items())}")
+    return "\n".join(lines)
 
-    # ─── CHARACTER COUNT STRATEGY ───
-    ccs = core.get("character_count_strategy", {})
-    if ccs:
-        parts.append("\n## 글자수 전략")
-        parts.append(ccs.get("instruction", ""))
-        for sname, sval in (ccs.get("strategies") or {}).items():
-            if isinstance(sval, dict):
-                desc = sval.get("structure") or sval.get("description") or ""
-                parts.append(f"- **{sname}**: {desc}")
-            else:
-                parts.append(f"- **{sname}**: {sval}")
 
-    # ─── STEP 1: QUESTION CLASSIFICATION ───
-    parts.append("\n## STEP 1: 질문 유형 판별")
-    parts.append(qe.get("classification_instruction", ""))
-    for type_name, info in qe.get("types", {}).items():
-        parts.append(f"\n#### {type_name}")
-        parts.append(f"- 평가 의도: {info.get('evaluator_intent', '')}")
-        scores = info.get("what_evaluator_actually_scores", {})
-        if scores.get("S_tier"):
-            parts.append(f"- S등급: {scores['S_tier']}")
-        if scores.get("C_tier"):
-            parts.append(f"- C등급: {scores['C_tier']}")
-        struct = info.get("required_structure", {})
-        if struct:
-            parts.append(f"- 필수 구조: {' → '.join(f'{k}({v})' for k, v in struct.items())}")
-        fm = info.get("fatal_mistakes", [])
-        if fm:
-            parts.append(f"- 치명적 실수: {'; '.join(fm)}")
-    cqh = qe.get("complex_question_handling", {})
-    if cqh:
-        parts.append(f"\n### 복합 문항 처리\n{cqh.get('instruction', '')}")
+def _render_sector_company(name, info, sector_label, sub_sector):
+    """Render one company from 03d–03h shape (sector → sub_sector → company)."""
+    lines = [f"**{name}** [{sector_label} > {sub_sector}]"]
+    if info.get("what_they_do"):
+        lines.append(f"  하는 일: {info['what_they_do']}")
+    if info.get("what_they_want"):
+        lines.append(f"  원하는 인재: {info['what_they_want']}")
+    sh = info.get("strategic_hooks")
+    if sh:
+        lines.append(f"  전략 포인트: {_join_list(sh)}")
+    if info.get("tone_guide"):
+        lines.append(f"  톤: {info['tone_guide']}")
+    return "\n".join(lines)
 
-    # ─── STEP 2: COMPANY ANALYSIS ───
-    parts.append("\n## STEP 2: 기업 분석")
-    parts.append(cd.get("instruction", ""))
 
-    # 2a) Flat company DBs (03 + 03b — same shape)
-    def _render_flat_companies(db):
+def _render_sector_common(db):
+    sc = db.get("sector_common")
+    if not sc:
+        return ""
+    lines = ["[섹터 공통 가이드]"]
+    if isinstance(sc, dict):
+        for k, v in sc.items():
+            lines.append(f"- {k}: {_join_list(v)}")
+    else:
+        lines.append(_join_list(sc))
+    return "\n".join(lines)
+
+
+def _build_company_indices():
+    """Pre-render every company entry into a lookup dict for per-request use."""
+    flat = {}      # name → rendered text
+    sectors = {}   # name → (sector_label, sub_sector, rendered, sector_common)
+
+    for db_key in ("company", "company_b"):
+        db = PROMPT_MODULES.get(db_key, {})
         for name, info in (db.get("companies") or {}).items():
-            gv = ', '.join(info.get("group_values", []))
-            parts.append(f"\n**{name}** [{gv}]")
-            parts.append(f"  {info.get('evaluation_style', '')}")
-            for div_name, div_info in (info.get("divisions") or {}).items():
-                parts.append(
-                    f"  - {div_name}: {div_info.get('what_they_want', '')} "
-                    f"(톤: {div_info.get('tone_guide', '')})"
-                )
+            flat[name] = _render_flat_company(name, info)
 
-    _render_flat_companies(cd)
-
-    cb = PROMPT_MODULES["company_b"]
-    parts.append(f"\n### 확장 대기업 그룹 DB — {cb.get('description', '')}")
-    _render_flat_companies(cb)
-
-    # 2b) Sector-grouped DBs (03d–03h)
-    def _join(v):
-        if isinstance(v, list):
-            return '; '.join(str(x) for x in v)
-        return str(v) if v is not None else ''
-
-    def _render_sector_db(db, label):
-        parts.append(f"\n### {label}")
-        sc = db.get("sector_common")
-        if isinstance(sc, dict):
-            for k, v in sc.items():
-                parts.append(f"- [공통:{k}] {_join(v)}")
-        elif sc:
-            parts.append(_join(sc))
+    sector_labels = {
+        "finance":       "금융",
+        "it_game":       "IT/게임/콘텐츠",
+        "manufacturing": "제조/화학/건설/방산/에너지",
+        "consumer":      "유통/식품/뷰티/물류",
+        "public":        "공기업/공공기관",
+    }
+    for db_key, label in sector_labels.items():
+        db = PROMPT_MODULES.get(db_key, {})
+        sc_text = _render_sector_common(db)
         for sub_sector, comps in (db.get("companies") or {}).items():
-            parts.append(f"\n#### {sub_sector}")
             if not isinstance(comps, dict):
                 continue
             for cname, cinfo in comps.items():
                 if not isinstance(cinfo, dict):
                     continue
-                wt = cinfo.get("what_they_want", "")
-                tg = cinfo.get("tone_guide", "")
-                parts.append(f"- **{cname}**: {wt} (톤: {tg})")
-                sh = cinfo.get("strategic_hooks")
-                if sh:
-                    parts.append(f"    · 전략 포인트: {_join(sh)}")
+                sectors[cname] = (
+                    label, sub_sector,
+                    _render_sector_company(cname, cinfo, label, sub_sector),
+                    sc_text,
+                )
+    return flat, sectors
 
-    for key, label in (
-        ("finance",       "금융권 DB (은행/증권/보험/카드/자산운용)"),
-        ("it_game",       "IT/게임/콘텐츠 DB"),
-        ("manufacturing", "제조/화학/건설/방산/에너지/부품 DB"),
-        ("consumer",      "유통/식품/뷰티/물류/항공/서비스 DB"),
-        ("public",        "공기업/공공기관 DB"),
-    ):
-        _render_sector_db(PROMPT_MODULES[key], label)
 
-    # 2c) Industry framework (fallback for unregistered companies)
-    ind = PROMPT_MODULES["industry"]
-    parts.append("\n### 산업 프레임워크 (DB 미등록 기업 대응)")
+_FLAT_COMPANIES, _SECTOR_COMPANIES = _build_company_indices()
+
+
+def _render_industry_framework():
+    """Render the 03c industry framework once (used as fallback)."""
+    ind = PROMPT_MODULES.get("industry", {})
+    parts = []
     if ind.get("usage_instruction"):
         parts.append(ind["usage_instruction"])
     for ind_name, ind_info in (ind.get("industry_profiles") or {}).items():
         if not isinstance(ind_info, dict):
             continue
         parts.append(f"\n**[{ind_name}]**")
-        if ind_info.get("includes"):
-            parts.append(f"  포함: {_join(ind_info['includes'])}")
-        if ind_info.get("common_values"):
-            parts.append(f"  공통 가치: {_join(ind_info['common_values'])}")
-        if ind_info.get("key_emphasis"):
-            parts.append(f"  핵심 강조: {_join(ind_info['key_emphasis'])}")
-        if ind_info.get("strategic_trends"):
-            parts.append(f"  최근 트렌드: {_join(ind_info['strategic_trends'])}")
+        for label, key in (
+            ("포함", "includes"),
+            ("공통 가치", "common_values"),
+            ("핵심 강조", "key_emphasis"),
+            ("최근 트렌드", "strategic_trends"),
+        ):
+            if ind_info.get(key):
+                parts.append(f"  {label}: {_join_list(ind_info[key])}")
         et = ind_info.get("essay_tips")
         if et:
             if isinstance(et, list):
@@ -261,44 +229,153 @@ def build_system_prompt():
         adj = fcg.get("adjustments")
         if isinstance(adj, dict):
             for k, v in adj.items():
-                parts.append(f"- {k}: {_join(v)}")
+                parts.append(f"- {k}: {_join_list(v)}")
         elif isinstance(adj, list):
             for v in adj:
-                parts.append(f"- {_join(v)}")
+                parts.append(f"- {_join_list(v)}")
+    return "\n".join(parts)
 
-    cip = ind.get("company_inference_protocol")
-    if cip:
-        parts.append("\n### 기업 추론 프로토콜")
-        if isinstance(cip, dict):
-            for k, v in cip.items():
-                parts.append(f"- {k}: {_join(v)}")
-        else:
-            parts.append(_join(cip))
+
+_INDUSTRY_FRAMEWORK_TEXT = _render_industry_framework()
+
+
+def _lookup_company(name):
+    """Find a company across all DBs. Returns (rendered_text, sector_common)."""
+    if not name:
+        return None
+    name = name.strip()
+    if name in _FLAT_COMPANIES:
+        return _FLAT_COMPANIES[name], None
+    if name in _SECTOR_COMPANIES:
+        _, _, txt, sc = _SECTOR_COMPANIES[name]
+        return txt, sc
+    # substring fallback (handles "삼성전자 DS" → "삼성전자", "(주)신한은행" → "신한은행")
+    for k, v in _FLAT_COMPANIES.items():
+        if k in name or name in k:
+            return v, None
+    for k, (_lbl, _ss, txt, sc) in _SECTOR_COMPANIES.items():
+        if k in name or name in k:
+            return txt, sc
+    return None
+
+
+def _render_step2(company_name=""):
+    """Build STEP 2 dynamically — only the matched company + framework fallback."""
+    cd = PROMPT_MODULES["company"]
+    parts = ["\n## STEP 2: 기업 분석"]
+    parts.append(cd.get("instruction", ""))
+
+    matched = _lookup_company(company_name)
+    if matched:
+        rendered, sector_common = matched
+        parts.append(f"\n### 매칭 기업 정보 — {company_name}")
+        if sector_common:
+            parts.append(sector_common)
+        parts.append(rendered)
+    else:
+        parts.append("\n### 매칭 기업 없음 — 산업 프레임워크 적용")
+        parts.append(_INDUSTRY_FRAMEWORK_TEXT)
 
     ucp = cd.get("unknown_company_protocol", {})
     if ucp:
         parts.append("\n### 미등록 기업 처리 프로토콜")
         for step_key, step_val in ucp.items():
             parts.append(f"- {step_key}: {step_val}")
+    return "\n".join(parts)
 
-    # ─── STEP 3: WRITING RULES ───
-    parts.append("\n## STEP 3: 작성 규칙")
-    parts.append("### 절대 규칙")
+
+def _build_static_parts():
+    """Render everything except STEP 2 (which is per-request).
+
+    Returns (prefix, suffix) where prefix = role/philosophy/STEP 1
+    and suffix = STEP 3/4/5 + output format."""
+    core = PROMPT_MODULES["core"]
+    qe   = PROMPT_MODULES["question"]
+    we   = PROMPT_MODULES["writing"]
+    ds   = PROMPT_MODULES["diagnosis"]
+    ib   = PROMPT_MODULES["interview"]
+    of   = PROMPT_MODULES["output"]
+
+    prefix = []
+
+    # ─── ROLE & CORE PHILOSOPHY ───
+    prefix.append(core["role"])
+    cp = core.get("core_philosophy", {})
+    if cp:
+        prefix.append(_section(
+            "\n## 핵심 철학",
+            cp.get("principle", ""),
+            cp.get("evaluation_mindset", ""),
+            cp.get("differentiation_rule", ""),
+        ))
+
+    # ─── EVALUATOR SIMULATION ───
+    es = core.get("evaluator_simulation", {})
+    if es:
+        prefix.append("\n## 평가자 시뮬레이션")
+        prefix.append(es.get("instruction", ""))
+        for stage, desc in (es.get("reading_pattern") or {}).items():
+            prefix.append(f"- {stage}: {desc}")
+        if es.get("instant_reject_signals"):
+            prefix.append("\n### 즉시 탈락 신호")
+            for s in es["instant_reject_signals"]:
+                prefix.append(f"- {s}")
+        if es.get("positive_signals"):
+            prefix.append("\n### 긍정 신호")
+            for s in es["positive_signals"]:
+                prefix.append(f"- {s}")
+
+    # ─── CHARACTER COUNT STRATEGY ───
+    ccs = core.get("character_count_strategy", {})
+    if ccs:
+        prefix.append("\n## 글자수 전략")
+        prefix.append(ccs.get("instruction", ""))
+        for sname, sval in (ccs.get("strategies") or {}).items():
+            if isinstance(sval, dict):
+                desc = sval.get("structure") or sval.get("description") or ""
+                prefix.append(f"- **{sname}**: {desc}")
+            else:
+                prefix.append(f"- **{sname}**: {sval}")
+
+    # ─── STEP 1: QUESTION CLASSIFICATION ───
+    prefix.append("\n## STEP 1: 질문 유형 판별")
+    prefix.append(qe.get("classification_instruction", ""))
+    for type_name, info in qe.get("types", {}).items():
+        prefix.append(f"\n#### {type_name}")
+        prefix.append(f"- 평가 의도: {info.get('evaluator_intent', '')}")
+        scores = info.get("what_evaluator_actually_scores", {})
+        if scores.get("S_tier"):
+            prefix.append(f"- S등급: {scores['S_tier']}")
+        if scores.get("C_tier"):
+            prefix.append(f"- C등급: {scores['C_tier']}")
+        struct = info.get("required_structure", {})
+        if struct:
+            prefix.append(f"- 필수 구조: {' → '.join(f'{k}({v})' for k, v in struct.items())}")
+        fm = info.get("fatal_mistakes", [])
+        if fm:
+            prefix.append(f"- 치명적 실수: {'; '.join(fm)}")
+    cqh = qe.get("complex_question_handling", {})
+    if cqh:
+        prefix.append(f"\n### 복합 문항 처리\n{cqh.get('instruction', '')}")
+
+    # ─── STEP 3: WRITING RULES (suffix begins) ───
+    suffix = []
+    suffix.append("\n## STEP 3: 작성 규칙")
+    suffix.append("### 절대 규칙")
     for r in we.get("absolute_rules", []):
-        parts.append(f"- {r}")
-    parts.append("\n### 문장 규칙")
+        suffix.append(f"- {r}")
+    suffix.append("\n### 문장 규칙")
     for r in we.get("sentence_level_rules", []):
-        parts.append(f"- {r}")
+        suffix.append(f"- {r}")
 
-    # Anti-cliche engine (3 tiers)
     ace = we.get("anti_cliche_engine", {})
     if ace:
-        parts.append(f"\n### 안티 클리셰 엔진\n{ace.get('instruction', '')}")
+        suffix.append(f"\n### 안티 클리셰 엔진\n{ace.get('instruction', '')}")
         for tier_key in ("tier_1_instant_kill", "tier_2_weak_signals", "tier_3_overused_structures"):
             tier = ace.get(tier_key, {})
             if not tier:
                 continue
-            parts.append(f"\n**[{tier_key}]** {tier.get('description', '')}")
+            suffix.append(f"\n**[{tier_key}]** {tier.get('description', '')}")
             items = tier.get("expressions") or tier.get("patterns") or []
             for e in items:
                 if isinstance(e, dict):
@@ -310,58 +387,54 @@ def build_system_prompt():
                         line += f" — {why}"
                     if alt:
                         line += f" / 대안: {alt}"
-                    parts.append(line)
+                    suffix.append(line)
                 else:
-                    parts.append(f"- {e}")
+                    suffix.append(f"- {e}")
 
-    # Tone calibration (brief reference)
     tc = we.get("tone_calibration", {})
     if tc:
-        parts.append(f"\n### 톤 캘리브레이션\n{tc.get('instruction', '')}")
-        # tone_profile of each company is already given in STEP 2 indirectly
-        # only include the formality scale summary here
+        suffix.append(f"\n### 톤 캘리브레이션\n{tc.get('instruction', '')}")
         fs = tc.get("formality_scale", {})
         if isinstance(fs, dict) and fs:
-            parts.append("기업별 격식도 척도(1=캐주얼 ~ 10=극도 격식):")
+            suffix.append("기업별 격식도 척도(1=캐주얼 ~ 10=극도 격식):")
             for level, desc in list(fs.items())[:6]:
-                parts.append(f"- {level}: {desc}")
+                suffix.append(f"- {level}: {desc}")
 
-    # Translation body detector
     tbd = we.get("translation_body_detector", {})
     if tbd:
-        parts.append(f"\n### 번역체 감지\n{tbd.get('instruction', '')}")
+        suffix.append(f"\n### 번역체 감지\n{tbd.get('instruction', '')}")
 
     # ─── STEP 4: DIAGNOSIS & SCORING ───
-    parts.append("\n## STEP 4: 진단 및 채점")
+    suffix.append("\n## STEP 4: 진단 및 채점")
     ddr = ds.get("diagnosis_depth_rules", {})
     if ddr:
-        parts.append(f"### 진단 깊이 (3단계)\n{ddr.get('instruction', '')}")
-        parts.append(f"1) {ddr.get('level_1_what', '')}")
-        parts.append(f"2) {ddr.get('level_2_why', '')}")
-        parts.append(f"3) {ddr.get('level_3_how', '')}")
+        suffix.append(f"### 진단 깊이 (3단계)\n{ddr.get('instruction', '')}")
+        suffix.append(f"1) {ddr.get('level_1_what', '')}")
+        suffix.append(f"2) {ddr.get('level_2_why', '')}")
+        suffix.append(f"3) {ddr.get('level_3_how', '')}")
 
     sev = ds.get("severity_system", {})
     if sev:
-        parts.append("\n### 심각도 체계")
+        suffix.append("\n### 심각도 체계")
         for level, info in sev.items():
             if isinstance(info, dict):
-                parts.append(f"- **{level}**: {info.get('description', info.get('criteria', ''))}")
+                suffix.append(f"- **{level}**: {info.get('description', info.get('criteria', ''))}")
             else:
-                parts.append(f"- **{level}**: {info}")
+                suffix.append(f"- **{level}**: {info}")
 
     sr = ds.get("scoring_rubric", {})
     if sr:
-        parts.append(f"\n### 5차원 채점 루브릭\n{sr.get('instruction', '')}")
+        suffix.append(f"\n### 5차원 채점 루브릭\n{sr.get('instruction', '')}")
         for dim_name, dim_info in (sr.get("dimensions") or {}).items():
             if isinstance(dim_info, dict):
                 desc = dim_info.get("description") or dim_info.get("what_it_measures", "")
-                parts.append(f"- **{dim_name}**: {desc}")
+                suffix.append(f"- **{dim_name}**: {desc}")
             else:
-                parts.append(f"- **{dim_name}**: {dim_info}")
+                suffix.append(f"- **{dim_name}**: {dim_info}")
 
     rfd = ds.get("red_flag_detection", {})
     if rfd:
-        parts.append(f"\n### 레드플래그 감지\n{rfd.get('instruction', '')}")
+        suffix.append(f"\n### 레드플래그 감지\n{rfd.get('instruction', '')}")
         for flag_key, flag_val in rfd.items():
             if flag_key == "instruction":
                 continue
@@ -369,36 +442,46 @@ def build_system_prompt():
                 for item in flag_val:
                     if isinstance(item, dict):
                         sig = item.get("signal") or item.get("description") or item.get("pattern", "")
-                        parts.append(f"- [{flag_key}] {sig}")
+                        suffix.append(f"- [{flag_key}] {sig}")
                     else:
-                        parts.append(f"- [{flag_key}] {item}")
+                        suffix.append(f"- [{flag_key}] {item}")
 
     ip = ds.get("improvement_priority", {})
     if ip:
-        parts.append(f"\n### 개선 우선순위\n{ip.get('instruction', '')}")
+        suffix.append(f"\n### 개선 우선순위\n{ip.get('instruction', '')}")
 
     # ─── STEP 5: INTERVIEW BRIDGE ───
     if ib:
-        parts.append("\n## STEP 5: 면접 연계 검증")
+        suffix.append("\n## STEP 5: 면접 연계 검증")
         if ib.get("philosophy"):
-            parts.append(ib["philosophy"])
+            suffix.append(ib["philosophy"])
         irc = ib.get("interview_readiness_check", {})
         if irc.get("instruction"):
-            parts.append(f"\n{irc['instruction']}")
+            suffix.append(f"\n{irc['instruction']}")
         dsd = ib.get("danger_sentence_detection", {})
         if dsd.get("instruction"):
-            parts.append(f"\n### 위험 문장 감지\n{dsd['instruction']}")
+            suffix.append(f"\n### 위험 문장 감지\n{dsd['instruction']}")
         if ib.get("output_instruction"):
-            parts.append(f"\n{ib['output_instruction']}")
+            suffix.append(f"\n{ib['output_instruction']}")
 
     # ─── OUTPUT FORMAT ───
-    parts.append("\n## 출력 형식 (반드시 JSON만 출력, 다른 텍스트 없이)")
-    parts.append(json.dumps(of["initial_review"], ensure_ascii=False, indent=2))
+    suffix.append("\n## 출력 형식 (반드시 JSON만 출력, 다른 텍스트 없이)")
+    suffix.append(json.dumps(of["initial_review"], ensure_ascii=False, indent=2))
 
-    return "\n".join(parts)
+    return "\n".join(prefix), "\n".join(suffix)
 
 
-SYSTEM_PROMPT = build_system_prompt()
+_PROMPT_PREFIX, _PROMPT_SUFFIX = _build_static_parts()
+
+
+def build_system_prompt(company_name=""):
+    """Build the system prompt with only the relevant company DB injected.
+
+    Static parts (steps 1, 3, 4, 5, output) are pre-rendered at startup.
+    STEP 2 is dynamic: only the matched company + industry framework fallback.
+    Result is ~12-15k chars instead of ~44k, fitting within Groq's free-tier
+    TPM (12,000 tokens/min)."""
+    return _PROMPT_PREFIX + _render_step2(company_name) + _PROMPT_SUFFIX
 
 
 # ── Revision system prompt ──
@@ -749,17 +832,24 @@ def create_review(req: ReviewRequest, user: User = Depends(get_current_user), db
 ## 자소서 내용:
 {req.text}"""
 
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_message},
-        ],
-        temperature=0.7,
-        response_format={"type": "json_object"},
-    )
+    system_prompt = build_system_prompt(req.company_name)
+    try:
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message},
+            ],
+            temperature=0.7,
+            response_format={"type": "json_object"},
+        )
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"AI 첨삭 처리 중 오류: {str(e)[:300]}")
 
-    result_text = clean_chinese_chars(response.choices[0].message.content)
+    try:
+        result_text = clean_chinese_chars(response.choices[0].message.content)
+    except (AttributeError, IndexError, TypeError) as e:
+        raise HTTPException(status_code=502, detail=f"AI 응답 형식 오류: {str(e)[:200]}")
 
     # Deduct items
     purchase.items_remaining -= items_needed
@@ -809,17 +899,23 @@ def revise_review(req: ReviseRequest, user: User = Depends(get_current_user), db
 ## 사용자 수정 요청:
 {req.instruction}"""
 
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[
-            {"role": "system", "content": REVISE_SYSTEM_PROMPT},
-            {"role": "user", "content": user_message},
-        ],
-        temperature=0.7,
-        response_format={"type": "json_object"},
-    )
+    try:
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": REVISE_SYSTEM_PROMPT},
+                {"role": "user", "content": user_message},
+            ],
+            temperature=0.7,
+            response_format={"type": "json_object"},
+        )
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"AI 수정 처리 중 오류: {str(e)[:300]}")
 
-    result_text = clean_chinese_chars(response.choices[0].message.content)
+    try:
+        result_text = clean_chinese_chars(response.choices[0].message.content)
+    except (AttributeError, IndexError, TypeError) as e:
+        raise HTTPException(status_code=502, detail=f"AI 응답 형식 오류: {str(e)[:200]}")
 
     # Update review
     review.result = result_text
