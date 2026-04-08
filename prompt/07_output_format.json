@@ -5,7 +5,7 @@
   "initial_review": {
     "instruction": "첫 첨삭 요청 시 아래 형식으로 출력한다. 모든 섹션을 빠짐없이 포함할 것.",
 
-    "step_1_company_analysis": {
+    "company_analysis": {
       "format": {
         "company": "기업명 (부서/부문 포함)",
         "core_values": ["이 기업+부서의 핵심 인재상 키워드 3~5개"],
@@ -16,19 +16,19 @@
       }
     },
 
-    "step_2_scoring": {
+    "structure_feedback": {
       "format": {
-        "flow_score": "1~10 + 한 줄 근거",
-        "logic_score": "1~10 + 한 줄 근거",
-        "specificity_score": "1~10 + 한 줄 근거",
-        "company_fit_score": "1~10 + 한 줄 근거",
-        "authenticity_score": "1~10 + 한 줄 근거",
+        "flow_score": "1~10 사이의 정수만 출력 (근거 텍스트 금지)",
+        "logic_score": "1~10 사이의 정수만 출력 (근거 텍스트 금지)",
+        "specificity_score": "1~10 사이의 정수만 출력 (근거 텍스트 금지)",
+        "company_fit_score": "1~10 사이의 정수만 출력 (근거 텍스트 금지)",
+        "authenticity_score": "1~10 사이의 정수만 출력 (근거 텍스트 금지)",
         "overall_grade": "S/A/B/C/D + 평균 점수",
-        "one_thing_to_change": "이 자소서에서 딱 한 가지만 바꿀 수 있다면 무엇을 바꿔야 하는지"
+        "overall_comment": "이 자소서의 강점과 가장 중요한 개선 포인트를 종합한 2~3문장 총평"
       }
     },
 
-    "step_3_sentence_diagnosis": {
+    "sentence_diagnosis": {
       "format": [
         {
           "original": "원본 문장 (그대로 인용)",
@@ -37,11 +37,11 @@
           "alternative": "이 기업 + 부서 + 질문 유형에 최적화된 대안 문장"
         }
       ],
-      "instruction": "모든 문장을 진단할 필요는 없다. severity가 medium 이상인 문장만 진단한다. 단, critical/high가 있으면 반드시 포함."
+      "instruction": "모든 문장을 진단할 필요는 없다. severity가 medium 이상인 문장만 진단한다. 단, critical/high가 있으면 반드시 포함. 반드시 JSON 배열로 출력한다."
     },
 
-    "step_4_revised_full_text": {
-      "format": "기업 인재상 + 부서 특성 + 질문 유형에 최적화된 전체 수정 자소서",
+    "revised_full_text": {
+      "format": "기업 인재상 + 부서 특성 + 질문 유형에 최적화된 전체 수정 자소서를 단일 문자열로 출력",
       "rules": [
         "원본의 핵심 경험을 유지하되, 프레이밍/구조/표현을 기업에 맞게 조정",
         "글자 수 제한이 있으면 해당 제한의 90~100% 수준으로 작성",
@@ -50,7 +50,7 @@
       ]
     },
 
-    "step_5_interview_bridge": {
+    "interview_bridge": {
       "format": {
         "predicted_questions": ["면접관이 할 가능성 높은 질문 3~5개"],
         "danger_points": ["면접에서 함정이 될 수 있는 포인트 (있을 경우)"],
@@ -58,9 +58,19 @@
       }
     },
 
-    "step_6_summary": {
-      "format": "3문장 이내의 핵심 개선 요약. ①가장 큰 변화 ②변화의 이유 ③추가 개선을 위해 사용자가 제공하면 좋을 정보"
-    }
+    "summary": {
+      "format": "3문장 이내의 핵심 개선 요약을 단일 문자열로 출력. ①가장 큰 변화 ②변화의 이유 ③추가 개선을 위해 사용자가 제공하면 좋을 정보"
+    },
+
+    "top_level_keys": [
+      "company_analysis",
+      "structure_feedback",
+      "sentence_diagnosis",
+      "revised_full_text",
+      "interview_bridge",
+      "summary"
+    ],
+    "top_level_keys_instruction": "최종 출력 JSON의 최상위 키는 정확히 위 6개여야 한다. 다른 키 이름(예: step_1_xxx)을 절대 사용하지 말 것."
   },
 
   "revision": {
