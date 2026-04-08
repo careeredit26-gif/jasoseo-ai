@@ -1,0 +1,299 @@
+{
+  "module": "company_db_finance",
+  "version": "3.0",
+  "sector": "금융",
+  "sector_common": {
+    "values": ["신뢰", "건전성", "고객가치", "전문성", "디지털혁신"],
+    "tone_profile": {"formality": 8, "emotion": 4, "data_driven": 7, "creativity": 4},
+    "key_emphasis": "금융 전문성, 리스크 관리, 고객 신뢰, 디지털 전환, 규제 이해",
+    "essay_tips": ["금융 자격증은 직무역량에서 보조 근거로만 사용. 에피소드가 핵심", "신뢰/윤리 에피소드 매우 효과적", "디지털 금융 트렌드(마이데이터/AI심사) 이해 필수"]
+  },
+
+  "companies": {
+    "은행": {
+      "IBK기업은행": {
+        "what_they_do": "중소기업 금융 특화 은행",
+        "what_they_want": "중소기업 이해, 현장 영업력, 공적 역할 인식",
+        "strategic_hooks": ["중소기업 디지털 금융", "i-ONE뱅크", "해외 진출(동남아)"],
+        "tone_guide": "공적 사명감 + 현장 영업 마인드"
+      },
+      "SC제일은행": {
+        "what_they_do": "외국계 은행(스탠다드차타드)",
+        "what_they_want": "글로벌 마인드, 영어 역량, 다양성 존중",
+        "strategic_hooks": ["글로벌 네트워크", "WM/PB", "디지털뱅킹"],
+        "tone_guide": "글로벌 + 다양성. 외국계 톤 허용"
+      },
+      "케이뱅크": {
+        "what_they_do": "인터넷전문은행(KT계열)",
+        "what_they_want": "디지털 금융 혁신, 기술 역량",
+        "strategic_hooks": ["가상자산 연계", "비대면 대출", "플랫폼 제휴"],
+        "tone_guide": "혁신적 + 기술 중심"
+      },
+      "수협은행": {
+        "what_they_do": "수산업 특화 + 일반 은행",
+        "what_they_want": "수산/해양 이해, 공적 역할",
+        "strategic_hooks": ["수산금융 특화", "디지털 전환"],
+        "tone_guide": "공적 사명 + 전문성"
+      },
+      "BNK부산은행": {
+        "what_they_do": "부산/경남 지역 은행",
+        "what_they_want": "지역경제 이해, 밀착 영업",
+        "strategic_hooks": ["지역 특화 금융", "디지털 전환", "ESG"],
+        "tone_guide": "지역 밀착 + 전문성"
+      },
+      "DGB대구은행": {
+        "what_they_do": "대구/경북 지역 은행",
+        "what_they_want": "지역경제 이해, 고객 밀착",
+        "strategic_hooks": ["IM뱅크(통합 앱)", "지역 상생"],
+        "tone_guide": "지역 밀착 + 디지털"
+      },
+      "광주은행": {
+        "what_they_do": "광주/전남 지역 은행(JB금융)",
+        "what_they_want": "지역 공헌, 고객 서비스",
+        "strategic_hooks": ["지역 특화 상품", "디지털 전환"],
+        "tone_guide": "지역 사랑 + 서비스"
+      },
+      "전북은행": {
+        "what_they_do": "전북 지역 은행(JB금융)",
+        "what_they_want": "지역경제 기여, 서민금융",
+        "strategic_hooks": ["JB금융 시너지", "서민금융"],
+        "tone_guide": "공익성 + 현장"
+      },
+      "제주은행": {
+        "what_they_do": "제주 지역 은행(신한금융)",
+        "what_they_want": "제주 지역 이해, 관광/농업 금융",
+        "strategic_hooks": ["신한금융 시너지", "제주 특화 금융"],
+        "tone_guide": "지역 특화 + 신한 문화"
+      },
+      "한국산업은행": {
+        "what_they_do": "국책은행. 산업금융, 기업구조조정, 정책금융",
+        "what_they_want": "거시경제/산업분석, 기업금융(IB), 공적 역할",
+        "strategic_hooks": ["신산업 정책금융", "기업구조조정", "해외 인프라 투자"],
+        "tone_guide": "공공성 + 고도의 전문성. 가장 격식 높은 톤"
+      },
+      "한국수출입은행": {
+        "what_they_do": "국책은행. 수출금융, 해외투자, 경제협력",
+        "what_they_want": "국제금융, 글로벌 역량, 어학",
+        "strategic_hooks": ["K-방산/원전 수출금융", "ODA", "글로벌 인프라"],
+        "tone_guide": "글로벌 + 공공성"
+      }
+    },
+
+    "증권": {
+      "삼성증권": {
+        "what_they_want": "WM/IB 이해, 삼성 인재상",
+        "strategic_hooks": ["초고액자산가 WM", "IB 딜", "디지털자산"],
+        "tone_guide": "삼성 톤 + 금융 전문성"
+      },
+      "미래에셋증권": {
+        "what_they_want": "글로벌 투자, 자산운용 감각, 도전정신",
+        "strategic_hooks": ["글로벌 네트워크(해외법인)", "ETF/연금", "대체투자"],
+        "tone_guide": "글로벌 + 도전적. 박현주 회장 철학 반영"
+      },
+      "NH투자증권": {
+        "what_they_want": "농협 공적 가치 + 증권 전문성",
+        "strategic_hooks": ["IB강자", "나무(MTS)", "농협 네트워크"],
+        "tone_guide": "공적 가치 + 전문성"
+      },
+      "한국투자증권": {
+        "what_they_want": "IB/트레이딩 역량, 독립계 증권사 특유의 자율성",
+        "strategic_hooks": ["IB리그테이블 상위", "카카오뱅크 대주주", "해외법인"],
+        "tone_guide": "전문성 + 자율성"
+      },
+      "신한투자증권": {
+        "what_they_want": "신한금융 시너지, 디지털 혁신",
+        "strategic_hooks": ["알파(MTS)", "그룹 연계 WM"],
+        "tone_guide": "신한 톤 + 증권 전문성"
+      },
+      "하나증권": {
+        "what_they_want": "글로벌 역량, 하나금융 시너지",
+        "strategic_hooks": ["해외주식", "글로벌IB"],
+        "tone_guide": "하나 톤 + 글로벌"
+      },
+      "키움증권": {
+        "what_they_want": "온라인 증권 DNA, 기술력, 개인투자자 이해",
+        "strategic_hooks": ["MTS 1위", "키움히어로즈(야구)", "해외주식"],
+        "tone_guide": "기술 중심 + 개인투자자 관점"
+      },
+      "메리츠증권": {
+        "what_they_want": "성과주의, IB/부동산금융 전문성",
+        "strategic_hooks": ["부동산PF 강자", "성과 보상 문화"],
+        "tone_guide": "성과 중심 + 전문성. 가장 공격적 톤 허용"
+      },
+      "대신증권": {
+        "what_they_want": "리서치/자산관리, 안정적 조직문화",
+        "strategic_hooks": ["크레온(MTS)", "리서치센터"],
+        "tone_guide": "안정적 + 전문적"
+      },
+      "KB증권": {
+        "what_they_want": "KB금융 시너지, WM/IB",
+        "strategic_hooks": ["KB 그룹 연계", "M-able(MTS)"],
+        "tone_guide": "KB 톤 + 증권 전문성"
+      },
+      "유진투자증권": {
+        "what_they_want": "리서치/IB, 중견 증권사 특유의 기회",
+        "strategic_hooks": ["리서치", "IB"],
+        "tone_guide": "전문성 중심"
+      },
+      "교보증권": {
+        "what_they_want": "교보그룹 가치관, 자산관리",
+        "strategic_hooks": ["교보그룹 시너지", "WM"],
+        "tone_guide": "안정적 + 교보 문화"
+      },
+      "현대차증권": {
+        "what_they_want": "현대차그룹 이해, 자동차/모빌리티 산업 분석",
+        "strategic_hooks": ["그룹 연계 IB", "모빌리티 산업 특화"],
+        "tone_guide": "현대 톤 + 산업 전문성"
+      },
+      "한화투자증권": {
+        "what_they_want": "한화그룹 시너지, 방산/에너지 섹터 이해",
+        "strategic_hooks": ["그룹 연계", "방산/에너지 특화"],
+        "tone_guide": "한화 톤"
+      },
+      "SK증권": {
+        "what_they_want": "SK그룹 VWBE, 자발적 역량개발",
+        "strategic_hooks": ["그룹 연계", "IB"],
+        "tone_guide": "SK 톤"
+      },
+      "DB금융투자": {
+        "what_they_want": "DB그룹 가치관, 보험연계 금융",
+        "strategic_hooks": ["DB그룹 시너지"],
+        "tone_guide": "안정적 + 전문적"
+      }
+    },
+
+    "보험": {
+      "삼성생명": {
+        "what_they_want": "보험/자산운용 이해, 삼성 인재상",
+        "strategic_hooks": ["GA채널 전략", "헬스케어 연계", "자산운용(삼성생명 일반계정)"],
+        "tone_guide": "삼성 톤"
+      },
+      "삼성화재": {
+        "what_they_want": "손해보험 이해, 리스크 관리, 데이터 분석",
+        "strategic_hooks": ["다이렉트 보험", "애니카(자동차보험)", "기업보험"],
+        "tone_guide": "삼성 톤 + 리스크 관점"
+      },
+      "한화생명": {
+        "what_they_want": "보험+자산운용, 한화 도전정신",
+        "strategic_hooks": ["라이프플러스", "LIFEPLUS 브랜드", "GA/디지털"],
+        "tone_guide": "한화 톤"
+      },
+      "교보생명": {
+        "what_they_want": "교보그룹 교육/문화 가치, 보험 전문성",
+        "strategic_hooks": ["광화문글판", "교육보험/연금", "IPO 추진"],
+        "tone_guide": "교보 문화(교육/문화) + 전문성"
+      },
+      "DB손해보험": {
+        "what_they_want": "손보 이해, 데이터 기반 언더라이팅",
+        "strategic_hooks": ["다이렉트 자동차보험", "프로미(브랜드)", "디지털 보험"],
+        "tone_guide": "안정적 + 데이터 중심"
+      },
+      "현대해상": {
+        "what_they_want": "손해보험 전문성, 현대 실행력",
+        "strategic_hooks": ["하이카(자동차보험)", "기업보험", "디지털"],
+        "tone_guide": "현대 톤 + 보험 전문성"
+      },
+      "KB손해보험": {
+        "what_they_want": "KB금융 시너지, 보험 혁신",
+        "strategic_hooks": ["KB금융 그룹 채널", "디지털보험"],
+        "tone_guide": "KB 톤"
+      },
+      "메리츠화재": {
+        "what_they_want": "성과주의, 영업력, 보험 전문성",
+        "strategic_hooks": ["장기인보험 강자", "성과 보상"],
+        "tone_guide": "성과 중심"
+      },
+      "신한라이프": {
+        "what_they_want": "신한금융 시너지, 디지털보험",
+        "strategic_hooks": ["신한금융 통합 마케팅"],
+        "tone_guide": "신한 톤"
+      },
+      "흥국생명": {
+        "what_they_want": "보험 전문성, 안정적 조직문화",
+        "strategic_hooks": ["태광그룹"],
+        "tone_guide": "안정적"
+      },
+      "동양생명": {
+        "what_they_want": "보험 영업/상품 이해",
+        "strategic_hooks": ["우리금융 편입"],
+        "tone_guide": "안정적"
+      },
+      "AIA생명": {
+        "what_they_want": "외국계 보험사 문화, 글로벌",
+        "strategic_hooks": ["AIA 글로벌 네트워크", "건강/웰니스"],
+        "tone_guide": "외국계 톤"
+      }
+    },
+
+    "카드_캐피탈": {
+      "삼성카드": {
+        "what_they_want": "데이터 마케팅, 삼성 인재상",
+        "strategic_hooks": ["LINK(데이터 플랫폼)", "개인화 마케팅"],
+        "tone_guide": "삼성 톤 + 데이터 감각"
+      },
+      "신한카드": {
+        "what_they_want": "결제/플랫폼 사고, 마이데이터",
+        "strategic_hooks": ["마이데이터", "페이판(PAYPLAN)"],
+        "tone_guide": "신한 톤"
+      },
+      "현대카드": {
+        "what_they_want": "브랜드 감각, 디자인 사고, 데이터",
+        "strategic_hooks": ["현대카드 라이브러리/언더스테이지", "PLCC", "데이터 사이언스"],
+        "tone_guide": "현대카드 특유의 세련된 톤. formality 6, creativity 8"
+      },
+      "롯데카드": {
+        "what_they_want": "유통 연계 금융, 디지털 결제",
+        "strategic_hooks": ["롯데 그룹 시너지", "디지캐시"],
+        "tone_guide": "롯데 톤"
+      },
+      "현대캐피탈": {
+        "what_they_want": "자동차금융, 리스, 현대 실행력",
+        "strategic_hooks": ["자동차금융 1위", "글로벌(북미/유럽)", "모빌리티 금융"],
+        "tone_guide": "현대 톤 + 금융 전문성"
+      }
+    },
+
+    "자산운용_기타": {
+      "삼성자산운용": {
+        "what_they_want": "KODEX ETF 이해, 운용 전문성",
+        "strategic_hooks": ["KODEX ETF 1위", "글로벌 운용"],
+        "tone_guide": "삼성 톤"
+      },
+      "미래에셋자산운용": {
+        "what_they_want": "글로벌 투자, ETF, 연금",
+        "strategic_hooks": ["TIGER ETF", "글로벌 자산운용", "연금 시장"],
+        "tone_guide": "글로벌 + 도전"
+      },
+      "한국투자공사(KIC)": {
+        "what_they_want": "국부펀드 역할 이해, 글로벌 투자, 어학",
+        "strategic_hooks": ["해외 대체투자", "국가 자산 운용"],
+        "tone_guide": "공공성 + 최고 수준 전문성"
+      },
+      "한국거래소": {
+        "what_they_want": "자본시장 이해, IT시스템, 규제",
+        "strategic_hooks": ["KRX 시스템", "ESG공시", "가상자산 거래소 논의"],
+        "tone_guide": "공공성 + 시장 전문성"
+      },
+      "금융감독원": {
+        "what_they_want": "금융규제 이해, 소비자보호, 공적 가치",
+        "strategic_hooks": ["핀테크 규제혁신", "금융소비자보호", "디지털금융감독"],
+        "tone_guide": "공공성 + 규제 전문성"
+      },
+      "예금보험공사": {
+        "what_they_want": "금융안전망 이해, 분석 역량",
+        "strategic_hooks": ["금융안전망", "부실금융기관 정리"],
+        "tone_guide": "공공성"
+      },
+      "신용보증기금": {
+        "what_they_want": "중소기업 이해, 신용분석",
+        "strategic_hooks": ["혁신기업 보증", "정책금융"],
+        "tone_guide": "공적 사명 + 분석력"
+      },
+      "기술보증기금": {
+        "what_they_want": "기술평가, 벤처/스타트업 이해",
+        "strategic_hooks": ["기술평가 모델", "벤처금융"],
+        "tone_guide": "기술 이해 + 공적 역할"
+      }
+    }
+  }
+}

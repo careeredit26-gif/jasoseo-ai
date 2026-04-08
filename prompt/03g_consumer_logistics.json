@@ -1,0 +1,265 @@
+{
+  "module": "company_db_consumer_logistics",
+  "version": "3.0",
+  "sector": "유통/식품/뷰티/물류/서비스",
+
+  "companies": {
+    "유통_리테일": {
+      "현대백화점": {
+        "what_they_do": "백화점(더현대서울), 면세, 아울렛, 현대홈쇼핑",
+        "what_they_want": "프리미엄 리테일 이해, 고객 경험 설계, 트렌드 감각",
+        "strategic_hooks": ["더현대서울(체험형 리테일)", "VIP CRM", "현대프리미엄아울렛"],
+        "tone_profile": {"formality": 7, "emotion": 6, "data_driven": 6, "creativity": 7},
+        "tone_guide": "프리미엄 + 트렌드"
+      },
+      "홈플러스": {
+        "what_they_do": "대형마트, 온라인, 익스프레스",
+        "what_they_want": "유통 현장 이해, 효율성",
+        "strategic_hooks": ["마트 리뉴얼", "온라인 배송"],
+        "tone_guide": "현장 + 효율"
+      },
+      "다이소": {
+        "what_they_do": "균일가 생활용품",
+        "what_they_want": "가성비 상품 기획, 매장 운영, 소싱",
+        "strategic_hooks": ["5,000원 이하 전략", "3,000점+ 매장", "뷰티/식품 확장"],
+        "tone_guide": "현장 + 고객 중심. 소박하되 실행력 있는 톤"
+      },
+      "올리브영(CJ)": {
+        "what_they_do": "H&B 드러그스토어",
+        "what_they_want": "뷰티/헬스 트렌드, MZ 소비자, 리테일",
+        "strategic_hooks": ["K-뷰티 큐레이션", "온라인 오늘드림(당일배송)", "PB 상품"],
+        "tone_guide": "CJ 톤 + 뷰티 트렌드"
+      },
+      "BGF리테일(CU)": {
+        "what_they_do": "편의점 CU",
+        "what_they_want": "편의점 트렌드, 상품 기획(MD), 현장 운영",
+        "strategic_hooks": ["PB상품(득템시리즈)", "편의점 간편식", "몽골/말레이시아 진출"],
+        "tone_guide": "트렌디 + 현장"
+      },
+      "GS홈쇼핑": {
+        "what_they_do": "TV홈쇼핑, 이커머스",
+        "what_they_want": "미디어커머스 이해, 상품 소싱",
+        "strategic_hooks": ["라이브커머스", "데이터커머스"],
+        "tone_guide": "GS 톤 + 커머스"
+      },
+      "CJ온스타일": {
+        "what_they_do": "TV홈쇼핑, 라이브커머스",
+        "what_they_want": "미디어+커머스 융합 이해",
+        "strategic_hooks": ["라이브커머스", "콘텐츠커머스"],
+        "tone_guide": "CJ 톤 + 크리에이티브"
+      },
+      "현대홈쇼핑": {
+        "what_they_do": "TV홈쇼핑, 이커머스",
+        "what_they_want": "커머스 이해, 상품 기획",
+        "strategic_hooks": ["H몰", "숏폼 커머스"],
+        "tone_guide": "현대 톤"
+      },
+      "이마트24": {
+        "what_they_do": "편의점",
+        "what_they_want": "편의점 트렌드, 현장 운영",
+        "strategic_hooks": ["주류특화", "신세계 시너지"],
+        "tone_guide": "신세계 톤 + 현장"
+      }
+    },
+
+    "식품_음료": {
+      "풀무원": {
+        "what_they_do": "건강식품(두부, 면류), 식물성 단백",
+        "what_they_want": "건강/지속가능 식품 이해, 바른먹거리 철학",
+        "group_values": ["바른먹거리", "지속가능", "건강"],
+        "strategic_hooks": ["식물성 단백(지구식단)", "미국/중국 시장", "비건 라인업"],
+        "tone_guide": "건강/지속가능 철학 + 글로벌"
+      },
+      "삼양식품": {
+        "what_they_do": "라면(불닭볶음면), 식품",
+        "what_they_want": "K-푸드 글로벌 이해, 마케팅 감각",
+        "strategic_hooks": ["불닭 글로벌 매출", "밀양 2공장", "소스류 확장"],
+        "tone_guide": "글로벌 + 트렌드"
+      },
+      "빙그레": {
+        "what_they_do": "유제품(바나나맛우유), 아이스크림, 건강기능식품",
+        "what_they_want": "브랜드 마케팅, 소비자 이해",
+        "strategic_hooks": ["바나나맛우유 리브랜딩", "MZ 마케팅(빙그레우스)", "건기식 확장"],
+        "tone_guide": "브랜드 감각 + 소비자 이해"
+      },
+      "롯데웰푸드(구 롯데제과)": {
+        "what_they_do": "과자, 아이스크림, 건강기능식품",
+        "what_they_want": "식품 트렌드, 롯데 문화",
+        "strategic_hooks": ["빼빼로/가나 글로벌", "제로슈거 라인업", "인도/카자흐스탄 공장"],
+        "tone_guide": "롯데 톤 + 글로벌"
+      },
+      "매일유업": {
+        "what_they_do": "유제품, 식물성 음료(어메이징 오트), 커피(폴바셋)",
+        "what_they_want": "유제품/식물성 트렌드, 브랜드",
+        "strategic_hooks": ["어메이징 오트", "폴바셋", "셀렉스(성인영양)"],
+        "tone_guide": "프리미엄 + 건강"
+      },
+      "동원F&B": {
+        "what_they_do": "참치캔, 간편식, 음료",
+        "what_they_want": "식품 유통/가공 이해",
+        "strategic_hooks": ["동원참치 리뉴얼", "간편식 확장"],
+        "tone_guide": "실용적"
+      },
+      "대상(청정원/종가)": {
+        "what_they_do": "조미료(미원/청정원), 김치(종가), 발효식품",
+        "what_they_want": "발효/전통식품 이해, K-푸드 글로벌",
+        "strategic_hooks": ["종가 김치 글로벌", "식물성 발효", "미원 리브랜딩"],
+        "tone_guide": "전통 + 글로벌"
+      },
+      "하이트진로": {
+        "what_they_do": "맥주(테라), 소주(참이슬), 위스키",
+        "what_they_want": "주류 시장 이해, 마케팅, 글로벌",
+        "strategic_hooks": ["테라/켈리", "참이슬 글로벌", "위스키 시장"],
+        "tone_guide": "마케팅 감각 + 글로벌"
+      },
+      "오비맥주": {
+        "what_they_do": "맥주(카스, 한맥), AB InBev 계열",
+        "what_they_want": "외국계 문화, 맥주/음료 마케팅",
+        "strategic_hooks": ["카스 리뉴얼", "논알코올", "AB InBev 글로벌"],
+        "tone_guide": "외국계 톤 + 마케팅"
+      },
+      "롯데칠성음료": {
+        "what_they_do": "음료(칠성사이다/펩시), 주류(클라우드/새로)",
+        "what_they_want": "음료/주류 트렌드, 마케팅",
+        "strategic_hooks": ["제로 음료 확대", "새로 소주", "펩시 라이선스"],
+        "tone_guide": "롯데 톤 + 트렌드"
+      },
+      "동서식품": {
+        "what_they_do": "커피(맥심/카누), 시리얼",
+        "what_they_want": "커피 시장 이해, 안정적 조직문화",
+        "strategic_hooks": ["카누/맥심", "스타벅스 원두 유통(제너럴밀스 JV)"],
+        "tone_guide": "안정적 + 브랜드"
+      },
+      "SPC그룹(파리크라상)": {
+        "what_they_do": "베이커리(파리바게뜨), 아이스크림(배스킨라빈스), 외식",
+        "what_they_want": "외식/베이커리 트렌드, 현장 운영, 글로벌",
+        "strategic_hooks": ["파리바게뜨 해외(미국/파리)", "배스킨라빈스", "삼립(양산빵)"],
+        "tone_guide": "현장 + 글로벌"
+      },
+      "KGC인삼공사(정관장)": {
+        "what_they_do": "홍삼(정관장), 건강기능식품",
+        "what_they_want": "건강식품 시장, 글로벌 마케팅",
+        "strategic_hooks": ["정관장 글로벌", "이너뷰티", "면세 채널"],
+        "tone_guide": "전통 + 프리미엄 + 글로벌"
+      }
+    },
+
+    "뷰티_생활용품": {
+      "한국콜마": {
+        "what_they_do": "화장품 ODM/OEM, 제약",
+        "what_they_want": "화장품 연구개발, 생산 공정",
+        "strategic_hooks": ["글로벌 ODM 1위", "K-뷰티 수혜", "북미/중국 공장"],
+        "tone_guide": "기술(R&D) + 글로벌"
+      },
+      "코스맥스": {
+        "what_they_do": "화장품 ODM",
+        "what_they_want": "화장품 처방/생산 이해, 트렌드",
+        "strategic_hooks": ["글로벌 ODM", "인디브랜드 파트너", "중국/미국"],
+        "tone_guide": "트렌드 + 기술"
+      },
+      "클리오": {
+        "what_they_do": "색조 화장품(클리오/페리페라/구달)",
+        "what_they_want": "뷰티 트렌드, MZ 마케팅, 브랜드",
+        "strategic_hooks": ["일본/미국 시장", "멀티브랜드 전략"],
+        "tone_guide": "트렌디 + 마케팅"
+      },
+      "애경산업": {
+        "what_they_do": "생활용품(2080, 케라시스), 화장품(에이지투웨니스)",
+        "what_they_want": "FMCG 이해, 채널 전략",
+        "strategic_hooks": ["프리미엄 전환", "친환경 제품"],
+        "tone_guide": "실용적 + 소비자 이해"
+      }
+    },
+
+    "물류_운송_항공": {
+      "대한항공": {
+        "what_they_do": "항공 여객/화물, 항공우주/방산",
+        "what_they_want": "글로벌, 서비스, 안전, 항공산업 이해",
+        "strategic_hooks": ["아시아나 인수 통합", "스카이팀", "화물 1위", "KF-16 정비"],
+        "tone_profile": {"formality": 8, "emotion": 5, "data_driven": 6, "creativity": 5},
+        "tone_guide": "글로벌 + 안전 + 서비스 프리미엄"
+      },
+      "아시아나항공": {
+        "what_they_do": "항공 여객/화물 (대한항공 인수 후 통합 진행)",
+        "what_they_want": "통합 과정 이해, 서비스, 글로벌",
+        "strategic_hooks": ["대한항공 통합", "스타얼라이언스→스카이팀"],
+        "tone_guide": "서비스 + 변화 적응력"
+      },
+      "제주항공": {
+        "what_they_do": "LCC(저비용항공사)",
+        "what_they_want": "LCC 비즈니스 모델, 효율, 서비스",
+        "strategic_hooks": ["LCC 1위", "이스타항공 인수"],
+        "tone_guide": "효율 + 서비스"
+      },
+      "진에어": {
+        "what_they_do": "LCC(대한항공 자회사)",
+        "what_they_want": "항공 서비스, 효율 운영",
+        "strategic_hooks": ["중장거리 LCC"],
+        "tone_guide": "대한항공 계열 톤"
+      },
+      "티웨이항공": {
+        "what_they_do": "LCC",
+        "what_they_want": "안전, 서비스, 비용 효율",
+        "strategic_hooks": ["중거리 노선 확대"],
+        "tone_guide": "안전 + 서비스"
+      },
+      "현대글로비스": {
+        "what_they_do": "완성차 물류, 해운, 3PL",
+        "what_they_want": "물류/SCM 이해, 현대 실행력, 글로벌",
+        "strategic_hooks": ["완성차 물류 세계 1위", "PCTC(자동차운반선)", "CKD 물류"],
+        "tone_guide": "현대 톤 + 물류 전문성"
+      },
+      "한진": {
+        "what_they_do": "택배, 물류, 글로벌 포워딩",
+        "what_they_want": "물류 현장 이해, 효율화",
+        "strategic_hooks": ["한진택배", "글로벌 포워딩", "풀필먼트"],
+        "tone_guide": "현장 + 효율"
+      },
+      "HMM(한국해운)": {
+        "what_they_do": "컨테이너/벌크 해운",
+        "what_they_want": "해운 산업 이해, 글로벌",
+        "strategic_hooks": ["THE Alliance", "초대형 컨테이너선", "민영화 논의"],
+        "tone_guide": "글로벌 + 해운 전문"
+      },
+      "팬오션": {
+        "what_they_do": "벌크/탱커 해운(하림그룹)",
+        "what_they_want": "해운 시장 이해",
+        "strategic_hooks": ["벌크선대 확대", "하림 시너지"],
+        "tone_guide": "해운 전문"
+      },
+      "판토스(LG)": {
+        "what_they_do": "글로벌 포워딩, 물류 솔루션",
+        "what_they_want": "글로벌 물류, LG 겸손함",
+        "strategic_hooks": ["LG그룹 물류 담당", "글로벌 네트워크"],
+        "tone_guide": "LG 톤 + 물류"
+      }
+    },
+
+    "서비스_기타": {
+      "삼성물산(상사부문)": {
+        "what_they_do": "트레이딩, 투자, 신사업(바이오/에너지)",
+        "what_they_want": "글로벌 비즈니스, 투자 감각, 삼성 인재상",
+        "strategic_hooks": ["글로벌 트레이딩", "바이오 투자(삼바)", "신재생에너지"],
+        "tone_guide": "삼성 톤 + 글로벌 비즈니스"
+      },
+      "삼성물산(리조트부문)": {
+        "what_they_do": "에버랜드, 레저",
+        "what_they_want": "호스피탈리티, 고객 경험, 삼성 인재상",
+        "strategic_hooks": ["에버랜드", "삼성웰스토리(급식/식자재)"],
+        "tone_guide": "삼성 톤 + 서비스 감각"
+      },
+      "삼성웰스토리": {
+        "what_they_do": "급식/식자재 유통/외식",
+        "what_they_want": "식품 서비스/위생, 삼성 인재상",
+        "strategic_hooks": ["B2B 급식", "식자재 유통"],
+        "tone_guide": "삼성 톤 + 식품 서비스"
+      },
+      "이디야커피": {
+        "what_they_do": "커피 프랜차이즈(점포수 1위)",
+        "what_they_want": "프랜차이즈 운영 이해, 가성비 전략",
+        "strategic_hooks": ["가성비 커피 1위", "3,800+ 매장"],
+        "tone_guide": "실용적 + 현장"
+      }
+    }
+  }
+}

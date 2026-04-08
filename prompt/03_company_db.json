@@ -1,0 +1,408 @@
+{
+  "module": "company_db",
+  "version": "3.0",
+
+  "instruction": "아래는 주요 기업별 인재상, 부서별 특성, 전략 방향이다. 사용자가 입력한 기업명에서 '기업'과 '부서/부문'을 분리하여, 해당 기업의 전체 인재상 + 해당 부서의 특수 요구사항을 모두 반영하라. 목록에 없는 기업은 기업명으로 추론하되, '이 기업의 구체적 인재상 정보가 데이터에 없으므로 일반적인 업계 기준으로 첨삭합니다. 기업 홈페이지의 인재상/채용 페이지를 확인하시면 더 정확한 첨삭이 가능합니다'라고 summary에 명시하라.",
+
+  "company_research_prompt": {
+    "instruction": "데이터에 있는 기업이라도, 최신 전략/사업 방향은 변할 수 있다. 수정안에 기업의 '현재' 전략을 반영할 때는, 사용자에게 '현재 이 기업의 주요 전략 키워드가 맞는지 확인해 주세요'라고 안내하라. 특히 입사후포부, 지원동기 유형에서 필수."
+  },
+
+  "companies": {
+    "삼성전자": {
+      "group_values": ["인재제일", "최고지향", "변화선도", "정도경영", "상생추구"],
+      "evaluation_style": "정제된 표현, 논리적 구조, 수치 기반 성과 중시. 삼성은 '스펙 + 논리'를 본다. 감성적 서사보다 구조화된 논증을 선호. GSAT 통과자 대상이므로 논리력은 기본 전제.",
+      "strategic_context": {
+        "current_priorities": ["AI 반도체(HBM/NPU)", "온디바이스 AI(갤럭시 AI)", "파운드리 2nm GAA", "XR/공간컴퓨팅"],
+        "use_in_essay": "지원동기/입사후포부에서 위 키워드를 자연스럽게 녹일 수 있으면 S_tier"
+      },
+      "tone_profile": {
+        "formality": 9,
+        "emotion": 3,
+        "data_driven": 9,
+        "creativity": 4,
+        "description": "격식체, 수치 중심, 논리적. '느꼈습니다'보다 '달성했습니다'. 감성은 최소화."
+      },
+      "divisions": {
+        "DX부문": {
+          "what_they_do": "소비자 중심 완성품 사업 — Galaxy 스마트폰, TV, 가전, 디스플레이",
+          "what_they_want": "소비자 경험 개선에 대한 관심, 기술과 사용자의 접점에서 사고하는 능력, 글로벌 시장 감각",
+          "strategic_hooks": ["갤럭시 AI", "온디바이스 AI", "접이식 폼팩터", "SmartThings 생태계"],
+          "sub_divisions": {
+            "MX사업부": "스마트폰/갤럭시 생태계. 빠른 실행력, 글로벌 트렌드 이해, 하드웨어-소프트웨어 융합 사고",
+            "VD사업부": "TV/모니터. 디스플레이 기술 이해, 프리미엄 전략, 홈 생태계 관점",
+            "DA사업부": "생활가전. 스마트홈/AI가전, 사용자 라이프스타일 이해, BESPOKE"
+          },
+          "tone_guide": "기술적 구체성 + 소비자 관점 사고를 동시에 보여줘야 함"
+        },
+        "DS부문": {
+          "what_they_do": "반도체 사업 — 메모리(DRAM/NAND), 파운드리, 시스템LSI",
+          "what_they_want": "기술적 깊이, 도전과 몰입, 초격차 마인드",
+          "strategic_hooks": ["HBM3E/HBM4", "2nm GAA 공정", "V-NAND 300단+", "AI 가속기 생태계"],
+          "sub_divisions": {
+            "메모리사업부": "HBM, DDR5, V-NAND. 기술 초격차, 공정 혁신, 양산 역량",
+            "파운드리사업부": "위탁생산. 고객사 대응 능력, 첨단 공정 이해, TSMC 대비 차별화",
+            "시스템LSI": "AP/이미지센서. 설계 역량, 팹리스 고객 이해"
+          },
+          "tone_guide": "기술적 전문성 + 끈기 있는 문제 해결을 강조. 감성보다 논리, 과정보다 결과와 수치"
+        },
+        "SDC": {
+          "what_they_do": "디스플레이 패널 — OLED, QD-OLED",
+          "what_they_want": "소재/공정 이해, 기술 혁신 의지",
+          "strategic_hooks": ["QD-OLED", "폴더블/롤러블 OLED", "IT용 OLED 확대", "마이크로LED"],
+          "tone_guide": "기술 깊이 + 산업 이해도"
+        },
+        "SDS": {
+          "what_they_do": "IT서비스/솔루션 — 클라우드, AI, 스마트팩토리",
+          "what_they_want": "디지털 전환 경험, 고객 문제 해결, 프로젝트 관리 역량",
+          "strategic_hooks": ["Brity(AI플랫폼)", "스마트팩토리", "클라우드 전환", "생성형 AI 활용"],
+          "tone_guide": "문제 해결 중심, 프로젝트 경험, IT 트렌드 이해"
+        }
+      }
+    },
+
+    "SK그룹": {
+      "group_values": ["VWBE(자발적이고·의욕적으로·두뇌를 활용하여 일하는 인재)", "파이낸셜 스토리", "딥체인지", "행복"],
+      "evaluation_style": "SK는 '자발성'을 가장 중시한다. '시켜서 한 것'과 '스스로 찾아서 한 것'을 구분한다. 에피소드에서 '누가 시켜서'가 아니라 '내가 스스로'의 증거를 찾는다.",
+      "tone_profile": {
+        "formality": 7,
+        "emotion": 5,
+        "data_driven": 7,
+        "creativity": 6,
+        "description": "삼성보다 유연하지만 여전히 격식. 자발성과 열정이 톤에 묻어나야 함."
+      },
+      "divisions": {
+        "SK하이닉스": {
+          "what_they_do": "메모리 반도체 — DRAM, NAND, HBM",
+          "what_they_want": "기술적 호기심, 자발적 학습, 반도체 공정/설계 이해",
+          "strategic_hooks": ["HBM 시장 1위", "AI 메모리", "1b DRAM", "238단 NAND", "NVIDIA 협업"],
+          "tone_guide": "자발성 + 기술적 깊이. '시켜서 한 것'이 아닌 '내가 찾아서 한 것'을 강조"
+        },
+        "SK텔레콤": {
+          "what_they_do": "통신, AI(에이닷), 구독, 메타버스",
+          "what_they_want": "AI/데이터 활용 능력, 신사업 감각",
+          "strategic_hooks": ["에이닷(AI 에이전트)", "AI 인프라", "구독 플랫폼 T우주", "양자암호통신"],
+          "tone_guide": "미래지향적 + 자발적 도전"
+        },
+        "SK이노베이션/SK온": {
+          "what_they_do": "배터리, 석유화학, E&P",
+          "what_they_want": "에너지 전환 이해, 친환경 마인드, 글로벌 시야",
+          "strategic_hooks": ["미국 JV(포드/현대)", "차세대 배터리(전고체/리튬메탈)", "배터리 리사이클링"],
+          "tone_guide": "ESG/친환경 관점 + 실행력"
+        }
+      }
+    },
+
+    "LG그룹": {
+      "group_values": ["고객가치 창출", "정도경영", "인간존중"],
+      "evaluation_style": "LG Way — 겸손하면서도 실력 있는 인재. '나를 드러내되 겸손하게'가 핵심 톤. 자기 PR이 과하면 오히려 감점.",
+      "tone_profile": {
+        "formality": 7,
+        "emotion": 5,
+        "data_driven": 7,
+        "creativity": 5,
+        "description": "겸손하지만 역량은 확실히 보여주는 균형. '저는 ~를 잘합니다'보다 '이 경험에서 ~를 배웠습니다'."
+      },
+      "divisions": {
+        "LG전자": {
+          "what_they_do": "가전, TV, 전장(VS사업부), B2B",
+          "what_they_want": "고객 가치 중심 사고",
+          "strategic_hooks": ["웹OS 생태계", "전장(SDV)", "HVAC(냉난방)", "로봇"],
+          "sub_divisions": {
+            "H&A사업부": "생활가전. 프리미엄 전략, 사용자 라이프스타일, UP가전",
+            "VS사업부": "전장/자율주행. 자동차 산업 이해, B2B 사고, 마그나와 JV",
+            "BS사업부": "B2B솔루션. 기업 고객 관점, 사이니지/로봇"
+          },
+          "tone_guide": "겸손 + 고객 가치"
+        },
+        "LG에너지솔루션": {
+          "what_they_do": "배터리 셀 — EV, ESS",
+          "what_they_want": "배터리/소재 기술 이해, 글로벌 생산 경험",
+          "strategic_hooks": ["46시리즈 원통형", "미국/유럽 기가팩토리", "리튬인산철(LFP)", "건식 전극"],
+          "tone_guide": "기술 전문성 + 글로벌 + 겸손"
+        },
+        "LG화학": {
+          "what_they_do": "석유화학, 첨단소재, 생명과학",
+          "what_they_want": "소재 산업 이해, R&D 역량",
+          "strategic_hooks": ["CNT/탄소나노튜브", "바이오 CDMO", "재생플라스틱", "양극재 분리 후 소재 집중"],
+          "tone_guide": "연구 깊이 + 산업 이해"
+        }
+      }
+    },
+
+    "현대자동차그룹": {
+      "group_values": ["고객 최우선", "도전적 실행", "소통과 협력", "인재존중", "글로벌 지향"],
+      "evaluation_style": "현대차는 '실행력'을 본다. 계획만 세운 사람보다 직접 해본 사람을 선호. '생각했습니다'보다 '실행했습니다'.",
+      "tone_profile": {
+        "formality": 8,
+        "emotion": 4,
+        "data_driven": 8,
+        "creativity": 5,
+        "description": "실행 중심, 결과 지향. 도전적이되 허황되지 않은 톤."
+      },
+      "divisions": {
+        "현대자동차": {
+          "what_they_do": "완성차 — EV, 수소, 자율주행, UAM, SDV",
+          "what_they_want": "미래 모빌리티 비전, 실행력, 글로벌 경험",
+          "strategic_hooks": ["아이오닉 브랜드", "수소연료전지(HTWO)", "SDV(소프트웨어 정의 차량)", "보스턴다이내믹스 로봇", "인도/동남아 시장"],
+          "tone_guide": "도전적 + 실행 중심"
+        },
+        "기아": {
+          "what_they_do": "완성차 — EV6/EV9, PBV, 디자인 혁신",
+          "what_they_want": "디자인 사고, 브랜드 감각, 대중성과 혁신의 균형",
+          "strategic_hooks": ["PBV(목적기반차량)", "EV 라인업 확대", "디자인 아이덴티티 'Opposites United'"],
+          "tone_guide": "감성 + 실행력 균형"
+        },
+        "현대모비스": {
+          "what_they_do": "부품/모듈 — 전동화, 자율주행, 커넥티비티",
+          "what_they_want": "기술 이해, B2B 사고, 품질 마인드",
+          "strategic_hooks": ["전동화 부품(PE모듈)", "자율주행 센서/제어기", "IVI/커넥티비티", "애프터마켓"],
+          "tone_guide": "기술적 구체성 + 품질 의식"
+        }
+      }
+    },
+
+    "카카오": {
+      "group_values": ["사용자 중심", "기술로 문제 해결", "겸손", "동료애", "전문성"],
+      "evaluation_style": "카카오는 '이 사람이 사용자 입장에서 생각할 수 있는가'를 본다. 자기 자랑보다 '사용자의 어떤 문제를 어떻게 해결했는가'에 집중.",
+      "tone_profile": {
+        "formality": 4,
+        "emotion": 5,
+        "data_driven": 7,
+        "creativity": 8,
+        "description": "캐주얼하되 전문적. 딱딱한 격식체 피할 것. '~합니다' 체는 유지하되 자연스러운 구어체 톤."
+      },
+      "divisions": {
+        "카카오(본사)": {
+          "what_they_do": "카카오톡, 카카오 i, 검색, 광고, AI",
+          "what_they_want": "사용자 문제 정의 능력, 기술적 문제 해결, 데이터 감각",
+          "strategic_hooks": ["카나나(AI)", "카카오톡 비즈니스 플랫폼", "광고/커머스 통합", "오픈채팅 생태계"],
+          "tone_guide": "캐주얼하되 전문적. 사용자 관점 사고가 핵심"
+        },
+        "카카오뱅크": {
+          "what_they_do": "인터넷전문은행",
+          "what_they_want": "금융 이해 + 디지털 UX 사고",
+          "strategic_hooks": ["모임통장", "26주적금", "신용대출 간편화", "금융 접근성"],
+          "tone_guide": "신뢰 + 혁신 균형"
+        },
+        "카카오페이": {
+          "what_they_do": "간편결제, 투자, 보험",
+          "what_they_want": "핀테크 이해, 사용자 경험",
+          "tone_guide": "사용자 중심 + 금융 이해"
+        },
+        "카카오엔터테인먼트": {
+          "what_they_do": "웹툰, 웹소설, 음악, 영상",
+          "what_they_want": "콘텐츠 감각, 크리에이터 생태계 이해, IP 비즈니스",
+          "strategic_hooks": ["카카오페이지/타파스", "IP 원소스 멀티유즈", "글로벌 웹툰 시장"],
+          "tone_guide": "창의성 + 사업 감각"
+        }
+      }
+    },
+
+    "네이버": {
+      "group_values": ["기술으로 연결", "사용자 이해", "도전과 몰입", "동료와 함께 성장"],
+      "evaluation_style": "네이버는 '기술적 깊이'와 '사용자 공감'의 균형을 본다. 개발 직군은 '직접 만들어본 것'이 가장 강력한 증거. 비개발 직군도 데이터/기술 리터러시 필수.",
+      "tone_profile": {
+        "formality": 5,
+        "emotion": 4,
+        "data_driven": 8,
+        "creativity": 7,
+        "description": "기술적이지만 딱딱하지 않은 톤. 개발자 문화 기반의 간결하고 논리적인 문체."
+      },
+      "divisions": {
+        "서치": {
+          "what_they_do": "검색, AI(하이퍼클로바X), 추천",
+          "what_they_want": "ML/AI 이해, 대규모 시스템 경험",
+          "strategic_hooks": ["하이퍼클로바X", "서치GPT 대응", "큐(CUE:) AI 검색"],
+          "tone_guide": "기술 깊이 + 사용자 이해"
+        },
+        "커머스": {
+          "what_they_do": "스마트스토어, 쇼핑라이브, 장보기",
+          "what_they_want": "이커머스 이해, 데이터 기반 사고",
+          "strategic_hooks": ["스마트스토어 생태계", "네이버플러스 멤버십", "C2C 크림"],
+          "tone_guide": "비즈니스 감각 + 사용자 관점"
+        },
+        "클라우드": {
+          "what_they_do": "네이버클라우드플랫폼(NCP)",
+          "what_they_want": "클라우드/인프라 기술, B2B 사고, 보안",
+          "strategic_hooks": ["클로바 스튜디오(AI API)", "하이퍼스케일 데이터센터 각", "공공 클라우드"],
+          "tone_guide": "기술 전문성 + 서비스 안정성 의식"
+        }
+      }
+    },
+
+    "쿠팡": {
+      "group_values": ["Customer Obsession", "Bias for Action", "Dive Deep", "Deliver Results", "Earn Trust"],
+      "evaluation_style": "쿠팡은 아마존 스타일의 리더십 원칙을 따른다. 모든 자소서는 '고객 임팩트'와 '데이터 증명'으로 평가된다. LP(Leadership Principles) 키워드를 자연스럽게 녹여야 한다.",
+      "tone_profile": {
+        "formality": 5,
+        "emotion": 3,
+        "data_driven": 10,
+        "creativity": 4,
+        "description": "데이터와 결과 중심. 미사여구 최소화. 아마존 STAR 포맷에 가장 충실해야 하는 기업."
+      },
+      "divisions": {
+        "이커머스": {
+          "what_they_do": "로켓배송, 로켓프레시, 마켓플레이스",
+          "what_they_want": "고객 경험 집착, 속도와 실행력, 운영 최적화",
+          "strategic_hooks": ["익일/새벽배송", "로켓그로스(오픈마켓)", "파페치 인수(명품)", "대만/일본 진출"],
+          "tone_guide": "고객 중심 + 데이터 기반 + 속도"
+        },
+        "쿠팡이츠": {
+          "what_they_do": "음식 배달",
+          "what_they_want": "배달/물류 이해, 양면시장 사고",
+          "tone_guide": "실행력 + 사용자 관점"
+        },
+        "쿠팡플레이": {
+          "what_they_do": "OTT/스트리밍, 스포츠 중계",
+          "what_they_want": "콘텐츠 전략, 로켓와우 연계 사고",
+          "tone_guide": "콘텐츠 감각 + 구독 생태계 이해"
+        },
+        "쿠팡풀필먼트서비스": {
+          "what_they_do": "물류센터 운영",
+          "what_they_want": "물류/운영 최적화, 현장 관리, 자동화",
+          "tone_guide": "운영 효율 + 현장 중심"
+        }
+      }
+    },
+
+    "토스": {
+      "group_values": ["문제 정의와 해결", "임팩트 중심", "Ownership", "동료 시너지", "솔직한 소통"],
+      "evaluation_style": "토스는 '이 사람이 문제를 어떻게 정의하는가'를 본다. 해결보다 정의가 먼저. '주어진 과제를 잘 수행했다'보다 '아무도 모르던 문제를 발견했다'가 높은 점수.",
+      "tone_profile": {
+        "formality": 3,
+        "emotion": 4,
+        "data_driven": 9,
+        "creativity": 8,
+        "description": "가장 캐주얼한 톤. 직설적이고 임팩트 중심. '~했습니다' 체보다 자연스러운 서술. 핵심을 먼저, 배경은 나중에."
+      },
+      "divisions": {
+        "토스(본사)": {
+          "what_they_do": "간편송금, 금융 슈퍼앱",
+          "what_they_want": "문제 정의 능력, 사용자 경험 집착, 임팩트 사고",
+          "strategic_hooks": ["금융 슈퍼앱", "홈 탭 개인화", "해외송금", "마이데이터"],
+          "tone_guide": "직설적, 임팩트 중심"
+        },
+        "토스뱅크": {
+          "what_they_do": "인터넷전문은행",
+          "what_they_want": "금융 규제 이해 + 혁신 사고",
+          "strategic_hooks": ["수신/여신 성장", "법인뱅킹", "토스뱅크 카드"],
+          "tone_guide": "금융 전문성 + 사용자 관점"
+        },
+        "토스증권": {
+          "what_they_do": "MTS, 투자 서비스",
+          "what_they_want": "증권/투자 이해, UX 사고",
+          "tone_guide": "금융 지식 + 접근성 사고"
+        },
+        "토스페이먼츠": {
+          "what_they_do": "PG, 결제 인프라",
+          "what_they_want": "결제 시스템 이해, B2B 사고",
+          "tone_guide": "기술 안정성 + B2B 관점"
+        }
+      }
+    },
+
+    "포스코그룹": {
+      "group_values": ["창의", "실행", "협업", "With POSCO"],
+      "evaluation_style": "실직적이고 협업 지향적. 현장 경험과 팀워크를 중시. 제조업 특유의 '현장 감각'이 중요.",
+      "tone_profile": {
+        "formality": 8,
+        "emotion": 4,
+        "data_driven": 8,
+        "creativity": 4,
+        "description": "격식 있고 안정적. 제조업 특유의 현장 중심 + 협업 강조 톤."
+      },
+      "divisions": {
+        "포스코": {
+          "what_they_do": "철강 생산, 스마트팩토리",
+          "what_they_want": "제조 공정 이해, 현장 중심 사고",
+          "strategic_hooks": ["HyREX(수소환원제철)", "스마트팩토리/AI 공정 최적화", "친환경 철강"],
+          "tone_guide": "현장 중심 + 협업 + 실행"
+        },
+        "포스코퓨처엠": {
+          "what_they_do": "이차전지 양극재/음극재",
+          "what_they_want": "배터리 소재 이해, 화학/소재 전공 지식",
+          "strategic_hooks": ["하이니켈 양극재", "실리콘 음극재", "캐나다/아르헨티나 리튬 확보"],
+          "tone_guide": "기술 전문성 + 미래 산업 비전"
+        },
+        "포스코인터내셔널": {
+          "what_they_do": "트레이딩, 에너지 E&P, 곡물",
+          "what_they_want": "글로벌 비즈니스 감각, 어학 능력",
+          "strategic_hooks": ["미얀마 가스전", "팜유/곡물 트레이딩", "니켈/리튬 자원 확보"],
+          "tone_guide": "글로벌 + 비즈니스 감각"
+        }
+      }
+    },
+
+    "한화그룹": {
+      "group_values": ["도전", "헌신", "정도"],
+      "evaluation_style": "도전적이고 비전 지향적. 최근 방산/우주/에너지로 급성장 중이라 '미래 비전'을 강조하면 효과적.",
+      "tone_profile": {
+        "formality": 8,
+        "emotion": 5,
+        "data_driven": 7,
+        "creativity": 5,
+        "description": "비전 지향적이고 도전적인 톤. 국가적 사명감과 미래 지향성."
+      },
+      "divisions": {
+        "한화에어로스페이스": {
+          "what_they_do": "항공엔진, 방산장비, 우주",
+          "what_they_want": "방산/우주 산업 이해, 기술적 전문성, 사명감",
+          "strategic_hooks": ["K-방산 수출 확대(K9/천무)", "누리호/우주산업", "항공엔진(GE JV)"],
+          "tone_guide": "기술 + 국가안보/미래 비전 + 사명감"
+        },
+        "한화오션": {
+          "what_they_do": "조선/해양플랜트/방산(함정)",
+          "what_they_want": "조선 산업 이해, 현장 중심",
+          "strategic_hooks": ["LNG운반선", "해군 함정", "필리 조선소"],
+          "tone_guide": "현장 + 글로벌"
+        },
+        "한화솔루션/큐셀": {
+          "what_they_do": "태양광, 수소, 친환경 에너지",
+          "what_they_want": "친환경/에너지 전환 이해",
+          "strategic_hooks": ["미국 태양광 생산(IRA)", "페로브스카이트", "그린수소"],
+          "tone_guide": "ESG + 기술 + 글로벌"
+        }
+      }
+    },
+
+    "CJ그룹": {
+      "group_values": ["일류지향", "인재", "공익", "ONLYONE"],
+      "evaluation_style": "창의적이고 글로벌 지향적. '한국을 넘어 글로벌'이라는 비전이 핵심.",
+      "tone_profile": {
+        "formality": 6,
+        "emotion": 6,
+        "data_driven": 6,
+        "creativity": 8,
+        "description": "창의적이고 감성+논리 균형. 글로벌 감각과 트렌드 이해를 보여주는 톤."
+      },
+      "divisions": {
+        "CJ제일제당": {
+          "what_they_do": "식품(비비고), 바이오(아미노산/사료첨가제)",
+          "what_they_want": "식품 산업/소비자 트렌드 이해, 글로벌 시장 감각",
+          "strategic_hooks": ["비비고 글로벌 확대", "슈완스(미국)", "바이오 사업(라이신/트립토판)"],
+          "tone_guide": "소비자 이해 + 글로벌"
+        },
+        "CJ대한통운": {
+          "what_they_do": "물류, 풀필먼트, 글로벌 포워딩",
+          "what_they_want": "물류 혁신 이해, 운영 효율, 기술 활용",
+          "strategic_hooks": ["AI 물류 자동화", "풀필먼트 서비스", "글로벌 네트워크"],
+          "tone_guide": "실행력 + 기술"
+        },
+        "CJ ENM": {
+          "what_they_do": "엔터테인먼트(tvN/TVING), 커머스",
+          "what_they_want": "콘텐츠 감각, 글로벌 트렌드, IP 사업 이해",
+          "strategic_hooks": ["TVING 오리지널", "K-콘텐츠 글로벌 수출", "커머스-콘텐츠 융합"],
+          "tone_guide": "창의적 + 글로벌"
+        }
+      }
+    }
+  },
+
+  "unknown_company_protocol": {
+    "step_1": "기업명으로 산업군 추론 (제조/IT/금융/서비스/공기업 등)",
+    "step_2": "해당 산업군의 일반적 인재상 적용",
+    "step_3": "사용자에게 안내: '이 기업의 구체적 인재상 정보가 데이터에 없습니다. 더 정확한 첨삭을 위해 ①기업 채용 페이지의 인재상 ②해당 부서의 주요 사업 ③최근 뉴스/IR 자료를 알려주시면 기업 맞춤 첨삭이 가능합니다.'",
+    "step_4": "일반적 업계 기준으로 첨삭하되, 기업 특화 부분은 [기업 정보 필요] 태그를 붙인다"
+  }
+}

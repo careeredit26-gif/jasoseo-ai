@@ -1,0 +1,200 @@
+{
+  "module": "company_db_public",
+  "version": "3.0",
+  "sector": "공기업/공공기관",
+  "sector_common": {
+    "values": ["공공성", "전문성", "윤리의식", "혁신", "소통"],
+    "tone_profile": {"formality": 9, "emotion": 3, "data_driven": 7, "creativity": 3},
+    "key_emphasis": "NCS 기반, 공공 가치와 직무 전문성 균형, 윤리/청렴",
+    "essay_tips": [
+      "공공성과 전문성을 동시에. 한쪽만 있으면 약함",
+      "'국민을 위해'는 추상적. 구체적 대상과 문제를 특정할 것",
+      "NCS 직업기초능력을 에피소드에 녹일 것",
+      "윤리/청렴 에피소드가 나오면 매우 효과적"
+    ]
+  },
+
+  "companies": {
+    "에너지_자원": {
+      "한국수자원공사(K-water)": {
+        "what_they_do": "수자원 관리, 댐 운영, 수도, 스마트워터",
+        "what_they_want": "수자원/환경 이해, 안전, 공공성",
+        "strategic_hooks": ["스마트 물관리", "수열에너지", "해외 물사업"],
+        "tone_guide": "공공 + 환경 + 기술"
+      },
+      "한국석유공사": {
+        "what_they_do": "석유/가스 E&P, 비축, 자원 개발",
+        "what_they_want": "에너지자원 이해, 글로벌 역량",
+        "strategic_hooks": ["해외 자원개발", "CCS(탄소포집)", "석유비축"],
+        "tone_guide": "자원 전문 + 글로벌"
+      },
+      "한국광물자원공사(KORES)": {
+        "what_they_do": "광물자원 확보(리튬/니켈/희토류)",
+        "what_they_want": "자원 산업 이해, 글로벌",
+        "strategic_hooks": ["핵심광물 확보(리튬/니켈)", "공급망 안정화"],
+        "tone_guide": "자원 + 글로벌"
+      },
+      "한국에너지공단": {
+        "what_they_do": "에너지 절약, 신재생에너지 보급, 온실가스 관리",
+        "what_they_want": "에너지 정책 이해, 탄소중립",
+        "strategic_hooks": ["RE100 지원", "에너지 효율", "탄소중립"],
+        "tone_guide": "정책 + 에너지"
+      },
+      "한국지역난방공사": {
+        "what_they_do": "집단에너지(지역난방/냉방), 수소",
+        "what_they_want": "에너지 인프라, 안전",
+        "strategic_hooks": ["수소연료전지", "신재생 열원"],
+        "tone_guide": "안전 + 에너지"
+      }
+    },
+
+    "교통_인프라": {
+      "인천국제공항공사": {
+        "what_they_do": "인천공항 운영/관리",
+        "what_they_want": "공항 운영 이해, 글로벌 서비스, 안전",
+        "strategic_hooks": ["세계 최고 공항(ASQ)", "4단계 확장", "스마트공항(AI/로봇)"],
+        "tone_guide": "글로벌 서비스 + 공공성 + 안전"
+      },
+      "한국공항공사": {
+        "what_they_do": "국내 14개 공항 운영(김포/김해/제주 등)",
+        "what_they_want": "공항 운영, 안전, 지역 발전",
+        "strategic_hooks": ["김포공항 활성화", "저비용터미널", "UAM 버티포트"],
+        "tone_guide": "안전 + 지역 공헌"
+      },
+      "한국도로공사": {
+        "what_they_do": "고속도로 건설/운영/관리",
+        "what_they_want": "도로/교통 이해, 안전, 현장",
+        "strategic_hooks": ["스마트하이웨이", "자율주행 도로 인프라", "하이패스"],
+        "tone_guide": "현장 + 안전 + 기술"
+      },
+      "서울교통공사": {
+        "what_they_do": "서울 지하철 1~8호선 운영",
+        "what_they_want": "철도/교통 안전, 시민 서비스",
+        "strategic_hooks": ["무인운전(경전철)", "역사 공간 활용", "안전 혁신"],
+        "tone_guide": "안전 + 시민 서비스"
+      },
+      "한국철도시설공단(국가철도공단)": {
+        "what_they_do": "철도 인프라 건설/관리(KTX 등 노선 건설)",
+        "what_they_want": "토목/철도 기술, 프로젝트 관리",
+        "strategic_hooks": ["GTX", "철도 인프라 확충", "스마트 건설"],
+        "tone_guide": "기술 + 공공 인프라"
+      }
+    },
+
+    "진흥_지원기관": {
+      "중소벤처기업진흥공단(중진공)": {
+        "what_they_do": "중소기업 정책자금, 수출지원, 연수원",
+        "what_they_want": "중소기업 이해, 정책 지원",
+        "strategic_hooks": ["정책자금", "온라인 수출지원", "스마트공장"],
+        "tone_guide": "중소기업 현장 이해 + 공공성"
+      },
+      "한국관광공사": {
+        "what_they_do": "관광 진흥, 한국 관광 마케팅",
+        "what_they_want": "관광산업 이해, 글로벌 마케팅, 지역관광",
+        "strategic_hooks": ["K-관광 글로벌", "지역관광 활성화", "디지털 관광"],
+        "tone_guide": "글로벌 + 관광 + 지역"
+      },
+      "한국콘텐츠진흥원(KOCCA)": {
+        "what_they_do": "콘텐츠 산업 진흥(게임/만화/영상/음악)",
+        "what_they_want": "콘텐츠 산업 이해, 정책",
+        "strategic_hooks": ["K-콘텐츠 글로벌", "게임 산업 진흥", "메타버스/AI 콘텐츠"],
+        "tone_guide": "콘텐츠 이해 + 공공"
+      },
+      "정보통신산업진흥원(NIPA)": {
+        "what_they_do": "SW/AI/디지털 산업 진흥",
+        "what_they_want": "IT 산업 이해, 정책 역량",
+        "strategic_hooks": ["AI 산업 육성", "SW 인재 양성", "디지털 뉴딜"],
+        "tone_guide": "IT + 정책"
+      },
+      "한국인터넷진흥원(KISA)": {
+        "what_they_do": "인터넷 보안, 개인정보보호, 디지털 인프라",
+        "what_they_want": "사이버보안/개인정보 이해, IT 역량",
+        "strategic_hooks": ["사이버보안", "개인정보보호", "디지털 인프라"],
+        "tone_guide": "보안 전문 + 공공"
+      },
+      "한국무역보험공사(K-SURE)": {
+        "what_they_do": "수출보험, 무역보험",
+        "what_they_want": "무역/금융 이해, 글로벌 리스크",
+        "strategic_hooks": ["수출 리스크 관리", "신시장 지원"],
+        "tone_guide": "무역 전문 + 공공"
+      },
+      "한국특허정보원": {
+        "what_they_do": "특허 정보 서비스, IP R&D",
+        "what_they_want": "지식재산권 이해, 데이터/IT",
+        "strategic_hooks": ["AI 특허분석", "IP 빅데이터"],
+        "tone_guide": "IP 전문 + IT"
+      }
+    },
+
+    "사회보장_복지": {
+      "국민건강보험공단": {
+        "what_they_do": "건강보험 운영, 건강검진, 장기요양",
+        "what_they_want": "보건의료 이해, 국민 서비스, 공공성",
+        "strategic_hooks": ["디지털 헬스케어", "빅데이터(건강보험 DB)", "장기요양 확대"],
+        "tone_guide": "국민 건강 + 공공성"
+      },
+      "국민연금공단": {
+        "what_they_do": "국민연금 운영, 기금 운용(세계 3위 연기금)",
+        "what_they_want": "연금/기금 이해, 투자 역량, 공적 가치",
+        "strategic_hooks": ["ESG 투자", "대체투자", "연금개혁"],
+        "tone_guide": "투자 전문성 + 공공성"
+      },
+      "근로복지공단": {
+        "what_they_do": "산재보험, 근로복지",
+        "what_they_want": "노동/안전 이해, 복지 마인드",
+        "strategic_hooks": ["산재예방", "직업재활"],
+        "tone_guide": "근로자 보호 + 공공"
+      }
+    },
+
+    "안전_환경": {
+      "한국산업안전보건공단(안전보건공단)": {
+        "what_they_do": "산업재해 예방, 안전 교육/인증",
+        "what_they_want": "산업안전 이해, 현장 감각",
+        "strategic_hooks": ["중대재해처벌법", "스마트안전 기술"],
+        "tone_guide": "안전 최우선 + 공공"
+      },
+      "한국환경공단": {
+        "what_they_do": "폐기물 관리, 수질/대기 관리, 환경 복원",
+        "what_they_want": "환경공학/환경정책 이해",
+        "strategic_hooks": ["탄소중립", "순환경제", "환경 빅데이터"],
+        "tone_guide": "환경 + 공공"
+      },
+      "한국가스안전공사": {
+        "what_they_do": "가스 안전 검사, 수소 안전",
+        "what_they_want": "가스/수소 안전, 기술 검사",
+        "strategic_hooks": ["수소안전 기준", "스마트안전검사"],
+        "tone_guide": "안전 + 기술"
+      },
+      "한국전기안전공사": {
+        "what_they_do": "전기 안전 검사, 전기 재해 예방",
+        "what_they_want": "전기 안전, 현장 기술",
+        "strategic_hooks": ["전기화재 예방 AI", "신재생 설비 안전"],
+        "tone_guide": "안전 + 기술"
+      }
+    },
+
+    "연구_교육": {
+      "한국과학기술연구원(KIST)": {
+        "what_they_want": "연구 역량, 과학적 사고",
+        "strategic_hooks": ["AI/양자/바이오 융합연구"],
+        "tone_guide": "연구 + 공공"
+      },
+      "한국전자통신연구원(ETRI)": {
+        "what_they_want": "ICT 연구 역량",
+        "strategic_hooks": ["AI/6G/양자컴퓨팅 연구"],
+        "tone_guide": "ICT 연구"
+      },
+      "한국에너지기술연구원": {
+        "what_they_want": "에너지 기술 연구",
+        "strategic_hooks": ["수소/태양광/풍력 연구"],
+        "tone_guide": "에너지 연구"
+      },
+      "한국원자력연구원": {
+        "what_they_want": "원자력 기술, 안전",
+        "strategic_hooks": ["SMR", "핵융합", "방사선 의학"],
+        "tone_guide": "원자력 + 안전"
+      }
+    }
+  }
+}

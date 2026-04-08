@@ -1,0 +1,318 @@
+{
+  "module": "company_db_manufacturing",
+  "version": "3.0",
+  "sector": "제조/에너지/건설/방산/화학",
+
+  "companies": {
+    "화학_소재": {
+      "금호석유화학": {
+        "what_they_do": "합성고무, 합성수지, 에너지",
+        "what_they_want": "화학 공정 이해, 현장 감각",
+        "strategic_hooks": ["합성고무 세계 1위", "전고체 전해질", "친환경 소재"],
+        "tone_guide": "기술 + 현장"
+      },
+      "SKC": {
+        "what_they_do": "반도체 소재(동박), 모빌리티 소재",
+        "what_they_want": "소재 산업 이해, SK 자발성",
+        "strategic_hooks": ["동박(반도체/배터리)", "반도체 글라스기판"],
+        "tone_guide": "SK 톤 + 소재 전문성"
+      },
+      "SK지오센트릭": {
+        "what_they_do": "석유화학→친환경 소재 전환",
+        "what_they_want": "에너지전환 이해, ESG",
+        "strategic_hooks": ["폐플라스틱 리사이클링", "도시유전", "바이오화학"],
+        "tone_guide": "SK 톤 + 친환경"
+      },
+      "코오롱인더스트리": {
+        "what_they_do": "산업소재, 화학, 필름, 전자재료, 패션",
+        "what_they_want": "소재 기술 이해, 다각화 사업 이해",
+        "strategic_hooks": ["수소연료전지 수분제어장치", "아라미드", "PET필름"],
+        "tone_guide": "기술 + 다각화"
+      },
+      "한솔케미칼": {
+        "what_they_do": "반도체/디스플레이 공정 소재(과산화수소, 프리커서)",
+        "what_they_want": "반도체 소재 이해, 품질 관리",
+        "strategic_hooks": ["반도체 프리커서", "2차전지 소재"],
+        "tone_guide": "기술 전문성"
+      },
+      "동진세미켐": {
+        "what_they_do": "반도체/디스플레이 포토레지스트",
+        "what_they_want": "반도체 공정 소재 이해",
+        "strategic_hooks": ["EUV PR", "반도체 소재 국산화"],
+        "tone_guide": "기술 깊이"
+      },
+      "솔브레인": {
+        "what_they_do": "반도체 식각액/세정액",
+        "what_they_want": "반도체 공정 화학 이해",
+        "strategic_hooks": ["반도체 핵심 소재", "2차전지 전해액"],
+        "tone_guide": "기술 전문성"
+      },
+      "후성": {
+        "what_they_do": "냉매, 반도체 특수가스, 2차전지 전해질",
+        "what_they_want": "특수화학 이해",
+        "strategic_hooks": ["2차전지 전해질(LiPF6)", "반도체 특수가스"],
+        "tone_guide": "기술 전문성"
+      },
+      "에코프로": {
+        "what_they_do": "2차전지 양극재 지주회사",
+        "what_they_want": "배터리 소재 이해, 성장 기업 마인드",
+        "strategic_hooks": ["하이니켈 양극재", "에코프로비엠/에코프로이노베이션"],
+        "tone_guide": "성장지향 + 기술"
+      },
+      "에코프로비엠": {
+        "what_they_do": "2차전지 양극재 제조",
+        "what_they_want": "양극재 공정/소재 기술, 품질",
+        "strategic_hooks": ["삼성SDI/SK온 공급", "캐나다/헝가리 공장"],
+        "tone_guide": "기술 + 글로벌"
+      },
+      "SK실트론": {
+        "what_they_do": "반도체 실리콘 웨이퍼",
+        "what_they_want": "웨이퍼 공정 이해, SK 자발성",
+        "strategic_hooks": ["SiC 웨이퍼(전력반도체)", "300mm 웨이퍼"],
+        "tone_guide": "SK 톤 + 소재"
+      },
+      "KCC": {
+        "what_they_do": "실리콘, 건자재, 도료",
+        "what_they_want": "소재 산업 이해, B2B",
+        "strategic_hooks": ["실리콘 사업", "모멘티브 인수"],
+        "tone_guide": "안정적 + B2B"
+      }
+    },
+
+    "건설_추가": {
+      "포스코이앤씨": {
+        "what_they_do": "건축(더샵), 플랜트, 인프라",
+        "what_they_want": "포스코 협업문화, 현장 실행력",
+        "strategic_hooks": ["더샵", "친환경 건축", "해외 플랜트"],
+        "tone_guide": "포스코 톤 + 건설"
+      },
+      "SK에코플랜트": {
+        "what_they_do": "환경/에너지 플랜트, 건설",
+        "what_they_want": "환경사업 이해, SK 자발성",
+        "strategic_hooks": ["폐기물→자원순환", "수소 플랜트", "데이터센터"],
+        "tone_guide": "SK 톤 + 환경/에너지"
+      },
+      "HDC현대산업개발": {
+        "what_they_do": "건축(아이파크), 토목",
+        "what_they_want": "안전 최우선, 현장 관리",
+        "strategic_hooks": ["아이파크", "안전 혁신"],
+        "tone_guide": "안전 + 현장 중심"
+      },
+      "태영건설": {
+        "what_they_do": "건축(데시앙), 토목, 환경",
+        "what_they_want": "현장 중심, 안정적",
+        "strategic_hooks": ["데시앙"],
+        "tone_guide": "현장 + 안정"
+      },
+      "한화건설": {
+        "what_they_do": "건축(포레나), 플랜트",
+        "what_they_want": "한화 도전정신",
+        "strategic_hooks": ["포레나", "이라크 신도시"],
+        "tone_guide": "한화 톤"
+      },
+      "코오롱글로벌": {
+        "what_they_do": "건설, 무역, 자동차부품",
+        "what_they_want": "다각화 사업 이해",
+        "strategic_hooks": ["하늘채", "인프라"],
+        "tone_guide": "안정적"
+      }
+    },
+
+    "방산_항공우주_추가": {
+      "LIG넥스원": {
+        "what_they_do": "유도무기, 통신전자, 감시정찰, 항공전자",
+        "what_they_want": "방산 기술 이해, 사명감, 보안 의식",
+        "strategic_hooks": ["천궁/해궁(미사일)", "K-방산 수출", "무인체계"],
+        "tone_guide": "기술 + 사명감"
+      },
+      "한국항공우주산업(KAI)": {
+        "what_they_do": "항공기(KF-21, KUH수리온), 위성, UAM",
+        "what_they_want": "항공우주 기술, 국가 프로젝트 이해, 장기 비전",
+        "strategic_hooks": ["KF-21(보라매)", "LAH/KUH", "UAM/위성"],
+        "tone_guide": "항공우주 비전 + 기술 + 사명감"
+      },
+      "현대로템": {
+        "what_they_do": "철도차량, 방산(K2전차), 수소",
+        "what_they_want": "현대 실행력, 방산/철도 기술",
+        "strategic_hooks": ["K2전차 수출", "수소연료전지 트램", "자율주행 철도"],
+        "tone_guide": "현대 톤 + 방산/모빌리티"
+      },
+      "풍산": {
+        "what_they_do": "방산(탄약), 비철금속(동합금)",
+        "what_they_want": "방산 사명감, 소재 기술",
+        "strategic_hooks": ["탄약 수출 확대", "동합금 소재"],
+        "tone_guide": "사명감 + 기술"
+      },
+      "한화시스템": {
+        "what_they_do": "방산전자(레이더/전자전), ICT, UAM",
+        "what_they_want": "전자/SW 기술, 한화 도전정신",
+        "strategic_hooks": ["AESA 레이더", "UAM(버터플라이)", "위성통신"],
+        "tone_guide": "한화 톤 + 기술"
+      }
+    },
+
+    "에너지_전력": {
+      "S-OIL": {
+        "what_they_do": "정유, 석유화학(샤힌 프로젝트)",
+        "what_they_want": "에너지 산업 이해, 아람코 파트너십 이해",
+        "strategic_hooks": ["샤힌 프로젝트(석유→화학 전환)", "수소/친환경"],
+        "tone_guide": "글로벌(아람코) + 에너지 전환"
+      },
+      "HD현대오일뱅크": {
+        "what_they_do": "정유, 석유화학, 백유/윤활유",
+        "what_they_want": "정유/화학 공정 이해",
+        "strategic_hooks": ["화이트오일", "친환경 연료", "HD현대 시너지"],
+        "tone_guide": "HD현대 톤"
+      },
+      "SK가스": {
+        "what_they_do": "LPG 수입/유통, 도시가스",
+        "what_they_want": "에너지 유통 이해, SK 자발성",
+        "strategic_hooks": ["LNG/수소 밸류체인", "탄소중립"],
+        "tone_guide": "SK 톤"
+      },
+      "E1": {
+        "what_they_do": "LPG 수입/판매, 수소충전소",
+        "what_they_want": "에너지 유통, 수소경제 이해",
+        "strategic_hooks": ["수소충전 인프라", "LPG 수입 1위"],
+        "tone_guide": "안정적 + 에너지 전환"
+      },
+      "한국남부발전": {
+        "what_they_do": "발전(화력/신재생)",
+        "what_they_want": "발전 기술, 안전, 공공성",
+        "strategic_hooks": ["탄소중립 발전", "수소혼소", "해상풍력"],
+        "tone_guide": "공기업 톤"
+      },
+      "한국동서발전": {
+        "what_they_do": "발전(화력/신재생)",
+        "what_they_want": "발전 기술, 안전, 공공성",
+        "strategic_hooks": ["동해 해상풍력", "수소발전", "RE100"],
+        "tone_guide": "공기업 톤"
+      },
+      "한국중부발전": {
+        "what_they_do": "발전",
+        "what_they_want": "발전 기술, 안전",
+        "strategic_hooks": ["보령 석탄→LNG 전환", "신재생"],
+        "tone_guide": "공기업 톤"
+      },
+      "한국서부발전": {
+        "what_they_do": "발전",
+        "what_they_want": "발전 기술, 안전",
+        "strategic_hooks": ["태안 탄소중립", "신재생"],
+        "tone_guide": "공기업 톤"
+      },
+      "한국남동발전": {
+        "what_they_do": "발전",
+        "what_they_want": "발전 기술, 안전",
+        "strategic_hooks": ["영흥 LNG전환", "그린수소"],
+        "tone_guide": "공기업 톤"
+      },
+      "한전KPS": {
+        "what_they_do": "발전설비 정비/운영",
+        "what_they_want": "설비 기술, 안전, 현장",
+        "strategic_hooks": ["해외 정비사업", "원전/가스터빈 정비"],
+        "tone_guide": "공기업 + 현장 기술"
+      },
+      "한전KDN": {
+        "what_they_do": "전력IT, 스마트그리드",
+        "what_they_want": "전력 IT 이해, 보안",
+        "strategic_hooks": ["AMI(스마트미터)", "전력데이터", "사이버보안"],
+        "tone_guide": "공기업 + IT"
+      },
+      "한국전력기술": {
+        "what_they_do": "원전/발전소 설계 엔지니어링",
+        "what_they_want": "원전 설계 기술, 엔지니어링 역량",
+        "strategic_hooks": ["APR1400 설계", "SMR", "해외 원전 설계"],
+        "tone_guide": "공기업 + 기술 엄밀성"
+      }
+    },
+
+    "반도체장비_디스플레이장비": {
+      "삼성전기": {
+        "what_they_do": "MLCC, 기판(FC-BGA), 카메라모듈",
+        "what_they_want": "전자부품 기술, 삼성 인재상",
+        "strategic_hooks": ["초소형 MLCC", "FC-BGA(AI서버)", "고화소 카메라모듈"],
+        "tone_guide": "삼성 톤 + 부품 기술"
+      },
+      "삼성SDI": {
+        "what_they_do": "2차전지(EV/ESS), 전자재료",
+        "what_they_want": "배터리 기술, 삼성 인재상",
+        "strategic_hooks": ["전고체 배터리", "46파이 원통형", "PRiMX 브랜드"],
+        "tone_guide": "삼성 톤 + 배터리 전문성"
+      },
+      "SK스퀘어": {
+        "what_they_do": "ICT 투자 지주(SK하이닉스, 원스토어 등)",
+        "what_they_want": "투자/전략 관점, SK 자발성",
+        "strategic_hooks": ["SK하이닉스", "사피온(AI반도체)"],
+        "tone_guide": "SK 톤 + 투자 관점"
+      },
+      "DB하이텍": {
+        "what_they_do": "파운드리(8인치 특화)",
+        "what_they_want": "아날로그 반도체 이해",
+        "strategic_hooks": ["8인치 파운드리", "전력반도체"],
+        "tone_guide": "기술 전문성"
+      },
+      "원익IPS": {
+        "what_they_do": "반도체/디스플레이 장비(CVD/ALD)",
+        "what_they_want": "반도체 장비 기술, 공정 이해",
+        "strategic_hooks": ["ALD 장비", "OLED 증착"],
+        "tone_guide": "기술 깊이"
+      },
+      "한미반도체": {
+        "what_they_do": "반도체 후공정 장비(TC본더)",
+        "what_they_want": "패키징 기술 이해",
+        "strategic_hooks": ["TC본더 세계 1위", "HBM 패키징"],
+        "tone_guide": "기술 + 글로벌 리더십"
+      },
+      "주성엔지니어링": {
+        "what_they_do": "반도체/디스플레이/태양전지 장비",
+        "what_they_want": "증착 기술 이해",
+        "strategic_hooks": ["ALD/CVD 장비", "페로브스카이트"],
+        "tone_guide": "기술 전문성"
+      }
+    },
+
+    "자동차부품": {
+      "만도": {
+        "what_they_do": "자율주행/ADAS, 조향/제동, 서스펜션",
+        "what_they_want": "자동차 전장/전자 이해, 글로벌",
+        "strategic_hooks": ["자율주행(레이더/카메라)", "SbW(Steer-by-Wire)"],
+        "tone_guide": "기술 + 글로벌"
+      },
+      "HL만도(HL그룹)": {
+        "what_they_do": "위와 동일(HL그룹 소속)",
+        "strategic_hooks": ["HL그룹 출범", "전장 부품 전환"],
+        "tone_guide": "기술 + 모빌리티"
+      },
+      "한온시스템": {
+        "what_they_do": "자동차 열관리시스템(공조/배터리 냉각)",
+        "what_they_want": "열관리 기술, 글로벌(한화 인수)",
+        "strategic_hooks": ["EV 열관리", "한화 인수", "글로벌 공장"],
+        "tone_guide": "기술 + 글로벌. 한화 톤 전환 중"
+      },
+      "현대위아": {
+        "what_they_do": "자동차 부품(엔진/변속기), 공작기계, 방산",
+        "what_they_want": "현대 실행력, 기계 기술",
+        "strategic_hooks": ["전동화 부품", "공작기계(5축)"],
+        "tone_guide": "현대 톤"
+      },
+      "현대트랜시스": {
+        "what_they_do": "시트, 변속기(DCT/전동화)",
+        "what_they_want": "자동차 부품 기술, 현장",
+        "strategic_hooks": ["전동화 파워트레인", "프리미엄 시트"],
+        "tone_guide": "현대 톤"
+      },
+      "현대오토에버": {
+        "what_they_do": "자동차 SW/IT서비스(그룹 IT계열사)",
+        "what_they_want": "SDV/커넥티비티 이해, IT역량",
+        "strategic_hooks": ["SDV 플랫폼", "커넥티드카 인포테인먼트", "그룹 IT인프라"],
+        "tone_guide": "현대 톤 + IT"
+      },
+      "LG이노텍": {
+        "what_they_do": "카메라모듈, 기판(FC-BGA), 전장부품",
+        "what_they_want": "광학/전자 기술, LG 겸손함",
+        "strategic_hooks": ["아이폰 카메라모듈", "전장용 기판", "3D센싱"],
+        "tone_guide": "LG 톤 + 부품 기술"
+      }
+    }
+  }
+}

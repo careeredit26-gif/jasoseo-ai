@@ -1,0 +1,504 @@
+{
+  "module": "company_db_expanded",
+  "version": "3.0",
+  "description": "03_company_db.json에 없는 추가 기업. 03과 동일한 구조를 따른다.",
+
+  "companies": {
+
+    "롯데그룹": {
+      "group_values": ["고객중심", "독창성", "열정", "협력"],
+      "evaluation_style": "유통/식품/화학 등 사업 다각화 그룹. '현장 중심 실행력'과 '고객 접점 사고'를 본다.",
+      "tone_profile": {"formality": 7, "emotion": 5, "data_driven": 6, "creativity": 6},
+      "divisions": {
+        "롯데쇼핑": {
+          "what_they_do": "백화점, 마트, 이커머스(롯데온), 편의점(세븐일레븐)",
+          "what_they_want": "유통 트렌드 이해, 옴니채널 사고, 고객 데이터 활용",
+          "strategic_hooks": ["롯데온 통합", "리테일테크", "MZ세대 소비 트렌드"]
+        },
+        "롯데케미칼": {
+          "what_they_do": "석유화학, 첨단소재, 수소사업",
+          "what_they_want": "화학 공정 이해, 친환경 전환 마인드",
+          "strategic_hooks": ["수소 밸류체인", "리사이클링", "고부가 소재 전환"]
+        },
+        "롯데건설": {
+          "what_they_do": "건축/토목, 플랜트",
+          "what_they_want": "현장 관리, 프로젝트 실행력",
+          "strategic_hooks": ["롯데캐슬", "해외 플랜트", "스마트 건설"]
+        },
+        "롯데정보통신": {
+          "what_they_do": "IT서비스, 클라우드, AI",
+          "what_they_want": "IT 솔루션 역량, 그룹 DX 이해",
+          "strategic_hooks": ["그룹 디지털전환", "AI/클라우드", "스마트팩토리"]
+        }
+      }
+    },
+
+    "GS그룹": {
+      "group_values": ["혁신과 효율", "투명경영", "인재중시"],
+      "evaluation_style": "에너지/유통 중심. 실용적이고 효율 지향.",
+      "tone_profile": {"formality": 7, "emotion": 4, "data_driven": 7, "creativity": 5},
+      "divisions": {
+        "GS칼텍스": {
+          "what_they_do": "정유, 윤활유, 석유화학, 수소/배터리소재",
+          "what_they_want": "에너지 산업 이해, 공정 안전, 에너지 전환 마인드",
+          "strategic_hooks": ["수소 사업", "폐플라스틱 열분해유", "탄소중립 로드맵"]
+        },
+        "GS리테일": {
+          "what_they_do": "GS25, GS수퍼, 요기요, 심플리쿡",
+          "what_they_want": "편의점/유통 트렌드, 소비자 행동 이해",
+          "strategic_hooks": ["편의점 라스트마일", "PB상품 전략", "O4O(Online for Offline)"]
+        },
+        "GS건설": {
+          "what_they_do": "건축(자이), 인프라, 플랜트",
+          "what_they_want": "건설 현장 이해, 프로젝트 관리",
+          "strategic_hooks": ["자이(Xi) 브랜드", "해외 플랜트", "모듈러 건설"]
+        }
+      }
+    },
+
+    "두산그룹": {
+      "group_values": ["인재", "혁신", "협력", "세계화"],
+      "evaluation_style": "중공업/에너지 중심으로 재편 중. 기술력과 글로벌 사고를 중시.",
+      "tone_profile": {"formality": 8, "emotion": 4, "data_driven": 7, "creativity": 5},
+      "divisions": {
+        "두산에너빌리티": {
+          "what_they_do": "발전설비(가스터빈/원전), 해수담수화, 수소",
+          "what_they_want": "에너지 기술 이해, 대형 프로젝트 관리, 글로벌 역량",
+          "strategic_hooks": ["SMR(소형모듈원전)", "가스터빈 국산화", "해상풍력", "수소터빈"]
+        },
+        "두산로보틱스": {
+          "what_they_do": "협동로봇(코봇)",
+          "what_they_want": "로봇/자동화 이해, B2B 솔루션 사고",
+          "strategic_hooks": ["협동로봇 글로벌 시장", "AI 비전 로봇", "식음료/물류 자동화"]
+        },
+        "두산밥캣": {
+          "what_they_do": "소형 건설장비",
+          "what_they_want": "건설기계 시장 이해, 북미 시장 감각",
+          "strategic_hooks": ["전동화 장비", "자율주행 건설기계", "북미 시장 1위"]
+        }
+      }
+    },
+
+    "신세계그룹": {
+      "group_values": ["고객제일", "최고지향", "혁신추구", "인재중시"],
+      "evaluation_style": "유통의 본질(고객 경험)을 중시. 프리미엄과 대중성의 균형.",
+      "tone_profile": {"formality": 7, "emotion": 5, "data_driven": 6, "creativity": 7},
+      "divisions": {
+        "이마트": {
+          "what_they_do": "대형마트, 이마트에브리데이, SSG닷컴",
+          "what_they_want": "유통 현장 이해, 옴니채널 전략, 소비자 트렌드",
+          "strategic_hooks": ["SSG닷컴 통합", "피코크/노브랜드 PB", "그로서리 경쟁력"]
+        },
+        "신세계백화점": {
+          "what_they_do": "백화점, 면세점",
+          "what_they_want": "프리미엄 고객 경험, 럭셔리 리테일 이해",
+          "strategic_hooks": ["더현대vs신세계 경쟁", "VIP CRM", "체험형 리테일"]
+        },
+        "스타벅스코리아": {
+          "what_they_do": "커피 프랜차이즈, 리테일",
+          "what_they_want": "브랜드 경험 설계, 현장 오퍼레이션, 고객 로열티",
+          "strategic_hooks": ["사이렌오더", "리저브 매장", "친환경 매장 운영"]
+        }
+      }
+    },
+
+    "LS그룹": {
+      "group_values": ["고객성공", "최고실력", "원팀"],
+      "evaluation_style": "전선/전력/반도체 B2B 중심. 기술적 전문성과 실행력.",
+      "tone_profile": {"formality": 7, "emotion": 4, "data_driven": 8, "creativity": 4},
+      "divisions": {
+        "LS전선": {
+          "what_they_do": "전력케이블, 해저케이블, 통신케이블",
+          "what_they_want": "전력 인프라 이해, 글로벌 프로젝트 경험",
+          "strategic_hooks": ["해저케이블(해상풍력 연계)", "북미/유럽 전력망 투자 수혜", "초고압 케이블"]
+        },
+        "LS일렉트릭": {
+          "what_they_do": "전력기기, 자동화 솔루션",
+          "what_they_want": "전력 시스템 이해, 스마트그리드",
+          "strategic_hooks": ["HVDC", "ESS", "디지털변전소"]
+        }
+      }
+    },
+
+    "효성그룹": {
+      "group_values": ["최고의 기술과 경영으로 인류사회에 공헌"],
+      "evaluation_style": "소재/중공업 기술 중심. 기술적 깊이와 글로벌 감각.",
+      "tone_profile": {"formality": 8, "emotion": 3, "data_driven": 8, "creativity": 4},
+      "divisions": {
+        "효성첨단소재": {
+          "what_they_do": "타이어보강재, 탄소섬유, 아라미드",
+          "what_they_want": "소재 기술 이해, 글로벌 시장 감각",
+          "strategic_hooks": ["탄소섬유(수소탱크용)", "친환경 타이어코드"]
+        },
+        "효성중공업": {
+          "what_they_do": "변압기, 차단기, 전력 인프라",
+          "what_they_want": "전력기기 기술, 글로벌 수주",
+          "strategic_hooks": ["북미 변압기 수주 호황", "HVDC", "ESS"]
+        },
+        "효성티앤씨": {
+          "what_they_do": "스판덱스, 폴리에스터, 나일론",
+          "what_they_want": "섬유/화학 공정 이해",
+          "strategic_hooks": ["리사이클 섬유 크레오라", "친환경 소재"]
+        }
+      }
+    },
+
+    "HD현대그룹": {
+      "group_values": ["신뢰", "열정", "창의"],
+      "evaluation_style": "조선/해양/건설기계 중심. 현장 감각과 글로벌 실행력.",
+      "tone_profile": {"formality": 8, "emotion": 4, "data_driven": 7, "creativity": 4},
+      "divisions": {
+        "HD한국조선해양": {
+          "what_they_do": "조선 지주사(HD현대중공업, HD현대삼호, HD현대미포)",
+          "what_they_want": "조선 산업 이해, 수주 사이클, 글로벌 물류",
+          "strategic_hooks": ["LNG운반선 수주", "친환경선박(암모니아/메탄올)", "자율운항선박"]
+        },
+        "HD현대인프라코어": {
+          "what_they_do": "건설기계, 엔진",
+          "what_they_want": "건설기계 시장, 전동화",
+          "strategic_hooks": ["전동화 굴착기", "스마트건설솔루션"]
+        },
+        "HD현대일렉트릭": {
+          "what_they_do": "변압기, 회전기기",
+          "what_they_want": "전력기기 기술, 글로벌 수주 역량",
+          "strategic_hooks": ["북미 변압기 특수", "초고압 변압기", "에너지전환 인프라"]
+        }
+      }
+    },
+
+    "금융_은행권": {
+      "group_note": "은행/증권/보험 등 금융권은 공통적으로 '신뢰/리스크 관리/디지털 전환'을 중시한다.",
+      "common_values": ["고객신뢰", "건전성", "디지털 혁신", "ESG"],
+      "common_tone_profile": {"formality": 8, "emotion": 4, "data_driven": 7, "creativity": 4},
+      "divisions": {
+        "KB국민은행": {
+          "group": "KB금융그룹",
+          "group_values": ["고객중심", "전문성", "소통", "도전"],
+          "what_they_want": "금융 전문성 + 디지털 역량, 고객 접점 경험",
+          "strategic_hooks": ["KB스타뱅킹 슈퍼앱", "AI 금융비서", "자산관리(WM)", "글로벌 확장(동남아)"],
+          "tone_guide": "안정적 + 디지털 혁신 균형"
+        },
+        "신한은행": {
+          "group": "신한금융그룹",
+          "group_values": ["미래를 함께하는 따뜻한 금융", "바르게", "빠르게", "다르게"],
+          "what_they_want": "고객 공감 + 디지털 전환 이해",
+          "strategic_hooks": ["쏠(SOL) 슈퍼앱", "제로 브랜치(비대면)", "ESG 금융", "글로벌(베트남/인도네시아)"],
+          "tone_guide": "따뜻함 + 전문성"
+        },
+        "하나은행": {
+          "group": "하나금융그룹",
+          "group_values": ["함께 성장하며 행복을 나누는 금융"],
+          "what_they_want": "글로벌 역량, 다문화 감수성, 디지털 혁신",
+          "strategic_hooks": ["하나원큐", "글로벌 네트워크(20개국)", "외환 강점"],
+          "tone_guide": "글로벌 + 포용성"
+        },
+        "우리은행": {
+          "group": "우리금융그룹",
+          "group_values": ["우리다움", "가장 가까운 은행"],
+          "what_they_want": "현장 중심 금융, 고객 밀착",
+          "strategic_hooks": ["우리WON뱅킹", "기업금융 강점", "그룹 재편(증권/보험 확대)"],
+          "tone_guide": "친근함 + 전문성"
+        },
+        "NH농협은행": {
+          "group": "농협금융",
+          "group_values": ["농업인과 국민의 행복한 내일"],
+          "what_they_want": "농촌/지역 이해, 공익적 가치, 디지털 혁신",
+          "strategic_hooks": ["올원뱅크", "농업금융 특화", "ESG/탄소중립농업"],
+          "tone_guide": "공익성 + 디지털"
+        },
+        "삼성생명/삼성화재": {
+          "group": "삼성금융",
+          "what_they_want": "보험 산업 이해, 리스크 관리, 데이터 분석",
+          "strategic_hooks": ["인슈어테크", "헬스케어 연계", "GA 채널 전략"],
+          "tone_guide": "삼성 그룹 톤 준용. 논리적 + 수치 기반"
+        },
+        "증권사_공통": {
+          "examples": ["삼성증권", "미래에셋증권", "NH투자증권", "한국투자증권", "KB증권"],
+          "what_they_want": "금융시장 이해, 리서치/분석 역량, 투자 감각",
+          "strategic_hooks": ["MTS 경쟁", "해외주식", "퇴직연금", "WM/IB"],
+          "tone_guide": "전문적 + 시장 감각"
+        }
+      }
+    },
+
+    "게임_엔터테인먼트": {
+      "group_note": "게임사는 '열정+전문성+크리에이티브'를 본다. 자사 게임 플레이 경험이 거의 필수.",
+      "common_tone_profile": {"formality": 4, "emotion": 6, "data_driven": 6, "creativity": 9},
+      "divisions": {
+        "크래프톤": {
+          "what_they_do": "배틀그라운드, 인조이, 다크앤다커",
+          "what_they_want": "게임 개발 열정, 글로벌 시장 이해, 자사 게임 경험 필수",
+          "group_values": ["도전", "겸손", "크래프트맨십"],
+          "strategic_hooks": ["인도 시장(BGMI)", "신규 IP 확장", "AI/딥러닝 활용", "매디슨 엔터"],
+          "tone_guide": "게임에 대한 진짜 열정 + 겸손한 크래프트맨십"
+        },
+        "넥슨": {
+          "what_they_do": "메이플스토리, 던전앤파이터, FC온라인, 블루아카이브",
+          "what_they_want": "라이브 서비스 이해, 유저 커뮤니티 감각",
+          "group_values": ["플레이어 퍼스트", "열정", "협업"],
+          "strategic_hooks": ["메이플스토리 유니버스(블록체인)", "PC+모바일 크로스", "글로벌 퍼블리싱"],
+          "tone_guide": "유저 관점 + 서비스 감각"
+        },
+        "엔씨소프트": {
+          "what_they_do": "리니지, 블소, TL, AI(LLM)",
+          "what_they_want": "기술적 깊이(개발), AI/ML 역량, MMORPG 이해",
+          "group_values": ["창의", "성장", "협업"],
+          "strategic_hooks": ["TL(Throne and Liberty)", "AI센터/LLM 연구", "글로벌 런칭"],
+          "tone_guide": "기술 깊이 + 게임 철학"
+        },
+        "넷마블": {
+          "what_they_do": "모바일게임 퍼블리싱, 메타버스, 웹3",
+          "what_they_want": "모바일 게임 시장 이해, 글로벌 퍼블리싱 감각",
+          "strategic_hooks": ["나혼렙:어라이즈", "마블 IP", "메타버스/AI"],
+          "tone_guide": "글로벌 감각 + 트렌드 이해"
+        },
+        "스마일게이트": {
+          "what_they_do": "크로스파이어, 로스트아크, 에픽세븐",
+          "what_they_want": "게임 경험 + 사회공헌 마인드(오렌지팜 등)",
+          "strategic_hooks": ["로스트아크 글로벌", "크로스파이어 중국 시장", "희망스튜디오(사회공헌)"],
+          "tone_guide": "열정 + 사회적 가치"
+        }
+      }
+    },
+
+    "제약_바이오": {
+      "group_note": "제약바이오는 '과학적 사고 + 인내심 + 규제 이해'가 핵심. 파이프라인 이해는 필수.",
+      "common_tone_profile": {"formality": 8, "emotion": 3, "data_driven": 9, "creativity": 4},
+      "divisions": {
+        "삼성바이오로직스": {
+          "what_they_do": "바이오의약품 CMO/CDO",
+          "what_they_want": "바이오 공정 이해, GMP, 글로벌 규제",
+          "group_values": ["삼성 그룹 인재상 준용"],
+          "strategic_hooks": ["4공장 가동", "5공장 착공", "ADC/이중항체 CDMO", "mRNA"],
+          "tone_guide": "삼성 톤 + 바이오 전문성"
+        },
+        "삼성바이오에피스": {
+          "what_they_do": "바이오시밀러 개발",
+          "what_they_want": "바이오시밀러 시장 이해, 임상/허가 프로세스",
+          "strategic_hooks": ["바이오시밀러 글로벌 1위권", "자가면역/안과 파이프라인"],
+          "tone_guide": "과학적 근거 + 글로벌 시장 이해"
+        },
+        "셀트리온": {
+          "what_they_do": "바이오시밀러, 신약 개발",
+          "what_they_want": "바이오 열정, 도전 정신, 과학적 사고",
+          "group_values": ["도전", "열정", "창의"],
+          "strategic_hooks": ["셀트리온 통합(제약/헬스케어)", "짐펜트라(SC)", "ADC 파이프라인"],
+          "tone_guide": "도전적 + 과학적"
+        },
+        "유한양행": {
+          "what_they_do": "전문의약품, 오픈이노베이션",
+          "what_they_want": "오픈이노베이션 이해, 레거시+혁신 균형",
+          "group_values": ["유한정신(유일한 박사 철학)", "정직", "성실", "사회공헌"],
+          "strategic_hooks": ["레이저티닙(폐암)", "렉라자 글로벌 L/O", "오픈이노베이션 플랫폼"],
+          "tone_guide": "유한정신(공익) + 과학적 전문성"
+        },
+        "SK바이오팜/SK바이오사이언스": {
+          "what_they_do": "CNS신약(바이오팜), 백신(바이오사이언스)",
+          "what_they_want": "SK 자발성 + 바이오 전문성",
+          "strategic_hooks": ["엑스코프리/세노바메이트", "코로나 백신→차세대 백신 플랫폼"],
+          "tone_guide": "SK 톤 + 과학적 깊이"
+        }
+      }
+    },
+
+    "IT_스타트업_유니콘": {
+      "group_note": "스타트업/유니콘은 '문제 해결 능력 + Ownership + 속도'를 본다. 직급 구분보다 임팩트 중시.",
+      "common_tone_profile": {"formality": 3, "emotion": 5, "data_driven": 8, "creativity": 8},
+      "divisions": {
+        "우아한형제들(배달의민족)": {
+          "what_they_do": "배달의민족, B마트, 배민1",
+          "what_they_want": "사용자 경험 집착, 유쾌한 브랜딩 감각, 실행력",
+          "group_values": ["송파구에서 일을 더 잘하는 11가지 방법"],
+          "strategic_hooks": ["배민1(단건배달)", "B마트(퀵커머스)", "로봇배달", "DH 그룹 시너지"],
+          "tone_guide": "유쾌하되 전문적. 배민 특유의 브랜드 톤 이해 필요"
+        },
+        "당근": {
+          "what_they_do": "지역 기반 중고거래, 동네생활, 비즈프로필",
+          "what_they_want": "커뮤니티/로컬 사고, 사용자 신뢰 설계",
+          "group_values": ["사용자 중심", "신뢰", "로컬"],
+          "strategic_hooks": ["동네생활 서비스", "당근비즈니스(광고)", "글로벌(영국/캐나다/일본)"],
+          "tone_guide": "따뜻하고 캐주얼 + 사용자 중심"
+        },
+        "야놀자": {
+          "what_they_do": "여가/숙박 플랫폼, 클라우드 SaaS",
+          "what_they_want": "플랫폼 비즈니스 이해, 글로벌 SaaS 감각",
+          "group_values": ["놀자", "도전", "기술"],
+          "strategic_hooks": ["야놀자클라우드", "글로벌 SaaS(동남아)", "인터파크 인수"],
+          "tone_guide": "테크 기반 + 글로벌 스케일"
+        },
+        "무신사": {
+          "what_they_do": "패션 이커머스, 무신사스토어, 29CM, 솔드아웃",
+          "what_they_want": "패션/트렌드 감각, 이커머스 이해, MZ 세대 문화",
+          "strategic_hooks": ["무신사스탠다드", "29CM 프리미엄", "오프라인 확장", "글로벌"],
+          "tone_guide": "트렌디 + 데이터 기반"
+        },
+        "직방": {
+          "what_they_do": "부동산 플랫폼, 삼성SDS 인수, 메타폴리스",
+          "what_they_want": "프롭테크 이해, 사용자 경험",
+          "strategic_hooks": ["삼성SDS 인수", "메타버스 오피스", "원룸/아파트 매물"],
+          "tone_guide": "혁신적 + 안정성"
+        },
+        "리디": {
+          "what_they_do": "전자책, 웹소설, 웹툰(만타)",
+          "what_they_want": "콘텐츠 플랫폼 이해, 글로벌 콘텐츠 감각",
+          "strategic_hooks": ["만타(글로벌 웹툰/소설)", "AI 추천", "셀렉트(구독)"],
+          "tone_guide": "콘텐츠 열정 + 글로벌"
+        },
+        "컬리": {
+          "what_they_do": "마켓컬리(새벽배송), 뷰티컬리",
+          "what_they_want": "프리미엄 그로서리 이해, 물류/큐레이션 감각",
+          "strategic_hooks": ["뷰티컬리 확장", "컬리멤버스", "수익성 개선"],
+          "tone_guide": "프리미엄 감각 + 실행력"
+        }
+      }
+    },
+
+    "건설_엔지니어링": {
+      "group_note": "건설/엔지니어링은 '현장 안전 + 프로젝트 관리 + 기술력'이 핵심.",
+      "common_tone_profile": {"formality": 8, "emotion": 3, "data_driven": 7, "creativity": 3},
+      "divisions": {
+        "삼성물산(건설부문)": {
+          "what_they_do": "초고층/플랜트/인프라",
+          "what_they_want": "글로벌 프로젝트 경험, 기술 혁신, 삼성 인재상",
+          "strategic_hooks": ["해외 플랜트", "스마트건설기술", "래미안"],
+          "tone_guide": "삼성 톤 + 현장 감각"
+        },
+        "현대건설": {
+          "what_they_do": "건축(힐스테이트), 토목, 플랜트, 원전",
+          "what_they_want": "현장 실행력, 글로벌 프로젝트 관리",
+          "strategic_hooks": ["원전(체코 등 해외)", "힐스테이트", "수소/탄소포집 플랜트"],
+          "tone_guide": "현대 그룹 톤 + 도전적 실행"
+        },
+        "대우건설": {
+          "what_they_do": "건축(푸르지오), 토목, 플랜트",
+          "what_they_want": "현장 중심, 안전 의식",
+          "strategic_hooks": ["중동 플랜트 수주", "푸르지오 브랜드"],
+          "tone_guide": "현장 안전 + 실행력"
+        },
+        "DL이앤씨": {
+          "what_they_do": "건축(아크로), 토목, 플랜트",
+          "what_they_want": "프리미엄 건축 이해, 기술 경쟁력",
+          "strategic_hooks": ["아크로 프리미엄", "해외 EPC"],
+          "tone_guide": "기술 + 프리미엄"
+        }
+      }
+    },
+
+    "공기업_공공기관": {
+      "group_note": "공기업은 NCS 기반 평가가 많다. '공공성 + 전문성 + 직업윤리'가 핵심. 직무역량형 자소서가 대부분.",
+      "common_tone_profile": {"formality": 9, "emotion": 3, "data_driven": 7, "creativity": 3},
+      "common_values": ["공공성", "전문성", "윤리의식", "혁신", "소통"],
+      "divisions": {
+        "한국전력공사": {
+          "what_they_do": "전력 송배전, 에너지 전환",
+          "what_they_want": "전력 산업 이해, 에너지 전환 비전, 공익 마인드",
+          "strategic_hooks": ["탄소중립", "재생에너지 계통연계", "디지털변전소", "해외 사업"],
+          "tone_guide": "공공성 + 전문성"
+        },
+        "한국가스공사": {
+          "what_they_do": "천연가스 도입/배관 운영, 수소사업",
+          "what_they_want": "에너지 산업 이해, 안전관리",
+          "strategic_hooks": ["수소 밸류체인", "LNG 인프라", "탄소중립"],
+          "tone_guide": "안전 + 에너지 전환"
+        },
+        "한국수력원자력": {
+          "what_they_do": "원전 운영, 수력/양수 발전",
+          "what_they_want": "원자력 기술 이해, 안전 최우선 마인드",
+          "strategic_hooks": ["SMR 개발", "해체 기술", "수출(체코/폴란드)", "탄소중립 전원"],
+          "tone_guide": "안전 + 기술적 엄밀성"
+        },
+        "코트라(KOTRA)": {
+          "what_they_do": "무역투자진흥, 해외 무역관 운영",
+          "what_they_want": "글로벌 역량, 어학, 무역/투자 이해",
+          "strategic_hooks": ["수출 지원(중소기업)", "해외 투자 유치", "통상 환경 변화 대응"],
+          "tone_guide": "글로벌 + 공공성"
+        },
+        "한국토지주택공사(LH)": {
+          "what_they_do": "공공주택, 도시개발, 토지 관리",
+          "what_they_want": "부동산/도시계획 이해, 공공성, 윤리의식",
+          "strategic_hooks": ["공공주택 공급", "스마트시티", "도시재생"],
+          "tone_guide": "공공성 + 윤리"
+        },
+        "한국철도공사(코레일)": {
+          "what_they_do": "철도 운영(KTX, 일반열차), 역세권 개발",
+          "what_they_want": "교통/물류 이해, 안전 의식, 서비스 마인드",
+          "strategic_hooks": ["GTX", "스마트역사", "철도물류"],
+          "tone_guide": "안전 + 서비스"
+        }
+      }
+    },
+
+    "미디어_광고": {
+      "group_note": "미디어/광고는 '크리에이티브 + 트렌드 감각 + 데이터'의 삼각 균형.",
+      "common_tone_profile": {"formality": 5, "emotion": 6, "data_driven": 6, "creativity": 9},
+      "divisions": {
+        "제일기획": {
+          "what_they_do": "종합광고, 디지털마케팅, 이벤트",
+          "what_they_want": "크리에이티브 + 전략적 사고, 삼성 그룹사 이해",
+          "strategic_hooks": ["AI 크리에이티브", "데이터 마케팅", "글로벌 캠페인"],
+          "tone_guide": "크리에이티브 + 전략"
+        },
+        "이노션": {
+          "what_they_do": "종합광고(현대차그룹 인하우스)",
+          "what_they_want": "자동차/모빌리티 마케팅 감각, 글로벌 캠페인",
+          "strategic_hooks": ["EV 브랜딩", "글로벌 캠페인", "디지털 트랜스포메이션"],
+          "tone_guide": "현대 그룹 톤 + 크리에이티브"
+        },
+        "JTBC/SBS/KBS/MBC": {
+          "what_they_want": "미디어 산업 이해, 콘텐츠 감각, 저널리즘/제작 열정",
+          "strategic_hooks": ["OTT 대응", "숏폼 콘텐츠", "글로벌 포맷 판매"],
+          "tone_guide": "콘텐츠 열정 + 미디어 리터러시"
+        }
+      }
+    },
+
+    "통신_인터넷인프라": {
+      "divisions": {
+        "KT": {
+          "what_they_do": "유무선통신, AICT, 클라우드, 미디어(시즌)",
+          "group_values": ["고객중심", "혁신", "협력", "신뢰"],
+          "what_they_want": "통신+AI 융합 사고, B2B/B2G 이해",
+          "strategic_hooks": ["AICT(AI+ICT) 전환", "KT클라우드", "AI컨택센터(AICC)", "디지코(Digico) 전략"],
+          "tone_profile": {"formality": 7, "emotion": 4, "data_driven": 7, "creativity": 5},
+          "tone_guide": "기술 + B2B 사고"
+        },
+        "LG유플러스": {
+          "what_they_do": "유무선통신, IPTV(U+tv), 기업솔루션",
+          "group_values": ["고객가치", "도전", "협업"],
+          "what_they_want": "통신+플랫폼 사고, MZ세대 마케팅 감각",
+          "strategic_hooks": ["익시(ixi) AI", "U+3.0 플랫폼 전략", "아이들나라", "B2B DX"],
+          "tone_profile": {"formality": 6, "emotion": 5, "data_driven": 6, "creativity": 6},
+          "tone_guide": "LG 톤(겸손) + 플랫폼 사고"
+        }
+      }
+    },
+
+    "식품_소비재": {
+      "group_note": "식품/소비재는 '소비자 인사이트 + 트렌드 감각 + 현장(영업/생산) 이해'가 핵심.",
+      "common_tone_profile": {"formality": 6, "emotion": 6, "data_driven": 6, "creativity": 7},
+      "divisions": {
+        "오리온": {
+          "what_they_do": "과자/초콜릿(초코파이, 꼬북칩), 중국/베트남/러시아 해외 사업",
+          "what_they_want": "글로벌 식품 시장 이해, 소비자 트렌드",
+          "strategic_hooks": ["중국/베트남 현지 생산", "건강 스낵 트렌드", "글로벌 매출 비중 60%+"]
+        },
+        "농심": {
+          "what_they_do": "라면(신라면), 스낵, 음료",
+          "what_they_want": "K-푸드 글로벌 확장 이해, 브랜드 전략",
+          "strategic_hooks": ["미국 제2공장", "신라면 글로벌", "비건/건강 라인업"]
+        },
+        "아모레퍼시픽": {
+          "what_they_do": "화장품(설화수, 라네즈, 이니스프리)",
+          "what_they_want": "뷰티 트렌드, 글로벌 마케팅, 브랜드 전략",
+          "group_values": ["개방", "혁신", "친밀", "도전"],
+          "strategic_hooks": ["북미/유럽 시장 확대", "더마/클린뷰티", "D2C 전략"]
+        },
+        "LG생활건강": {
+          "what_they_do": "생활용품, 화장품(후, 숨), 음료(코카콜라)",
+          "what_they_want": "FMCG 시장 이해, 프리미엄 전략",
+          "strategic_hooks": ["프리미엄 뷰티(후/숨)", "생활용품 친환경", "HDB 구조"]
+        }
+      }
+    }
+  }
+}

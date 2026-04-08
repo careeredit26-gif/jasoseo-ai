@@ -1,0 +1,242 @@
+{
+  "module": "company_db_it_game_content",
+  "version": "3.0",
+  "sector": "IT/게임/콘텐츠/스타트업",
+
+  "companies": {
+    "IT_플랫폼": {
+      "라인플러스": {
+        "what_they_do": "LINE 메신저, 핀테크, AI, 블록체인",
+        "what_they_want": "글로벌(일본/태국/대만) 감각, 기술 깊이, 서비스 감각",
+        "strategic_hooks": ["LINE 야후 통합", "AI/LLM", "핀테크(LINE Pay)"],
+        "tone_profile": {"formality": 4, "emotion": 4, "data_driven": 8, "creativity": 7},
+        "tone_guide": "네이버 계열이지만 일본 시장 중심. 글로벌+기술"
+      },
+      "NHN": {
+        "what_they_do": "클라우드(토스트), 결제(페이코), 게임, 커머스",
+        "what_they_want": "B2B 클라우드/SaaS 이해, 기술 역량",
+        "strategic_hooks": ["NHN클라우드", "페이코", "NHN게임(한게임)"],
+        "tone_guide": "기술 중심 + B2B"
+      },
+      "11번가": {
+        "what_they_do": "오픈마켓, 아마존 글로벌 스토어",
+        "what_they_want": "이커머스 이해, 고객 경험, SK 자발성",
+        "strategic_hooks": ["아마존 글로벌 셀링", "AI 추천"],
+        "tone_guide": "SK 톤 + 커머스 감각"
+      },
+      "SSG닷컴": {
+        "what_they_do": "신세계 통합 온라인몰",
+        "what_they_want": "이커머스+오프라인 연계 사고, 데이터",
+        "strategic_hooks": ["쓱배송", "이마트/신세계 통합", "G마켓 연계"],
+        "tone_guide": "신세계 톤 + 이커머스"
+      },
+      "오늘의집(버킷플레이스)": {
+        "what_they_do": "인테리어/홈리빙 플랫폼, 시공 서비스, 커머스",
+        "what_they_want": "커뮤니티+커머스 이해, 사용자 경험, 성장 마인드",
+        "strategic_hooks": ["콘텐츠 커머스", "시공 중개", "3D 인테리어"],
+        "tone_guide": "사용자 중심 + 성장지향"
+      },
+      "클래스101": {
+        "what_they_do": "온라인 클래스 플랫폼, 크리에이터 이코노미",
+        "what_they_want": "교육/콘텐츠 이해, 글로벌 확장 감각",
+        "strategic_hooks": ["글로벌(미국/일본)", "크리에이터 이코노미", "AI 활용"],
+        "tone_guide": "크리에이티브 + 글로벌"
+      },
+      "뱅크샐러드": {
+        "what_they_do": "마이데이터, 개인금융관리(PFM)",
+        "what_they_want": "마이데이터/핀테크 이해, 데이터 분석",
+        "strategic_hooks": ["마이데이터 선두", "금융 데이터 분석"],
+        "tone_guide": "데이터 + 사용자 중심"
+      },
+      "채널코퍼레이션(채널톡)": {
+        "what_they_do": "B2B 고객 메시징/CRM SaaS",
+        "what_they_want": "B2B SaaS 이해, 고객 성공",
+        "strategic_hooks": ["올인원 비즈 메신저", "일본/글로벌 확장"],
+        "tone_guide": "B2B + 글로벌"
+      },
+      "원티드랩": {
+        "what_they_do": "채용 플랫폼, HR테크",
+        "what_they_want": "채용시장/HR 이해, AI 매칭",
+        "strategic_hooks": ["AI 추천 채용", "원티드인사이트"],
+        "tone_guide": "HR 전문 + 테크"
+      },
+      "메가존클라우드": {
+        "what_they_do": "클라우드 MSP(AWS 파트너)",
+        "what_they_want": "클라우드 기술 역량, B2B 컨설팅",
+        "strategic_hooks": ["AWS 프리미어 파트너", "AI/ML 서비스"],
+        "tone_guide": "기술 전문 + B2B"
+      },
+      "베스핀글로벌": {
+        "what_they_do": "멀티클라우드 MSP",
+        "what_they_want": "클라우드 기술, 글로벌",
+        "strategic_hooks": ["OpsNow(클라우드 관리)", "중동/아시아 진출"],
+        "tone_guide": "기술 + 글로벌"
+      },
+      "그렙(프로그래머스)": {
+        "what_they_do": "코딩테스트/교육 플랫폼",
+        "what_they_want": "개발 교육 이해, 기술 역량",
+        "strategic_hooks": ["프로그래머스(기업 코딩테스트)", "데브코스(교육)"],
+        "tone_guide": "개발자 문화 + 교육"
+      },
+      "토스랩(잔디)": {
+        "what_they_do": "기업용 메신저(잔디), 협업툴",
+        "what_they_want": "B2B SaaS, 사용자 경험",
+        "strategic_hooks": ["기업 메신저", "업무 자동화"],
+        "tone_guide": "B2B + 사용자 중심"
+      },
+      "센드버드": {
+        "what_they_do": "메시징/채팅 API SaaS (글로벌)",
+        "what_they_want": "글로벌 SaaS 이해, API/개발자 경험",
+        "strategic_hooks": ["글로벌 B2B SaaS", "미국 본사"],
+        "tone_guide": "글로벌 + 기술. 영어 혼용 자연스러움"
+      },
+      "하이퍼커넥트": {
+        "what_they_do": "아자르(영상 소셜), AI, Match Group 자회사",
+        "what_they_want": "글로벌 서비스 경험, AI/ML, 소셜 이해",
+        "strategic_hooks": ["Match Group 시너지", "AI 기반 소셜", "WebRTC 기술"],
+        "tone_guide": "글로벌 + AI + 소셜"
+      },
+      "여기어때": {
+        "what_they_do": "숙박/레저/티켓 플랫폼",
+        "what_they_want": "여가 플랫폼 이해, 마케팅 감각",
+        "strategic_hooks": ["종합 여가 플랫폼", "AI 추천"],
+        "tone_guide": "캐주얼 + 마케팅 감각"
+      },
+      "에이블리": {
+        "what_they_do": "패션 이커머스(여성 패션 앱)",
+        "what_they_want": "패션 트렌드, MZ 소비자 이해, 데이터",
+        "strategic_hooks": ["AI 개인화 추천", "셀러 생태계"],
+        "tone_guide": "트렌디 + 데이터"
+      },
+      "지그재그(카카오스타일)": {
+        "what_they_do": "패션 메타 플랫폼",
+        "what_they_want": "패션 커머스 이해, 카카오 문화",
+        "strategic_hooks": ["직잭결제(직진배송)", "카카오 시너지"],
+        "tone_guide": "카카오 톤 + 패션 감각"
+      },
+      "번개장터": {
+        "what_they_do": "중고거래 플랫폼, 리셀",
+        "what_they_want": "C2C 마켓 이해, MZ 문화",
+        "strategic_hooks": ["리셀(BGZT)", "인증/검수"],
+        "tone_guide": "캐주얼 + 트렌디"
+      },
+      "왓챠": {
+        "what_they_do": "OTT 스트리밍",
+        "what_they_want": "콘텐츠 큐레이션, 추천 알고리즘",
+        "strategic_hooks": ["왓챠파티", "독립/아트 콘텐츠"],
+        "tone_guide": "콘텐츠 감각"
+      },
+      "밀리의서재": {
+        "what_they_do": "오디오북/전자책 구독 플랫폼",
+        "what_they_want": "출판/콘텐츠 이해, 구독 모델",
+        "strategic_hooks": ["오디오북", "AI 요약/추천"],
+        "tone_guide": "콘텐츠 + 구독 사업 이해"
+      },
+      "크몽": {
+        "what_they_do": "프리랜서 마켓플레이스",
+        "what_they_want": "긱이코노미 이해, 양면시장",
+        "strategic_hooks": ["프리랜서 생태계", "기업용 솔루션"],
+        "tone_guide": "플랫폼 + 사용자 중심"
+      }
+    },
+
+    "게임_추가": {
+      "카카오게임즈": {
+        "what_they_do": "게임 퍼블리싱/개발(오딘, 우마무스메)",
+        "what_they_want": "카카오 문화 + 게임 열정",
+        "strategic_hooks": ["카카오 플랫폼 연계", "글로벌 퍼블리싱"],
+        "tone_guide": "카카오 톤 + 게임 열정"
+      },
+      "펄어비스": {
+        "what_they_do": "검은사막 개발사",
+        "what_they_want": "MMORPG 이해, 기술 역량(자체 엔진)",
+        "strategic_hooks": ["검은사막 글로벌", "신작(붉은사막)", "자체 엔진"],
+        "tone_guide": "기술 깊이 + 게임 장인정신"
+      },
+      "위메이드": {
+        "what_they_do": "미르 시리즈, 웹3/블록체인 게임",
+        "what_they_want": "웹3/토큰이코노미 이해, 게임 경험",
+        "strategic_hooks": ["위믹스(블록체인)", "미르4 글로벌"],
+        "tone_guide": "혁신적 + 웹3 이해"
+      },
+      "컴투스": {
+        "what_they_do": "서머너즈워, 모바일게임",
+        "what_they_want": "모바일 게임 이해, 글로벌 운영",
+        "strategic_hooks": ["서머너즈워 프랜차이즈", "e스포츠", "웹3"],
+        "tone_guide": "글로벌 모바일"
+      },
+      "데브시스터즈": {
+        "what_they_do": "쿠키런 시리즈",
+        "what_they_want": "IP 비즈니스, 캐주얼 게임 감각",
+        "strategic_hooks": ["쿠키런:킹덤", "IP 확장(굿즈/캐릭터)"],
+        "tone_guide": "크리에이티브 + IP"
+      },
+      "시프트업": {
+        "what_they_do": "니케, 스텔라블레이드",
+        "what_they_want": "비주얼/아트 감각, 글로벌 콘솔",
+        "strategic_hooks": ["스텔라블레이드(PS5)", "글로벌 콘솔 시장"],
+        "tone_guide": "아트 감각 + 글로벌 콘솔"
+      },
+      "라이엇게임즈코리아": {
+        "what_they_want": "LoL/발로란트 경험, 글로벌 조직문화, 플레이어 중심",
+        "strategic_hooks": ["e스포츠(LCK)", "발로란트", "Player Experience First"],
+        "tone_guide": "외국계 톤. 플레이어 중심 + 다양성"
+      }
+    },
+
+    "엔터_콘텐츠": {
+      "HYBE": {
+        "what_they_do": "음악(BTS/세븐틴), 위버스, 팬 플랫폼",
+        "what_they_want": "팬덤/커뮤니티 이해, IP 비즈니스, 기술+콘텐츠 융합",
+        "strategic_hooks": ["위버스(팬 플랫폼)", "멀티레이블 전략", "AI(슈퍼톤)"],
+        "tone_profile": {"formality": 4, "emotion": 6, "data_driven": 6, "creativity": 9},
+        "tone_guide": "팬덤 이해 + 기술 감각"
+      },
+      "SM엔터테인먼트": {
+        "what_they_do": "음악(에스파/NCT), 메타버스(KWANGYA), SM Culture Universe",
+        "what_they_want": "콘텐츠 기획, 아티스트 매니지먼트, 기술 융합",
+        "strategic_hooks": ["SM3.0(카카오 인수)", "KWANGYA", "AI/메타버스"],
+        "tone_guide": "크리에이티브 + 테크 융합"
+      },
+      "JYP엔터테인먼트": {
+        "what_they_do": "음악(스트레이키즈/ITZY/NMIXX), 글로벌 확장",
+        "what_they_want": "글로벌 엔터 이해, 아티스트 육성, 팬덤 매니지먼트",
+        "strategic_hooks": ["글로벌 오디션", "일본/미국 시장"],
+        "tone_guide": "글로벌 + 진정성"
+      },
+      "YG엔터테인먼트": {
+        "what_they_do": "음악(블랙핑크/트레저), YG PLUS",
+        "what_they_want": "음악/패션/브랜드 감각",
+        "strategic_hooks": ["IP 비즈니스", "YG PLUS(유통/MD)"],
+        "tone_guide": "브랜드 감각"
+      },
+      "스튜디오드래곤": {
+        "what_they_do": "드라마 제작(CJ ENM 자회사)",
+        "what_they_want": "콘텐츠 기획/제작 이해, 스토리텔링",
+        "strategic_hooks": ["넷플릭스/글로벌 OTT 공급", "오리지널 IP"],
+        "tone_guide": "스토리텔링 + 사업 감각"
+      },
+      "JTBC스튜디오": {
+        "what_they_do": "드라마/예능 제작",
+        "what_they_want": "콘텐츠 제작, 저널리즘 DNA",
+        "strategic_hooks": ["JTBC 콘텐츠 허브", "글로벌 포맷"],
+        "tone_guide": "콘텐츠 열정"
+      },
+      "SBS": {
+        "what_they_want": "방송/콘텐츠 열정, 디지털 전환 이해",
+        "strategic_hooks": ["웨이브(wavve)", "숏폼", "글로벌 포맷 판매"],
+        "tone_guide": "콘텐츠 + 디지털"
+      },
+      "KBS": {
+        "what_they_want": "공영방송 가치, 저널리즘, 공익",
+        "strategic_hooks": ["공영미디어 디지털 전환", "수신료 논의"],
+        "tone_guide": "공영 가치 + 전문성"
+      },
+      "MBC": {
+        "what_they_want": "콘텐츠 감각, 방송 열정",
+        "strategic_hooks": ["디지털 콘텐츠", "OTT 대응"],
+        "tone_guide": "콘텐츠 열정"
+      }
+    }
+  }
+}
