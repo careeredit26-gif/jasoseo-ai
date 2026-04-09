@@ -465,8 +465,38 @@ def _build_static_parts():
             suffix.append(f"\n{ib['output_instruction']}")
 
     # ─── OUTPUT FORMAT ───
+    # 주의: JSON 파일의 initial_review 를 그대로 dump 하면 각 섹션의
+    # {"format": {...}} wrapper 를 LLM이 내용의 일부로 오해하여
+    # 최상위에 "instruction"/"format" 키를 그대로 흉내내는 사고가 난다.
+    # 그래서 각 섹션의 format 값만 뽑아 평탄한 스키마 dict 로 재조립한다.
+    ir = of["initial_review"]
+    schema_keys = [
+        "company_analysis",
+        "structure_feedback",
+        "sentence_diagnosis",
+        "revised_full_text",
+        "interview_bridge",
+        "summary",
+    ]
+    flat_schema = {}
+    for k in schema_keys:
+        section = ir.get(k) or {}
+        if "format" in section:
+            flat_schema[k] = section["format"]
+        else:
+            flat_schema[k] = section
+
     suffix.append("\n## 출력 형식 (반드시 JSON만 출력, 다른 텍스트 없이)")
-    suffix.append(json.dumps(of["initial_review"], ensure_ascii=False, indent=2))
+    suffix.append(ir.get("instruction", ""))
+    suffix.append("\n최종 출력 JSON의 최상위 키는 정확히 다음 6개여야 한다:")
+    for k in schema_keys:
+        suffix.append(f"- {k}")
+    suffix.append(
+        '\n"instruction", "format" 같은 wrapper 키로 감싸지 말 것. '
+        "위 6개 키를 최상위에 두고 각각의 값은 아래 스키마에 맞춰 채워라."
+    )
+    suffix.append("\n### 출력 JSON 스키마 (이 구조 그대로)")
+    suffix.append(json.dumps(flat_schema, ensure_ascii=False, indent=2))
 
     return "\n".join(prefix), "\n".join(suffix)
 
@@ -489,6 +519,12 @@ _rg = PROMPT_MODULES["writing"].get("revision_guidelines", {})
 _rg_common = '\n'.join(
     f"- '{k}': {v}" for k, v in (_rg.get("common_requests") or {}).items()
 )
+# output.revision 전체를 dump하면 LLM이 {instruction, format} 구조를
+# wrapper로 오해하여 {"format": {...}} 형태로 감싸 출력하는 사고가 발생한다.
+# format 객체 내부만 dump 하고, 최상위 키 화이트리스트를 명시적으로 지시한다.
+_revision_section = PROMPT_MODULES["output"]["revision"]
+_revision_format_schema = _revision_section.get("format", {})
+_revision_instruction = _revision_section.get("instruction", "")
 REVISE_SYSTEM_PROMPT = f"""{PROMPT_MODULES["core"]["role"]}
 
 {_rg.get('instruction', '')}
@@ -496,8 +532,19 @@ REVISE_SYSTEM_PROMPT = f"""{PROMPT_MODULES["core"]["role"]}
 ## 자주 요청되는 수정 유형
 {_rg_common}
 
-## 출력 형식 (반드시 JSON만 출력)
-{json.dumps(PROMPT_MODULES["output"]["revision"], ensure_ascii=False, indent=2)}"""
+## 출력 형식 (반드시 JSON만 출력, 다른 텍스트 없이)
+{_revision_instruction}
+
+최종 출력 JSON의 최상위 키는 정확히 다음 4개여야 한다:
+- changes_made
+- revised_full_text
+- updated_scores
+- summary
+
+다른 키 이름을 쓰거나 "format"/"instruction" 같은 wrapper로 감싸지 말 것.
+아래는 각 키가 가져야 할 값의 스키마이다:
+
+{json.dumps(_revision_format_schema, ensure_ascii=False, indent=2)}"""
 
 
 # ──────────────────────────────────────
